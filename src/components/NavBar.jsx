@@ -1,9 +1,9 @@
 import { Menu, Brain, Search, Moon, Sun } from "lucide-react"
 import React, { useState } from "react";
-import "../styles/NavBar.css"
+import "../styles/NavBar.css";
 
 
-function NavBar({ toggleSidebar, darkMode, toggleDarkMode }) {
+function NavBar({ darkMode, toggleDarkMode, toggleSidebar ,isSidebarOpen}) {
     const [searching, setsearching] = useState(false);
 
     const handleSearchClick = () => {
@@ -12,7 +12,7 @@ function NavBar({ toggleSidebar, darkMode, toggleDarkMode }) {
     return (
         <header className="header">
             <header className="header">
-                {!searching ? (
+                {searching ? (
                     <div className="searchInput">
                         <input type="text" className="inputBar" placeholder="Search from all papers..." />
                         <button onClick={handleSearchClick} className="closeSearchBtn">
@@ -23,7 +23,7 @@ function NavBar({ toggleSidebar, darkMode, toggleDarkMode }) {
                     <div className="navbar">
                         <div className="leftNav">
                             <button onClick={toggleSidebar} className="menuBtn">
-                                <Menu className="hamburgerIcon" />
+                                <Menu onClick={toggleSidebar} className="hamburgerIcon" />
                             </button>
                             <span className="logoText">
                                 FYIMP H<Brain className="logoBrain" />B
@@ -37,7 +37,6 @@ function NavBar({ toggleSidebar, darkMode, toggleDarkMode }) {
                     </div>
                 )}
             </header>
-
         </header>
 
     )

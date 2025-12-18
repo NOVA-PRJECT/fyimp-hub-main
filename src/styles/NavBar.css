@@ -16,6 +16,41 @@
   height: 4rem;    
   margin: 0 ;       
 }
+.searchInput {
+  position: relative;  
+  padding: 0rem;      
+}
+.inputBar {
+  width: 100%;
+  margin: 0%;
+  padding: 0rem 0rem 0rem 0rem;
+  background-color: #e5e7eb;
+  color: #000000;
+  font-size: 1rem;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-weight: 1000;
+  outline: none;
+  height: 100%;
+  padding: 0px 0px 0px 1rem;
+}
+.closeSearchBtn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #000000;
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+
+}
 .leftNav {
   display: flex;         
   align-items: center;     
@@ -49,7 +84,7 @@
 .logoBrain {
   width: 1.5rem;
   height: 1.5rem;
-  padding-bottom: 0.094rem;
+  padding-bottom: 0.0987rem;
   color: #000000; 
 }
 .rightNav {
@@ -67,10 +102,4 @@
   color: #000000; 
   cursor: pointer;
 }
-.inputBar {
-  width: 100%;        
-  padding: 0.5rem;       
-  border: 1px solid #d1d5db; 
-  border-radius: 0rem;    
-  font-size: 1rem;        
-}
+

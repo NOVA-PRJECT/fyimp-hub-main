@@ -1,0 +1,43 @@
+.sidebar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100vh;
+  background: rgb(255, 255, 255);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 500;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+.sidebar.close{
+    transform: translateX(-100%);
+}
+.heading {
+  display: flex;
+  align-items: center;
+  gap: 0rem;    
+  font-size: 1.5rem;
+  margin:0;
+  font-weight: bold;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  color: black;
+}
+
+.closebtn {
+  background: none;
+  align-items: center;
+  color: black;
+  padding-left: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+.departmentList{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
