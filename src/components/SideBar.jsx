@@ -19,6 +19,10 @@ useEffect(()=>{
   fetchdept();
 },[])
   return (
+    <>
+{isSidebarOpen && (
+  <div className="overlay" onClick={toggleSidebar}></div>
+)}
     <div className={`sidebar ${isSidebarOpen ? 'open' : 'close'}`}>
       <div className="sidebarhead">
         <h2 className="heading">Departments</h2>
@@ -32,6 +36,7 @@ useEffect(()=>{
   ))}
 </ul>
     </div>
+    </>
   );
 }
 

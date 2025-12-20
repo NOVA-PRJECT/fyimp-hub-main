@@ -1,0 +1,26 @@
+.homebottom{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4rem;
+  color:black;
+  background-color: white;
+}
+.semselect{
+  margin-right: 2rem;
+  border-radius: 2rem;
+  padding: 0.5rem;
+  font-weight: 1000;
+  background-color: red;
+  border: none;
+}
+.semselect:focus{
+  outline: none;
+}
+.questmark{
+ margin-left: 1rem;
+}

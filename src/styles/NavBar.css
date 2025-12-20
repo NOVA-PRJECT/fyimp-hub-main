@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   z-index: 40;
-  background-color: rgba(255, 255, 255, 0.8); 
+  background-color: white; 
   backdrop-filter: blur(16px);                
   -webkit-backdrop-filter: blur(16px);        
   border-bottom: 1px solid #e5e7eb;      
@@ -61,7 +61,8 @@
   gap: 0.75rem;             
 }
 .menuBtn {
-  display: flex;          
+  display: flex;        
+  margin-right: 0.5rem;
   align-items: center;  
   gap: 0px;         
   padding: 0.5rem;
