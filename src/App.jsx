@@ -19,7 +19,7 @@ function App() {
   return (
     <div>
       <NavBar  darkMode={darkMode} toggleDarkMode={toggleDarkMode} toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}/>
-      <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/>
+      <SideBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}/>
       <h1>THE WEBSITE IS UNDER CONSTRUCTION</h1>
     </div>
   );

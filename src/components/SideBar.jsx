@@ -1,14 +1,18 @@
 import { supabase } from "../supabaseClient";
 import React, { useState , useEffect} from "react";
 import "../styles/SideBar.css"
+import {X} from "lucide-react"
 
 
-function SideBar({ isSidebarOpen }) {
+function SideBar({ isSidebarOpen,toggleSidebar }) {
 
 
   return (
     <div className={`sidebar ${isSidebarOpen ? 'open' : 'close'}`}>
-      <h2>Departments</h2>y
+      <div className="sidebarhead">
+        <h2 className="heading">Departments</h2>
+        <X className="closebtn" onClick ={toggleSidebar}/>
+      </div>
       <ul className="departmentList">
         <li className="departmentItem">Computer Science</li>
         <li className="departmentItem">Electrical Engineering</li>

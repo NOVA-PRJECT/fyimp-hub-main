@@ -16,25 +16,26 @@
 .sidebar.close{
     transform: translateX(-100%);
 }
-.heading {
+.sidebarhead {
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+}
+.heading {
   gap: 0rem;    
   font-size: 1.5rem;
   margin:0;
   font-weight: bold;
   padding: 1rem;
-  border-bottom: 1px solid #e5e7eb;
   color: black;
 }
 
 .closebtn {
   background: none;
-  align-items: center;
+  margin-right: 1.5rem;
   color: black;
-  padding-left: 1.5rem;
-  display: flex;
-  align-items: center;
 }
 .departmentList{
     list-style: none;
