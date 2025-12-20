@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "../styles/NavBar.css";
 
 
-function NavBar({ darkMode, toggleDarkMode, toggleSidebar ,isSidebarOpen}) {
+function NavBar({ darkMode, toggleDarkMode, toggleSidebar ,isSidebarOpen,setisSidebarOpen}) {
     const [searching, setsearching] = useState(false);
 
     const handleSearchClick = () => {
@@ -30,7 +30,7 @@ function NavBar({ darkMode, toggleDarkMode, toggleSidebar ,isSidebarOpen}) {
                             </span>
                         </div>
                         <div className="rightNav">
-                            <Search onClick={handleSearchClick} className="searchIcon" />
+                            <Search onClick={()=>{handleSearchClick();toggleSidebar();}}  className="searchIcon" />
                             {darkMode ? <Sun onClick={toggleDarkMode} className="darkModeIcon" /> : <Moon onClick={toggleDarkMode} className="darkModeIcon" />
                             }
                         </div>
