@@ -19,7 +19,7 @@ useEffect(()=>{
   fetchdept();
 },[])
   return (
-    <div className={`sidebar ${isSidebarOpen ? 'open' : 'close'}`}>
+    <div className={`sidebarr ${isSidebarOpen ? 'open' : 'close'}`}>
       <div className="sidebarhead">
         <h2 className="heading">Departments</h2>
         <X className="closebtn" onClick ={toggleSidebar}/>
