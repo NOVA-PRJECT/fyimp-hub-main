@@ -38,7 +38,13 @@
   color: black;
 }
 .departmentList{
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  margin: 0rem;
+  padding: 1rem;
+  line-height: 3.5rem;
+}
+.departmentItem{
+  margin: 0rem;
+  padding: 0rem;
+  color: black;
 }

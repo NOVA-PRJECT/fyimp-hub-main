@@ -4,9 +4,20 @@ import "../styles/SideBar.css"
 import {X} from "lucide-react"
 
 
-function SideBar({ isSidebarOpen,toggleSidebar }) {
+function SideBar({ isSidebarOpen,toggleSidebar,departments,setdepartments}) {
+ async function fetchdept() {
+   const {data,error} = await supabase
+.from("departments")
+.select("*");
+ if (error){
+   console.log("error : ",error);
+ }
+ setdepartments(data || []);
+}
 
-
+useEffect(()=>{
+  fetchdept();
+},[])
   return (
     <div className={`sidebar ${isSidebarOpen ? 'open' : 'close'}`}>
       <div className="sidebarhead">
@@ -14,11 +25,12 @@ function SideBar({ isSidebarOpen,toggleSidebar }) {
         <X className="closebtn" onClick ={toggleSidebar}/>
       </div>
       <ul className="departmentList">
-        <li className="departmentItem">Computer Science</li>
-        <li className="departmentItem">Electrical Engineering</li>
-        <li className="departmentItem">Mechanical Engineering</li>
-        <li className="departmentItem">Civil Engineering</li>
-      </ul>
+  {departments.map((dept) => (
+    <li onClick={toggleSidebar} className="departmentItem" key={dept.id}>
+      {dept.name}
+    </li>
+  ))}
+</ul>
     </div>
   );
 }

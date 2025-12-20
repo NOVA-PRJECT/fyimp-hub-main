@@ -7,6 +7,7 @@ import SideBar from './components/SideBar';
 function App() {
   const [darkMode ,setdarkMode] = useState(false);
       const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+      const [departments,setdepartments] =useState([])
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -18,8 +19,9 @@ function App() {
   
   return (
     <div>
-      <NavBar  darkMode={darkMode} toggleDarkMode={toggleDarkMode} toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}/>
-      <SideBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}/>
+      <NavBar  darkMode={darkMode} toggleDarkMode={toggleDarkMode} toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}
+      setisSidebarOpen={setIsSidebarOpen}/>
+      <SideBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} departments={departments} setdepartments={setdepartments}/>
       <h1>THE WEBSITE IS UNDER CONSTRUCTION</h1>
     </div>
   );
