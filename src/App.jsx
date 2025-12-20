@@ -8,6 +8,7 @@ function App() {
   const [darkMode ,setdarkMode] = useState(false);
       const [isSidebarOpen, setIsSidebarOpen] = useState(false);
       const [departments,setdepartments] =useState([])
+      const[selectedDept, setselectedDept] = useState("none");
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -21,8 +22,10 @@ function App() {
     <div>
       <NavBar  darkMode={darkMode} toggleDarkMode={toggleDarkMode} toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}
       setisSidebarOpen={setIsSidebarOpen}/>
-      <SideBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} departments={departments} setdepartments={setdepartments}/>
+      <SideBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} departments={departments} setdepartments={setdepartments}
+      setselectedDept={setselectedDept}/>
       <h1>THE WEBSITE IS UNDER CONSTRUCTION</h1>
+      <h4>Selected department : {selectedDept}</h4>
     </div>
   );
 }
