@@ -12,6 +12,9 @@ function HomeView (){
      <p class="texthamhome">
   Click <span class="ham">&#9776;</span> on the top left to select your department
     </p>
+    <div className="statcard">
+    
+    </div>
     </div>
     )
 }
