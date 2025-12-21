@@ -13,7 +13,18 @@ function HomeView (){
   Click <span class="ham">&#9776;</span> on the top left to select your department
     </p>
     <div className="statcard">
-    
+       <div className="perstat">
+         <h2>180+</h2>
+         <p>visitors</p>
+       </div>
+       <div className="perstat">
+         <h2>1328+</h2>
+         <p>downloads</p>
+       </div>
+        <div className="perstat">
+         <h2>2785+</h2>
+         <p>resources</p>
+       </div>
     </div>
     </div>
     )
