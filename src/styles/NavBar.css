@@ -5,8 +5,7 @@
   right: 0;
   z-index: 40;
   background-color: white; 
-  backdrop-filter: blur(16px);                
-  -webkit-backdrop-filter: blur(16px);        
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);      
   border-bottom: 1px solid #e5e7eb;      
 }
 .searchInput , .navbar {

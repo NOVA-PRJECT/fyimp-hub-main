@@ -4,6 +4,7 @@ import React from 'react';
 import { useState } from 'react';
 import SideBar from './components/SideBar';
 import BottomNavBar from './components/BottomNavBar'
+import HomeView from './components/HomeView'
 function App() {
   const [darkMode ,setdarkMode] = useState(false);
       const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -26,9 +27,7 @@ function App() {
       setisSidebarOpen={setIsSidebarOpen}/>
       <SideBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} departments={departments} setdepartments={setdepartments}
       setselectedDept={setselectedDept}/>
-      <h1>THE WEBSITE IS UNDER CONSTRUCTION</h1>
-      <h4>Selected department : {selectedDept}</h4>
-       <h4>Selected Semester : {selectedSem}</h4>
+       <HomeView/>
       <BottomNavBar setselectedSem={setselectedSem}/>
     </div>
   );
