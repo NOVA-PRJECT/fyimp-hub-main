@@ -6,6 +6,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 40;
   height: 4rem;
   border-top: 1px solid #e5e7eb; 
   box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
