@@ -1,0 +1,12 @@
+.paperview{
+  position: fixed;
+  color: black;
+ background-color: white;
+ width: 100vw;
+ min-height: 100vh;
+ top: 4rem;
+}
+.paperview h4 {
+  margin: 1rem;
+  border-bottom: 1px solid grey;
+}

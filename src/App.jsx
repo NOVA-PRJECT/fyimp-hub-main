@@ -5,12 +5,13 @@ import { useState } from 'react';
 import SideBar from './components/SideBar';
 import BottomNavBar from './components/BottomNavBar'
 import HomeView from './components/HomeView'
+import PaperView from './components/PaperView'
 function App() {
   const [darkMode ,setdarkMode] = useState(false);
       const [isSidebarOpen, setIsSidebarOpen] = useState(false);
       const [departments,setdepartments] =useState([])
-      const[selectedDept, setselectedDept] = useState("none");
-      const [selectedSem,setselectedSem] =useState(0);
+      const[selectedDept, setselectedDept] = useState(null);
+      const [selectedSem,setselectedSem] =useState(1);
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -24,10 +25,15 @@ function App() {
   return (
     <div>
       <NavBar  darkMode={darkMode} toggleDarkMode={toggleDarkMode} toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}
-      setisSidebarOpen={setIsSidebarOpen}/>
+      setisSidebarOpen={setIsSidebarOpen}
+      setselectedDept={setselectedDept}/>
       <SideBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} departments={departments} setdepartments={setdepartments}
       setselectedDept={setselectedDept}/>
-       <HomeView/>
+          {selectedDept === null ? (
+        <HomeView />
+      ) : (
+        <PaperView selectedDept={selectedDept} selectedSem={selectedSem }/>
+        )}
       <BottomNavBar setselectedSem={setselectedSem}/>
     </div>
   );

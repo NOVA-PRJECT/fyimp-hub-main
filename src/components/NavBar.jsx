@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "../styles/NavBar.css";
 
 
-function NavBar({ darkMode, toggleDarkMode, toggleSidebar ,isSidebarOpen,setisSidebarOpen}) {
+function NavBar({ darkMode, toggleDarkMode, toggleSidebar ,isSidebarOpen,setisSidebarOpen,setselectedDept}) {
     const [searching, setsearching] = useState(false);
 
     const handleSearchClick = () => {
@@ -25,7 +25,7 @@ function NavBar({ darkMode, toggleDarkMode, toggleSidebar ,isSidebarOpen,setisSi
                             <button onClick={toggleSidebar} className="menuBtn">
                                 <Menu onClick={toggleSidebar} className="hamburgerIcon" />
                             </button>
-                            <span className="logoText">
+                            <span onClick={()=>{setselectedDept(null)}} className="logoText">
                                 FYIMP H<Brain className="logoBrain" />B
                             </span>
                         </div>
