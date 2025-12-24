@@ -30,7 +30,8 @@ function App() {
         setisSidebarOpen={setIsSidebarOpen}
         setselectedDept={setselectedDept} />
       <SideBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} departments={departments} setdepartments={setdepartments}
-        setselectedDept={setselectedDept} setdeptid={setdeptid} />
+        setselectedDept={setselectedDept} setdeptid={setdeptid} 
+        selectedDept={selectedDept}/>
       {selectedDept === null ? (
         <HomeView />
       ) : (

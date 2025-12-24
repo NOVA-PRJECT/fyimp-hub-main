@@ -9,6 +9,7 @@ function HomeView (){
      <div className="quotediv">
        <p className="quotetext">Knowledge grows strongest when it is shared, structured, and preserved.</p>
      </div>
+     <div className="belowquote">
      <p class="texthamhome">
   Click <span class="ham">&#9776;</span> on the top left to select your department
     </p>
@@ -25,6 +26,7 @@ function HomeView (){
          <h2>2785+</h2>
          <p>resources</p>
        </div>
+    </div>
     </div>
     </div>
     )

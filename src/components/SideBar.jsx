@@ -4,7 +4,7 @@ import "../styles/SideBar.css"
 import {X} from "lucide-react"
 
 
-function SideBar({ isSidebarOpen,toggleSidebar,departments,setdepartments,setselectedDept,setdeptid} ) {
+function SideBar({ isSidebarOpen,toggleSidebar,departments,setdepartments,setselectedDept,setdeptid,selectedDept} ) {
  async function fetchdept() {
    const {data,error} = await supabase
 .from("departments")
@@ -30,7 +30,9 @@ useEffect(()=>{
       </div>
       <ul className="departmentList">
   {departments.map((dept) => (
-    <li onClick={()=>{toggleSidebar();setselectedDept(dept.name); setdeptid(dept.id)}} className="departmentItem" key={dept.id}>
+    <li onClick={()=>{toggleSidebar();setselectedDept(dept.name); setdeptid(dept.id)}} className={`departmentItem ${
+    selectedDept === dept.name ? "activeDept" : ""
+  }`} key={dept.id}>
       {dept.name}
     </li>
   ))}
