@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import "../styles/PaperView.css";
 import { supabase } from "../supabaseClient";
+import { StickyNote } from 'lucide-react';
+
 
 function PaperView({
   selectedDept,
@@ -14,7 +16,7 @@ function PaperView({
     if (!deptid || !selectedSem) return;
 
     const { data, error } = await supabase
-      .from("papers_ordered") // ✅ use ordered VIEW
+      .from("papers_ordered") 
       .select("*")
       .eq("department_id", deptid)
       .eq("semester", selectedSem);
@@ -56,10 +58,27 @@ function PaperView({
             {paper.type}
           </li>
         )}
+<li className="paperItem">
+  {/* LEFT */}
+  <div className="paperIcon">
+    <StickyNote size={28} />
+  </div>
 
-        <li className="paperItem">
-          {paper.name}
-        </li>
+  {/* RIGHT */}
+  <div className="paperDetails">
+    {/* TOP */}
+    <div className="paperName">
+      <span className="paperNameText">
+    {paper.name.toUpperCase()}
+  </span>
+    </div>
+
+    {/* BOTTOM */}
+    <div className="paperMeta">
+      {selectedDept} • {paper.type}
+    </div>
+  </div>
+</li>
       </React.Fragment>
     );
   })}

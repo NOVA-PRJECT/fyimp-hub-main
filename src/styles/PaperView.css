@@ -32,7 +32,7 @@
   content: "";
   position: absolute;
   bottom: -5px;
-  left: 0;
+  left: 0.1rem;
   width: 50%;
   height: 3px;
   border-radius: 999px;
@@ -42,17 +42,68 @@
 .paperList {
   list-style: none;
   padding: 0;
-  margin: 0;
-
+  margin: 0rem 0.7rem 0rem;
   overflow-y: auto;
   flex: 1;
 }
-
+.paperTypeHeading{
+  color: red;
+  display: inline-block;
+  position: relative;
+  font-weight:bold ;
+  margin: 0.1rem 1rem 0.3rem;
+}
 .paperItem {
-  padding: 10px 14px;
-  margin-bottom: 8px;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  cursor: pointer;
+  display: flex;
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  border: 1px solid black;
+}
+
+/* LEFT */
+.paperIcon {
+  width: 56px;
+  height: 56px;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* RIGHT */
+.paperDetails {
+  margin-left: 12px;
+  flex: 1;
+  display: flex;
+  color: black;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0; 
+}
+
+/* TOP – overflow only here */
+.paperName {
+  max-width: 100%;
+  position: relative;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.paperNameText{
+  display: inline-block;
+  padding-right: 40px;
+  will-change: transform;
+}
+/* BOTTOM – single line, same styling */
+.paperMeta {
+  font-size: 10px;
+  color: black;
+  white-space: nowrap;
 }
