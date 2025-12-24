@@ -57,9 +57,12 @@
   display: flex;
   background: white;
   padding: 12px;
+  padding-left: 0px;
   border-radius: 12px;
   margin-bottom: 15px;
   border: 1px solid black;
+  height: 80px;             /* constant height */
+  box-sizing: border-box;    /* include padding in height */
 }
 
 /* LEFT */
@@ -70,40 +73,38 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
   flex-shrink: 0;
 }
 
 /* RIGHT */
 .paperDetails {
-  margin-left: 12px;
+  margin-left: 0px;
   flex: 1;
   display: flex;
-  color: black;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center;  /* vertical center */
+  align-items: start;      /* horizontal center */
+  color: black;
   min-width: 0; 
 }
 
-/* TOP – overflow only here */
+/* TOP */
 .paperName {
   max-width: 100%;
   position: relative;
   font-size: 16px;
-  font-weight: 600;
-  white-space: nowrap;
-  text-overflow: ellipsis
-  overflow-x: auto;
-  overflow-y: hidden;
+  font-weight: 1000;
+  white-space: normal;
+  text-align: left;   
+  overflow-wrap: break-word; /* wrap long words */
+  margin-bottom: 4px;        /* space between name and meta */
 }
-.paperNameText{
-  display: inline-block;
-  padding-right: 40px;
-  will-change: transform;
-}
-/* BOTTOM – single line, same styling */
+
+/* BOTTOM */
 .paperMeta {
   font-size: 10px;
-  color: black;
+  font-weight: bold;
+  color: red;
   white-space: nowrap;
+  text-align: left; 
 }
