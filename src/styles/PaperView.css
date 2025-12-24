@@ -42,7 +42,7 @@
 .paperList {
   list-style: none;
   padding: 0;
-  margin: 0rem 0.7rem 0rem;
+  margin: 0rem 1rem 0rem;
   overflow-y: auto;
   flex: 1;
 }
@@ -55,14 +55,13 @@
 }
 .paperItem {
   display: flex;
-  background: white;
+  background: #80808018;
   padding: 12px;
   padding-left: 0px;
-  border-radius: 12px;
+  border-radius: 1px;
   margin-bottom: 15px;
-  border: 1px solid black;
-  height: 80px;             /* constant height */
-  box-sizing: border-box;    /* include padding in height */
+  height: auto;             /* constant height */
+  box-sizing: content-box;    /* include padding in height */
 }
 
 /* LEFT */
@@ -86,6 +85,7 @@
   align-items: start;      /* horizontal center */
   color: black;
   min-width: 0; 
+  
 }
 
 /* TOP */
@@ -95,9 +95,10 @@
   font-size: 16px;
   font-weight: 1000;
   white-space: normal;
-  text-align: left;   
-  overflow-wrap: break-word; /* wrap long words */
-  margin-bottom: 4px;        /* space between name and meta */
+  line-height: 1.2rem;
+  text-align: left; 
+  overflow-wrap: break-word; 
+  margin-bottom: 4px;  
 }
 
 /* BOTTOM */
