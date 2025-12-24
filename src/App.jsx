@@ -13,6 +13,7 @@ function App() {
   const [selectedDept, setselectedDept] = useState(null);
   const [selectedSem, setselectedSem] = useState(1);
   const [papers,setpapers] = useState([]);
+  const [deptid,setdeptid] = useState(0)
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -29,11 +30,11 @@ function App() {
         setisSidebarOpen={setIsSidebarOpen}
         setselectedDept={setselectedDept} />
       <SideBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} departments={departments} setdepartments={setdepartments}
-        setselectedDept={setselectedDept} />
+        setselectedDept={setselectedDept} setdeptid={setdeptid} />
       {selectedDept === null ? (
         <HomeView />
       ) : (
-        <PaperView selectedDept={selectedDept} selectedSem={selectedSem} setpapers={setpapers} papers={papers}/>
+        <PaperView selectedDept={selectedDept} selectedSem={selectedSem} setpapers={setpapers} papers={papers} deptid={deptid}/>
       )}
       <BottomNavBar setselectedSem={setselectedSem} />
     </div>

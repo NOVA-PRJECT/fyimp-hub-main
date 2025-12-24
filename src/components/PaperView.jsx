@@ -1,47 +1,71 @@
-import React,{useState,useEffect} from 'react'
-import "../styles/PaperView.css"
+import React, { useEffect } from "react";
+import "../styles/PaperView.css";
 import { supabase } from "../supabaseClient";
 
-function PaperView({selectedDept,selectedSem,setpapers,papers}){
+function PaperView({
+  selectedDept,
+  selectedSem,
+  deptid,
+  papers,
+  setpapers,
+}) {
 
-  const paperOrder=["DSC","DSE","MDC","SEC","VAC"];
-  
-async function fetchpapers() {
-   const {data,error} = await supabase
-.from("papers")
-.select("*")
-.eq("department_id",selectedDept)
-.eq("semester",selectedSem)
-.eq("is_active",true);
- if (error){
-   console.log("error : ",error);
- }
- setpapers(data || []);
-}
+  async function fetchpapers() {
+    if (!deptid || !selectedSem) return;
 
-useEffect(()=>{
-  fetchpapers();
-},[selectedDept,selectedSem])
+    const { data, error } = await supabase
+      .from("papers_ordered") // ✅ use ordered VIEW
+      .select("*")
+      .eq("department_id", deptid)
+      .eq("semester", selectedSem);
 
+    if (error) {
+      console.error("Error fetching papers:", error);
+    } else {
+      setpapers(data || []);
+    }
+  }
 
-const orderedPaper=[...papers].sort((a,b)=>{return paperOrder.indexOf(a.type)-paperOrder.indexOf(b.type);});
+  useEffect(() => {
+    fetchpapers();
+  }, [deptid, selectedSem]); 
 
-  return(
+  const deptName = selectedDept
+
+  return (
     <div className="paperview">
-      <h4>{selectedDept.charAt(0).toUpperCase() +
-    selectedDept.slice(1).toLowerCase()}&nbsp; &nbsp;{selectedSem} Sem</h4>
-      <ul className="paperList">
-  {orderedPaper.map((papers,index) => (
-    <li  className="paperItem" key={papers.id}>
-      {papers.name} ----{index+1}  -----{papers.type}
-    </li>
-  ))}
+      <div className="pprhead">
+      <h4>
+        {deptName && (
+          <>
+            {deptName} &nbsp;&nbsp; {selectedSem} SEM
+          </>
+        )}
+      </h4>
+      </div>
+
+<ul className="paperList">
+  {papers.map((paper, index) => {
+    const prevType = index > 0 ? papers[index - 1].type : null;
+    const showHeading = paper.type !== prevType;
+
+    return (
+      <React.Fragment key={paper.id}>
+        {showHeading && (
+          <li className="paperTypeHeading">
+            {paper.type}
+          </li>
+        )}
+
+        <li className="paperItem">
+          {paper.name}
+        </li>
+      </React.Fragment>
+    );
+  })}
 </ul>
     </div>
-    
-    
-    )
+  );
 }
-
 
 export default PaperView;
