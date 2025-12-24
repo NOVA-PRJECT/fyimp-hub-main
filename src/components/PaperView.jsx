@@ -57,7 +57,7 @@ function PaperView({
       <h4>
         {deptName && (
           <>
-            {deptName} >> {selectedSem} SEM
+            {deptName} -- {selectedSem} SEM
           </>
         )}
       </h4>

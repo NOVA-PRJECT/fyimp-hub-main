@@ -27,14 +27,14 @@
 .paperview {
   position: fixed;
   top: 4rem;
-   /* 👈 leaves space for bottom bar */
+  bottom: 0rem;
   left: 0;
   width: 100vw;
-  height: 150vh;
+  overflow-y: scroll;
   background-color: white;
   color: black;
   padding: px;
-
+  margin-bottom: 4rem;
   z-index: 1;
   display: flex;
   flex-direction: column;
