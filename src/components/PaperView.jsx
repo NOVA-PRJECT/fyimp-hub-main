@@ -92,8 +92,9 @@ function PaperView({
           </React.Fragment>
         );
       })}
+           <p className="end">---&nbsp;End of List&nbsp;---</p>
     </ul>
-     
+
   </div>
 )}
     </div>
