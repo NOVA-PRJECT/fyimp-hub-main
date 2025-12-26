@@ -1,4 +1,12 @@
-const SEMESTERS = [
+import {
+  NotebookText,
+  FileQuestionMark,
+  BookOpenText,
+  ListCheck,
+} from "lucide-react";
+
+
+export const SEMESTERS = [
   { id: 1, label: "Sem 1" },
   { id: 2, label: "Sem 2" },
   { id: 3, label: "Sem 3" },
@@ -11,5 +19,11 @@ const SEMESTERS = [
   { id: 10, label: "Sem 10" }
 ];
 
+export const BOTTOM_TABS = [
+  { id: "notes", label: "Notes", icon: NotebookText },
+  { id: "pyqs", label: "PYQs", icon: FileQuestionMark },
+  { id: "syllabus", label: "Syllabus", icon: BookOpenText },
+  { id: "reference", label: "Reference", icon: ListCheck },
+];
 
-export default SEMESTERS;
+

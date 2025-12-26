@@ -1,0 +1,57 @@
+import { useEffect, useState } from "react";
+import { supabase } from "../supabaseClient";
+
+function SyllabusView({ paperId, paperName }) {
+  const [pdfUrl, setPdfUrl] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!paperId) return;
+
+    const fetchSyllabus = async () => {
+      setLoading(true);
+
+      const { data, error } = await supabase
+        .from("paper_syllabus")
+        .select("pdf_url")
+        .eq("paper_id", paperId)
+        .eq("is_active", true)
+        .single();
+
+      if (!error && data) {
+        setPdfUrl(data.pdf_url);
+      }
+
+      setLoading(false);
+    };
+
+    fetchSyllabus();
+  }, [paperId]);
+
+  const downloadPdf = async () => {
+    const res = await fetch(pdfUrl);
+    const blob = await res.blob();
+
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${paperName}_Syllabus.pdf`;
+    a.click();
+  };
+
+  if (loading) return <p>Loading syllabus...</p>;
+  if (!pdfUrl) return <p>No syllabus available</p>;
+
+  return (
+    <div className="syllabusCard">
+      <button onClick={() => window.open(pdfUrl, "_blank")}>
+        View Syllabus
+      </button>
+
+      <button onClick={downloadPdf}>
+        Download Syllabus
+      </button>
+    </div>
+  );
+}
+
+export default SyllabusView;

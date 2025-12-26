@@ -1,0 +1,77 @@
+/* BOTTOM BAR CONTAINER */
+.resourcebottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  color: black;
+  display: flex;
+  justify-content: space-around;
+
+  background: #ffffff;
+  box-shadow:
+    0 -1px 0 rgba(0, 0, 0, 0.08),
+    0 -6px 16px rgba(0, 0, 0, 0.06);
+
+  z-index: 40;
+}
+
+/* EACH TOUCH ZONE */
+.part {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;      /* horizontal center */
+  justify-content: center;  /* vertical center */
+
+  gap: 2px;
+  text-align: center;
+
+  cursor: pointer;
+  /* Added 'color' to the transition so the active state fades in smoothly */
+  transition: background 0.15s ease, transform 0.1s ease, color 0.2s ease;
+}
+
+/* PRESS FEEDBACK (MOBILE) */
+.part:active {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* ICON STYLE */
+.part svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.8;
+  transition: stroke 0.2s ease;
+}
+
+/* LABEL STYLE */
+.part p {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1;
+  color: #333;
+  transition: color 0.2s ease;
+}
+
+/* -----------------------------------------------------------
+   ACTIVE STATE 
+   (Triggered when the 'active' class is added via React)
+   ----------------------------------------------------------- */
+
+.part.active {
+  background-color: #8080803d;
+  color: red; 
+}
+
+.part.active svg {
+  stroke: red; /* Colors the icon */
+}
+
+.part.active p {
+  color: red; /* Colors the text */
+  font-weight: 600; /* Makes text slightly bolder when selected */
+}

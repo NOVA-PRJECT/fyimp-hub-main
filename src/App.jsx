@@ -6,6 +6,11 @@ import SideBar from './components/SideBar';
 import BottomNavBar from './components/BottomNavBar'
 import HomeView from './components/HomeView'
 import PaperView from './components/PaperView'
+import BottomResourceNav from './components/BottomResourceNav'
+import ResourceView from './components/ResourceView'
+
+
+
 function App() {
   const [darkMode, setdarkMode] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -14,6 +19,10 @@ function App() {
   const [selectedSem, setselectedSem] = useState(1);
   const [papers,setpapers] = useState([]);
   const [deptid,setdeptid] = useState(0)
+  const [selectedPaper,setselectedPaper] = useState("");
+  const [paperid,setpaperid]=useState(0);
+  const [activeTab, setactiveTab] = useState("syllabus");
+
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -31,13 +40,20 @@ function App() {
         setselectedDept={setselectedDept} />
       <SideBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} departments={departments} setdepartments={setdepartments}
         setselectedDept={setselectedDept} setdeptid={setdeptid} 
-        selectedDept={selectedDept}/>
+        selectedDept={selectedDept}
+        setpaperid={setpaperid}/>
       {selectedDept === null ? (
         <HomeView />
       ) : (
-        <PaperView selectedDept={selectedDept} selectedSem={selectedSem} setpapers={setpapers} papers={papers} deptid={deptid}/>
+        <PaperView selectedDept={selectedDept} selectedSem={selectedSem} setpapers={setpapers} papers={papers} deptid={deptid} setselectedPaper={setselectedPaper} setpaperid={setpaperid} />
       )}
       <BottomNavBar setselectedSem={setselectedSem} />
+      {paperid && (
+      <>
+      <BottomResourceNav activeTab={activeTab} setactiveTab={setactiveTab} />
+      <ResourceView selectedDept={selectedDept} selectedSem={selectedSem} selectedPaper={selectedPaper} activeTab={activeTab} paperid={paperid}/>
+      </>
+      )}
     </div>
   );
 }

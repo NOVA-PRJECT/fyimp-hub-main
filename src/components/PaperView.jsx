@@ -12,6 +12,7 @@ function PaperView({
   deptid,
   papers,
   setpapers,
+  setselectedPaper,setpaperid, 
 }) {
   
   const [loading, setloading]=useState(false);
@@ -74,7 +75,7 @@ function PaperView({
               <li className="paperTypeHeading">{paper.type}</li>
             )}
 
-            <li className="paperItem">
+            <li onClick={()=>{setselectedPaper(paper.name);setpaperid(paper.id);}} className="paperItem">
               <div className="paperIcon">
                 <StickyNote size={28} />
               </div>
@@ -92,7 +93,7 @@ function PaperView({
           </React.Fragment>
         );
       })}
-           <p className="end">---&nbsp;End of List&nbsp;---</p>
+           <p className="end">---------------------------</p>
     </ul>
 
   </div>

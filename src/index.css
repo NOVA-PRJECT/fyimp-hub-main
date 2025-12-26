@@ -1,3 +1,34 @@
+/* GLOBAL UI FIXES */
+html, body {
+  /* Prevents text selection and the Google "Tap to Search" feature */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+/* Create a class to re-enable it when we want */
+.allow-select {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+}
+
+
+  /* Removes the blue/grey tap highlight on mobile */
+  -webkit-tap-highlight-color: transparent;
+
+  /* Prevents the system context menu on long-press (iOS/Android) */
+  -webkit-touch-callout: none;
+}
+
+/* IMPORTANT: Ensure users can still type in inputs and textareas */
+input, textarea, [contenteditable="true"] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

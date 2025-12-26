@@ -10,7 +10,7 @@ function SideBar({
   setdepartments,
   setselectedDept,
   setdeptid,
-  selectedDept,
+  selectedDept,setpaperid
 }) {
 
   const [loading, setLoading] = useState(false); // ✅ added
@@ -61,6 +61,7 @@ function SideBar({
                     toggleSidebar();
                     setselectedDept(dept.name);
                     setdeptid(dept.id);
+                    setpaperid(null);
                   }}
                   className={`departmentItem ${
                     selectedDept === dept.name ? "activeDept" : ""
