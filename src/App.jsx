@@ -21,7 +21,7 @@ function App() {
   const [deptid,setdeptid] = useState(0)
   const [selectedPaper,setselectedPaper] = useState("");
   const [paperid,setpaperid]=useState(0);
-  const [activeTab, setactiveTab] = useState("syllabus");
+  const [activeTab, setactiveTab] = useState("notes");
 
 
   const toggleSidebar = () => {

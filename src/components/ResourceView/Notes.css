@@ -1,0 +1,17 @@
+.grid {
+  height: auto;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;   /* two equal columns */
+  grid-template-rows: 1fr 1fr;      /* two equal rows   */
+  gap: 10px;     
+  row-gap: 5rem ;
+}
+
+.grid  div {
+  height: 10rem;
+  background: grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
