@@ -1,9 +1,16 @@
+
+
+
 import React from 'react';
 import { Worker, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+
+
+// Local worker URL for @react-pdf-viewer/core@^3.12.0 - Termux compatible
+const PDF_WORKER_URL = "/pdf.worker.min.js";
 
 const PdfViewer = ({ fileUrl, onClose }) => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
@@ -50,7 +57,7 @@ const PdfViewer = ({ fileUrl, onClose }) => {
 
             {/* Rendering Area */}
             <div style={{ flex: 1, overflow: 'hidden' }}>
-                <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
+                <Worker workerUrl={PDF_WORKER_URL}>
                     <Viewer 
                         fileUrl={fileUrl} 
                         plugins={[defaultLayoutPluginInstance]}
