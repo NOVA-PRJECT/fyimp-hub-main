@@ -252,6 +252,7 @@ box-shadow: inset 0 -4px 20px rgba(0, 0, 0, 0.12);
 .inputBar {
   width: 100%;
   margin: 0%;
+  border: none;
   padding: 0rem 0rem 0rem 0rem;
   background-color: #e5e7eb;
   color: #000000;
