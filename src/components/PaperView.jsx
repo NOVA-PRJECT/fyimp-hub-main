@@ -1,5 +1,4 @@
 import React, { useEffect,useState} from "react";
-import "../styles/PaperView.css";
 import { supabase } from "../supabaseClient";
 import { StickyNote } from "lucide-react";
 

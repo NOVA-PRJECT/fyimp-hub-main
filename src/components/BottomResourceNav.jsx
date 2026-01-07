@@ -3,7 +3,6 @@ import React,{useState} from 'react';
 import { FileQuestionMark } from 'lucide-react';
 import { ListCheck } from 'lucide-react';
 import { BookOpenText } from 'lucide-react';
-import '../styles/BottomResourceNav.css'
 import {BOTTOM_TABS} from '../constants.js'
 
 

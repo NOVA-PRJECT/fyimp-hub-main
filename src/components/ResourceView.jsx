@@ -1,11 +1,8 @@
 import React from 'react'; // Removed useState
-import '../styles/ResourceView.css';
 import Notes from './ResourceView/Notes';
 import Pyqs from './ResourceView/Pyqs';
 import Syllabus from './ResourceView/Syllabus';
 import Reference from './ResourceView/Reference';
-import Marquee from 'react-fast-marquee'
-
 
 
 function ResourceView({ selectedDept, selectedSem, selectedPaper, activeTab, paperid }) {

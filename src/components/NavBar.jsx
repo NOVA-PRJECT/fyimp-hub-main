@@ -1,6 +1,5 @@
 import { Menu, Brain, Search, Moon, Sun } from "lucide-react"
 import React, { useState } from "react";
-import "../styles/NavBar.css";
 
 
 function NavBar({ darkMode, toggleDarkMode, toggleSidebar ,isSidebarOpen,setisSidebarOpen,setselectedDept}) {

@@ -1,5 +1,4 @@
 import React from 'react'
-import "../styles/BottomNavBar.css";
 import {SEMESTERS} from '../constants.js'
 import { CircleQuestionMark } from 'lucide-react';
 

@@ -5,7 +5,7 @@ import React from 'react'
 })   {
   
   return(
-<div class="grid">
+<div className="grid">
   <div>1</div>
   <div>2</div>
   <div>3</div>

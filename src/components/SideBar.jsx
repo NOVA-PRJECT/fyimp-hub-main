@@ -1,6 +1,5 @@
 import { supabase } from "../supabaseClient";
 import React, { useState, useEffect } from "react";
-import "../styles/SideBar.css";
 import { X } from "lucide-react";
 
 function SideBar({
