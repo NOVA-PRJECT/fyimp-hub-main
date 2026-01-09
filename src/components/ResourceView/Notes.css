@@ -15,50 +15,80 @@
   margin-bottom: 10px;
   color: red;
 }
+.notes-row-wrapper {
+  position: relative;
+}
 
-/* Horizontal scroll row */
+/* right colored fade */
+.notes-row-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 5rem;
+  height: 100%;
+
+  pointer-events: none;
+
+  background: linear-gradient(
+    to right,
+    rgba(255, 0, 0, 0),
+    white
+  );
+}
+
+/* Horizontal scroll row — SNAP GOES HERE */
 .notes-row {
   display: flex;
   gap: 14px;
   overflow-x: auto;
+
+  /* ✅ correct snap for horizontal scroll */
+  scroll-snap-type: x mandatory;
+
   padding-bottom: 6px;
 
-  /* smooth scroll */
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
 
-/* Hide scrollbar (optional, clean look) */
+
+/* Hide scrollbar */
 .notes-row::-webkit-scrollbar {
   display: none;
 }
 
-/* Individual note card */
+/* Individual note card — SNAP TARGET */
 .note-card {
-  min-width: 210px;
+  height: 100px;
+  min-width: 100px;
   max-width: 210px;
   background: #ffffff;
   border-radius: 12px;
   padding: 14px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid grey;
+  /* ✅ snap alignment */
+  scroll-snap-align: start;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: px;
 
-  flex-shrink: 0; /* prevents shrinking in flex row */
+  flex-shrink: 0;
 }
 
 /* File icon */
 .note-icon {
-  color: #3b82f6;
+  color: red;
 }
 
 /* Priority label */
 .note-label {
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 1000;
   color: #555;
 }
 
@@ -81,7 +111,7 @@
   padding: 6px 8px;
   border-radius: 8px;
 
-  background: #f3f4f6;
+  background: red;
   border: none;
   cursor: pointer;
 
@@ -89,11 +119,12 @@
 }
 
 .note-btn:hover {
-  background: #e5e7eb;
+  background: white;
+  color: red;
 }
 
 .note-btn:active {
-  transform: scale(0.96);
+  transform: scale(0.90);
 }
 
 /* No notes text */

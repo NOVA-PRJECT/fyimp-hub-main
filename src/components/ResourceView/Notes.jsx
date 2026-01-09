@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { FileText, Eye, ExternalLink, Loader2 } from "lucide-react";
+import { FileText, NotebookText, Eye, ExternalLink, Loader2 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import PdfViewer from "./PdfViewer";
 import "./Notes.css";
@@ -12,7 +12,6 @@ function Notes({ paperid }) {
   const [activePdf, setActivePdf] = useState(null);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
 
-  // Fetch notes
   useEffect(() => {
     if (!paperid) return;
 
@@ -32,7 +31,6 @@ function Notes({ paperid }) {
         return;
       }
 
-      // Group notes by module
       const grouped = {};
       data.forEach(note => {
         if (!grouped[note.module_number]) {
@@ -48,7 +46,6 @@ function Notes({ paperid }) {
     fetchNotes();
   }, [paperid]);
 
-  // Mobile back button handling
   useEffect(() => {
     if (isViewerOpen) {
       window.history.pushState({ view: "pdf" }, "");
@@ -96,61 +93,69 @@ function Notes({ paperid }) {
 
   return (
     <div className="notes">
-
       {[1, 2, 3, 4].map(module => (
         <div key={module} className="module-block">
           <h3 className="module-title">Module {module}</h3>
-
+          <div class="notes-row-wrapper">
           <div className="notes-row">
             {notesByModule[module]?.length ? (
-              notesByModule[module].map(note => (
-                <div key={note.id} className="note-card">
-                  <FileText className="note-icon" />
+              <>
+                {notesByModule[module].map(note => (
+                  <div key={note.id} className="note-card">
+                    <NotebookText className="note-icon" />
 
-                  <p className="note-label">
-                    Priority {note.priority}
-                  </p>
+                    <p className="note-label">
+                      Priority {note.priority}
+                    </p>
 
-                  <div className="note-actions">
-                    <button
-                      className="note-btn"
-                      onClick={() => {
-                        setActivePdf(note.pdf_url);
-                        setIsViewerOpen(true);
-                      }}
-                    >
-                      <Eye size={16} /> View
-                    </button>
+                    <div className="note-actions">
+                      <button
+                        className="note-btn"
+                        onClick={() => {
+                          setActivePdf(note.pdf_url);
+                          setIsViewerOpen(true);
+                        }}
+                      >
+                        <Eye size={16} /> View
+                      </button>
 
-                    <button
-                      className="note-btn"
-                      onClick={() =>
-                        handleDownload(
-                          note.pdf_url,
-                          `Module_${module}_Priority_${note.priority}.pdf`
-                        )
-                      }
-                    >
-                      <ExternalLink size={16} /> Download
-                    </button>
+                      <button
+                        className="note-btn"
+                        onClick={() =>
+                          handleDownload(
+                            note.pdf_url,
+                            `Module_${module}_Priority_${note.priority}.pdf`
+                          )
+                        }
+                      >
+                        <ExternalLink size={16} /> Download
+                      </button>
+                    </div>
                   </div>
+                ))}
+
+                <div className="note-card coming-soon">
+                  <FileText className="note-icon muted" />
+                  <p className="note-label">More coming soon</p>
                 </div>
-              ))
+              </>
             ) : (
-              <p className="no-notes">No notes available</p>
+              <div className="note-card coming-soon">
+                <FileText className="note-icon muted" />
+                <p className="note-label">More coming soon</p>
+              </div>
             )}
+          </div>
           </div>
         </div>
       ))}
 
-      {/* PDF Viewer Portal */}
-      {isViewerOpen && activePdf && createPortal(
-        <PdfViewer
-          fileUrl={activePdf}
-          onClose={handleCloseViewer}
-        />,
-        document.body
-      )}
+      {isViewerOpen &&
+        activePdf &&
+        createPortal(
+          <PdfViewer fileUrl={activePdf} onClose={handleCloseViewer} />,
+          document.body
+        )}
     </div>
   );
 }
