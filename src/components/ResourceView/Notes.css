@@ -1,17 +1,116 @@
-.grid {
-  height: auto;
-  padding: 1rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;   /* two equal columns */
-  grid-template-rows: 1fr 1fr;      /* two equal rows   */
-  gap: 10px;     
-  row-gap: 5rem ;
+/* Root container */
+.notes {
+  padding: 0px 16px;
 }
 
-.grid  div {
-  height: 10rem;
-  background: grey;
+/* Each module block */
+.module-block {
+  margin-bottom: 28px;
+}
+
+/* Module heading */
+.module-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: red;
+}
+
+/* Horizontal scroll row */
+.notes-row {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+
+  /* smooth scroll */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar (optional, clean look) */
+.notes-row::-webkit-scrollbar {
+  display: none;
+}
+
+/* Individual note card */
+.note-card {
+  min-width: 210px;
+  max-width: 210px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  flex-shrink: 0; /* prevents shrinking in flex row */
+}
+
+/* File icon */
+.note-icon {
+  color: #3b82f6;
+}
+
+/* Priority label */
+.note-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #555;
+}
+
+/* Button container */
+.note-actions {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Buttons */
+.note-btn {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
+
+  font-size: 0.8rem;
+  padding: 6px 8px;
+  border-radius: 8px;
+
+  background: #f3f4f6;
+  border: none;
+  cursor: pointer;
+
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.note-btn:hover {
+  background: #e5e7eb;
+}
+
+.note-btn:active {
+  transform: scale(0.96);
+}
+
+/* No notes text */
+.no-notes {
+  font-size: 0.85rem;
+  color: #888;
+  padding: 6px 4px;
+}
+
+/* Loading state */
+.notes-loading {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  color: #555;
 }
