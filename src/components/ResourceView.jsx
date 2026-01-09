@@ -9,11 +9,13 @@ function ResourceView({ selectedDept, selectedSem, selectedPaper, activeTab, pap
   
   // Group props to avoid repeating them 4 times
   const commonProps = { selectedDept, selectedSem, selectedPaper, activeTab, paperid };
-
+  
+  const p=selectedPaper.toUpperCase();
+  const t = activeTab.toUpperCase();
   return (
     <div className="resourceview">
           <div className="reshead">
-             <h4>{selectedPaper. toUpperCase()}</h4>
+             <h4>{`${p} : ${t}`}</h4>
           </div>
       {activeTab === "notes" && <Notes {...commonProps} />}
       {activeTab === "pyqs" && <Pyqs {...commonProps} />}
