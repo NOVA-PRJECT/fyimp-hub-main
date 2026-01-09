@@ -515,6 +515,8 @@ box-shadow: inset 0 -4px 20px rgba(0, 0, 0, 0.12);
   display: flex;
   justify-content: center;
   align-items:center ;
+  align-self: center;
+  text-align: center;
   padding: 0 0 0 0;
   margin-bottom: 0px;
  padding-left: 10px;
