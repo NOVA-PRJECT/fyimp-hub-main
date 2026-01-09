@@ -1,0 +1,122 @@
+/* ===== Root container ===== */
+.pyqs-view {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: ;
+}
+
+/* ===== Loading & empty states ===== */
+.pyqs-view.center,
+.pyqs-view.empty {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  color: #777;
+}
+
+/* ===== Year group ===== */
+.pyq-year-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Year heading */
+.pyq-year {
+  font-size: 15px;
+  font-weight: 600;
+  color: red;
+  margin: 6px 4px 8px;
+  letter-spacing: 0.3px;
+}
+
+/* ===== Card ===== */
+.pyq-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 12px 14px;
+
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+/* Touch interaction */
+.pyq-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== Left section ===== */
+.pyq-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Title */
+.pyq-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: black;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+/* ===== Action buttons ===== */
+.pyq-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Icon button */
+.icon-btn {
+  background: red;
+  border: none;
+  border-radius: 10px;
+  padding: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.icon-btn:hover {
+  background: #e6e8eb;
+}
+
+.icon-btn:active {
+  transform: scale(0.9);
+}
+
+/* ===== Tablet & desktop ===== */
+@media (min-width: 768px) {
+  .pyqs-view {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .pyq-title {
+    font-size: 15px;
+  }
+
+  .pyq-card {
+    padding: 14px 18px;
+  }
+}
+.pyqicon{
+  color: red;
+}
