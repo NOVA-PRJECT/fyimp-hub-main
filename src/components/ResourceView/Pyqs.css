@@ -29,11 +29,22 @@
 
 /* Year heading */
 .pyq-year {
+  display: inline-block;
   font-size: 15px;
   font-weight: 600;
   color: red;
-  margin: 6px 4px 8px;
+  margin: 0px 0px;
   letter-spacing: 0.3px;
+  position: relative;
+}
+.pyq-year:after{
+  content: "";
+  position: absolute;
+  height: 1.5px;
+  width: 300px;
+  background-color: #80808067;
+  border-radius: 10px;
+  margin:10px 5px;
 }
 
 /* ===== Card ===== */

@@ -15,7 +15,7 @@ function ResourceView({ selectedDept, selectedSem, selectedPaper, activeTab, pap
   return (
     <div className="resourceview">
           <div className="reshead">
-             <h4>{`${p} : ${t}`}</h4>
+             <h4>{p}</h4><h4 className="s">{t}</h4>
           </div>
       {activeTab === "notes" && <Notes {...commonProps} />}
       {activeTab === "pyqs" && <Pyqs {...commonProps} />}
