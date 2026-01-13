@@ -264,6 +264,19 @@ box-shadow: inset 0 -4px 20px rgba(0, 0, 0, 0.12);
   outline: none;
   height: 100%;
   padding: 0px 0px 0px 1rem;
+  animation: fadeIn 0.3s ease forwards;
+  pointer-events: auto;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .closeSearchBtn {
   position: absolute;
@@ -384,9 +397,17 @@ box-shadow: inset 0 -4px 20px rgba(0, 0, 0, 0.12);
   align-items:center ;
   padding: 0 0 0 0;
   margin-bottom: 10px;
+  gap: 5px;
 }
-
-.pprhead h4 {
+.pprhead h5{
+  margin: 0;
+  font-size: 8px;
+  background-color: #80808049;
+  color: white;
+  padding: 2px;
+  border-radius: 3px;
+}
+.pprhead h4   {
   position: relative;
   margin-bottom: 12px;
   font-size: 1.rem;
@@ -604,6 +625,7 @@ box-shadow: inset 0 -4px 20px rgba(0, 0, 0, 0.12);
   align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  
 }
 .heading {
   gap: 0rem;    
@@ -624,27 +646,26 @@ box-shadow: inset 0 -4px 20px rgba(0, 0, 0, 0.12);
 .departmentList{
   list-style: none;
   margin: 0rem;
-  padding: 1rem 0rem;
-  line-height: 3.5rem;
+  padding: 0.5rem 0rem;
+  line-height: 3rem;
+  ;
 }
 .departmentItem{
   margin: 0rem;
-  padding: 0rem;
   padding: 0rem 0rem 0rem 1rem;
   color: black;
   position: relative;
-  font-weight: 600;
+  font-weight: 700;
+  
 }
 
 
 .departmentItem.activeDept {
   background: navy;
   color: white;
-  border-radius: 12px;
-  margin: 0 px;
-  padding: 0;
-  margin: 0 3px;
-  text-align: center;
+  
+  
+  
 
 }
 

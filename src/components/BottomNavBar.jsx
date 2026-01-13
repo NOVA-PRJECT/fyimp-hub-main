@@ -3,7 +3,7 @@ import {SEMESTERS} from '../constants.js'
 import { CircleQuestionMark } from 'lucide-react';
 
 
-function BottmNavBar({setselectedSem}){
+function BottmNavBar({setselectedSem, setabout, about}){
   
   const handleSemSelect  = (e)=>{
     const semval=Number(e.target.value);
@@ -12,7 +12,7 @@ function BottmNavBar({setselectedSem}){
   
   return(
      <div className="homebottom">
-       <CircleQuestionMark className="questmark"/>
+       <CircleQuestionMark onClick={()=>{setabout(!about);}} className="questmark"/>
        <select  onClick={handleSemSelect} className="semselect">
         {SEMESTERS.map((sem) => (
   <option  key={sem.id} value={sem.id}>

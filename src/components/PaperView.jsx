@@ -53,15 +53,14 @@ function PaperView({
 ) : (
   <div className="paperview">
      
-    <div className="pprhead">
-      <h4>
-        {deptName && (
-          <>
-            {deptName} -- {selectedSem} SEM
-          </>
-        )}
-      </h4>
-    </div>
+<div className="pprhead">
+  {deptName && (
+    <>
+      <h4>{deptName}</h4>
+      <h5>SEMESTER {selectedSem}</h5>
+    </>
+  )}
+</div>
 
     <ul className="paperList">
       {papers.map((paper, index) => {
