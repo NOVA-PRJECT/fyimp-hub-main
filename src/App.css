@@ -428,8 +428,8 @@ box-shadow: inset 0 -4px 20px rgba(0, 0, 0, 0.12);
 
 .paperList {
   list-style: none;
-  padding: 0;
-  margin: 0rem 1rem 0rem;
+  padding: 0rem 0rem 10rem;
+  margin: 0rem 1rem 3rem;
   overflow-y: auto;
   flex: 1;
   border-radius: 20px;
@@ -651,8 +651,8 @@ box-shadow: inset 0 -4px 20px rgba(0, 0, 0, 0.12);
   ;
 }
 .departmentItem{
-  margin: 0rem;
-  padding: 0rem 0rem 0rem 1rem;
+  margin: 0.5rem 0.5rem;
+  padding: 0rem 1rem;
   color: black;
   position: relative;
   font-weight: 700;
@@ -663,9 +663,19 @@ box-shadow: inset 0 -4px 20px rgba(0, 0, 0, 0.12);
 .departmentItem.activeDept {
   background: navy;
   color: white;
-  
-  
-  
-
+  border-radius: 10px;
+  position: relative; /* 👈 important */
 }
 
+  .departmentItem.activeDept::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid red;
+  border-bottom: 2px solid red;
+  transform: rotate(-45deg);
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  margin-top: -4px;
+}
