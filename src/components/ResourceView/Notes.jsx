@@ -96,7 +96,7 @@ function Notes({ paperid }) {
       {[1, 2, 3, 4].map(module => (
         <div key={module} className="module-block">
           <h3 className="module-title">Module {module}</h3>
-          <div class="notes-row-wrapper">
+          <div className="notes-row-wrapper">
           <div className="notes-row">
             {notesByModule[module]?.length ? (
               <>
