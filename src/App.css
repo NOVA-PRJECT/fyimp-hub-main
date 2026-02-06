@@ -20,13 +20,14 @@
   box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
   color:white;
   background-color: navy;
+  animation: fadeIn 0.5s ease-out;
 }
 .semselect{
   margin: 1rem;
   border-radius: 10px;
   padding: 0.5rem;
   font-weight: 1000;
-  background-color: red;
+  background-color: #e11d48;
   border: none;
 }
 .semselect:focus{
@@ -105,15 +106,15 @@ border-radius: 20px;
 
 .part.active {
   background-color: #8080803d;
-  color: red; 
+  color: #e11d48; 
 }
 
 .part.active svg {
-  stroke: red; /* Colors the icon */
+  stroke: #e11d48; /* Colors the icon */
 }
 
 .part.active p {
-  color: red; /* Colors the text */
+  color: #e11d48; /* Colors the text */
   font-weight: 600; /* Makes text slightly bolder when selected */
 }
 
@@ -122,6 +123,7 @@ border-radius: 20px;
 /*===========================*/
 /* Container & Global */
 .home-container {
+  background-color: white;
   padding: 6rem 1.5rem 8rem;
   max-width: 450px;
   margin: 0 auto;
@@ -186,13 +188,13 @@ border-radius: 20px;
 
 /* Quick Links Section */
 .section-divider { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-.section-divider h2 { font-size: 12px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.2em; }
-.section-divider .line { height: 1px; background: #f1f5f9; flex: 1; margin-left: 1rem; }
+.section-divider h2 { font-size: 12px; font-weight: 700; color: black; text-transform: uppercase; letter-spacing: 0.2em; }
+.section-divider .line { height: 1px; background: black; flex: 1; margin-left: 1rem; }
 
 .links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 2.5rem; }
 .link-btn {
   display: flex; align-items: center; gap: 0.5rem; padding: 1rem;
-  background: #ffffff; border: 1px solid #f1f5f9; border-radius: 1rem;
+  background: #ffffff; border: 1px solid black; border-radius: 1rem; color:black;
   font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;
 }
 .link-btn:active { transform: scale(0.95); }
@@ -214,10 +216,7 @@ border-radius: 20px;
 }
 
 /* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+
 
 /*===========================*/
 /* 4) NavBar  */
@@ -232,7 +231,8 @@ border-radius: 20px;
   background-color: navy; 
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);      
   color: white;
-  border-bottom: 1px solid #e5e7eb;      
+  border-bottom: 1px solid #e5e7eb;    
+  animation: zain 0.5s ease-out;
 }
 .searchInput , .navbar {
   display: flex;         
@@ -316,8 +316,15 @@ border-radius: 20px;
   gap: 1px;
   font-weight: 800;
   font-size: 1.3rem;   
-  line-height: 1;        
+  line-height: 1;       
 }
+
+.logoText:active {
+  transform: scale(0.95);
+  opacity: 0.85;
+}
+
+
 .logoBrain {
   width: 1.3rem;
   height: 1.3rem;
@@ -422,7 +429,7 @@ border-radius: 20px;
   width: 50%;
   height: 3px;
   border-radius: 999px;
-  background-color: red; 
+  background-color: #e11d48; 
 }
 
 .paperList {
@@ -434,7 +441,7 @@ border-radius: 20px;
   border-radius: 20px;
 }
 .paperTypeHeading{
-  color: red;
+  color: #e11d48;
   display: inline-block;
   position: relative;
   font-weight:bold ;
@@ -670,11 +677,24 @@ border-radius: 20px;
   content: "";
   width: 6px;
   height: 6px;
-  border-right: 2px solid red;
-  border-bottom: 2px solid red;
+  border-right: 2px solid #e11d48;
+  border-bottom: 2px solid #e11d48;
   transform: rotate(-45deg);
   position: absolute;
   right: 15px;
   top: 50%;
   margin-top: -4px;
+}
+
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+@keyframes zain {
+  from { opacity: 0; transform: translateY(-1px); }
+  to { opacity: 1; transform: translateY(0); }
 }

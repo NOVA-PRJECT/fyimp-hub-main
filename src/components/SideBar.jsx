@@ -32,49 +32,61 @@ function SideBar({
   useEffect(() => {
     fetchdept();
   }, []);
+  
+  
+  
+  
+  useEffect(() => {
+  if (isSidebarOpen) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+
+  return () => {
+    document.body.style.overflow = "auto";
+  };
+}, [isSidebarOpen]);
 
   return (
-    <>
+  <>
+    {isSidebarOpen && (
+      <div className="overlay" onClick={toggleSidebar}></div>
+    )}
+
+    <div className={`sidebar ${isSidebarOpen ? "open" : "close"}`}>
+      <div className="sidebarhead">
+        <h2 className="heading">Departments</h2>
+        <X className="closebtn" onClick={toggleSidebar} />
+      </div>
+
       {loading ? (
         <div className="loadingScreen">
           <div className="loader"></div>
           <p>Loading papers...</p>
         </div>
       ) : (
-        <>
-          {isSidebarOpen && (
-            <div className="overlay" onClick={toggleSidebar}></div>
-          )}
-
-          <div className={`sidebar ${isSidebarOpen ? "open" : "close"}`}>
-            <div className="sidebarhead">
-              <h2 className="heading">Departments</h2>
-              <X className="closebtn" onClick={toggleSidebar} />
-            </div>
-
-            <ul className="departmentList">
-              {departments.map((dept) => (
-                <li
-                  key={dept.id}
-                  onClick={() => {
-                    toggleSidebar();
-                    setselectedDept(dept.name);
-                    setdeptid(dept.id);
-                    setpaperid(null);
-                  }}
-                  className={`departmentItem ${
-                    selectedDept === dept.name ? "activeDept" : ""
-                  }`}
-                >
-                  {dept.name}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </>
+        <ul className="departmentList">
+          {departments.map((dept) => (
+            <li
+              key={dept.id}
+              onClick={() => {
+                toggleSidebar();
+                setselectedDept(dept.name);
+                setdeptid(dept.id);
+                setpaperid(null);
+              }}
+              className={`departmentItem ${
+                selectedDept === dept.name ? "activeDept" : ""
+              }`}
+            >
+              {dept.name}
+            </li>
+          ))}
+        </ul>
       )}
-    </>
-  );
+    </div>
+  </>
+);
 }
-
 export default SideBar;

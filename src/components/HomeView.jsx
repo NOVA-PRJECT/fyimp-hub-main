@@ -17,7 +17,7 @@ function HomeView(){
       <section className="welcome-header">
         <div className="badge">
           <Sparkles className="icon-sparkle" />
-          <span>KANNUR UNIVERSITY • FYIMP PORTAL</span>
+          <span>KUC MANGATTUPARAMBA • FYIMP PORTAL</span>
         </div>
         <h1 className="hero-title">
           Master Your <br/><span className="highlight">FYIMP</span> Journey.
@@ -36,7 +36,7 @@ function HomeView(){
             </div>
             <div className="card-text">
               <h3>Universal PDF Hub</h3>
-              <p>View <u>Any PDF</u> online or download for offline study.</p>
+              <p>View <b>Any PDF</b> online or download for offline study.</p>
             </div>
           </div>
         </div>
@@ -76,9 +76,11 @@ function HomeView(){
           <h2>Quick Resources</h2>
           <div className="line"></div>
         </div>
-        <div className="links-grid">
-           <button className="link-btn"><BookMarked size={16} className="text-crimson"/> Exam Portal</button>
-           <button className="link-btn"><Zap size={16} className="text-amber"/> Results</button>
+        <div className="links-grid"><a href="https://www.kannuruniversity.ac.in/en/">
+           <button className="link-btn"><BookMarked size={30} className="text-crimson"/> Kannur University Official Website</button></a>
+           
+           <a href="https://kannur.kreap.co.in/">
+           <button className="link-btn"><Zap size={30} className="text-amber"/> University Students portal</button></a>
         </div>
       </section>
 

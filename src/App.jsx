@@ -23,9 +23,12 @@ function App() {
   const [paperid,setpaperid]=useState(0);
   const [activeTab, setactiveTab] = useState("notes");
   const [about, setabout] = useState(false);
+  
   const backhome =()=>{
     setselectedDept(null);
     setdeptid(0);
+    setpaperid(0);
+    setselectedPaper("");
   }
 
   const toggleSidebar = () => {
@@ -35,11 +38,14 @@ function App() {
   const toggleDarkMode = () => {
     setdarkMode(!darkMode);
   }
-
+   
+   
+   
 
   return (
     <div>
       <NavBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}
+        selectedDept={selectedDept} 
         setisSidebarOpen={setIsSidebarOpen}
         setselectedDept={setselectedDept} 
         setselectedPaper={setselectedPaper}
