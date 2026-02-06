@@ -122,6 +122,7 @@ border-radius: 20px;
 /*===========================*/
 /* Container & Global */
 .home-container {
+  background-color: white;
   padding: 6rem 1.5rem 8rem;
   max-width: 450px;
   margin: 0 auto;

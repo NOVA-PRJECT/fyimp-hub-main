@@ -1,4 +1,6 @@
 import './App.css';
+import { Routes, Route } from "react-router-dom";
+import AppLayout from "./layouts/AppLayout";
 import NavBar from './components/NavBar';
 import React from 'react';
 import { useState } from 'react';
@@ -38,31 +40,18 @@ function App() {
 
 
   return (
-    <div>
-      <NavBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}
-        setisSidebarOpen={setIsSidebarOpen}
-        setselectedDept={setselectedDept} 
-        setselectedPaper={setselectedPaper}
-        backhome={backhome}/>
-      <SideBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} departments={departments} setdepartments={setdepartments}
-        setselectedDept={setselectedDept} setdeptid={setdeptid} 
-        selectedDept={selectedDept}
-        setpaperid={setpaperid}/>
-      {selectedDept === null ? (
-        <HomeView />
-      ) : (
-        <PaperView selectedDept={selectedDept} selectedSem={selectedSem} setpapers={setpapers} papers={papers} deptid={deptid} setselectedPaper={setselectedPaper} setpaperid={setpaperid} />
-      )}
-      <BottomNavBar setselectedSem={setselectedSem} setabout={setabout} about={about}/>
-      {about && (<About about={about} setabout={setabout}/>)}
-      {paperid && (
-      <>
-      <BottomResourceNav activeTab={activeTab} setactiveTab={setactiveTab} />
-      <ResourceView selectedDept={selectedDept} selectedSem={selectedSem} selectedPaper={selectedPaper} activeTab={activeTab} paperid={paperid}/> 
-      </>
-      )}
-    </div>
+    <Routes>
+      <Route element={<AppLayout />}>
+        {/* Home */}
+        <Route path="/" element={<HomeView />} />
+
+        {/* Department + Semester */}
+        <Route path=":dept/:sem" element={<PaperView />} />
+      </Route>
+    </Routes>
+   
   );
 }
+
 
 export default App;
