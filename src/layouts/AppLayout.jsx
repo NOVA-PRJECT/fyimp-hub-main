@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useState, useMemo } from "react"; // Added useMemo
 import NavBar from "../components/NavBar";
 import SideBar from "../components/SideBar";
@@ -44,6 +44,12 @@ function AppLayout() {
     setactiveTab,
   }), [selectedDept, selectedSem, papers, deptid, selectedPaper, paperid, activeTab]);
 
+
+    const location = useLocation();
+const isPaperRoute = location.pathname.includes("/paper/");
+
+
+
   return (
     <>
       <NavBar
@@ -71,11 +77,13 @@ function AppLayout() {
 
       <Outlet context={contextValue} />
 
-      <BottomNavBar
-        setselectedSem={setselectedSem}
-        setabout={setabout}
-        about={about}
-      />
+{!isPaperRoute && (
+  <BottomNavBar
+    setselectedSem={setselectedSem}
+    setabout={setabout}
+    about={about}
+  />
+)}
     </>
   );
 }

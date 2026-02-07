@@ -1,12 +1,16 @@
 /* Root container */
+
+
 .notes {
-  padding: 0px 16px;
+  
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  
 }
 
 /* Each module block */
-.module-block {
-  margin-bottom: px;
-}
+
 
 /* Module heading */
 .module-title {
@@ -47,7 +51,7 @@
   /* ✅ correct snap for horizontal scroll */
   scroll-snap-type: x mandatory;
 
-  padding-bottom: px;
+  
 
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -75,7 +79,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: px;
 
   flex-shrink: 0;
 }

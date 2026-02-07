@@ -11,6 +11,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
+import { useParams } from "react-router-dom";
 import PdfViewer from "./PdfViewer";
 
 /* ---------- ORDER & LABELS ---------- */
@@ -39,7 +40,8 @@ const ICON_MAP = {
   book_pdf: <FileText size={18} />,
 };
 
-function Reference({ paperid }) {
+function Reference() {
+  const { paperId } = useParams(); // ✅ URL-driven
   const [refs, setRefs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activePdf, setActivePdf] = useState(null);
@@ -47,7 +49,7 @@ function Reference({ paperid }) {
   /* ---------- FETCH ---------- */
 
   useEffect(() => {
-    if (!paperid) return;
+    if (!paperId) return;
 
     const fetchRefs = async () => {
       setLoading(true);
@@ -55,7 +57,7 @@ function Reference({ paperid }) {
       const { data, error } = await supabase
         .from("paper_references")
         .select("*")
-        .eq("paper_id", paperid)
+        .eq("paper_id", paperId)
         .eq("is_active", true);
 
       if (error) {
@@ -69,7 +71,19 @@ function Reference({ paperid }) {
     };
 
     fetchRefs();
-  }, [paperid]);
+  }, [paperId]);
+
+  /* ---------- MOBILE BACK ---------- */
+
+  useEffect(() => {
+    if (!activePdf) return;
+
+    window.history.pushState({ view: "reference-pdf" }, "");
+    const onPop = () => setActivePdf(null);
+
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [activePdf]);
 
   /* ---------- SORT + GROUP ---------- */
 
@@ -117,7 +131,7 @@ function Reference({ paperid }) {
 
           {items.map((ref) => (
             <div className="reference-card" key={ref.id}>
-              <div className="ref-left" >
+              <div className="ref-left">
                 {ICON_MAP[ref.reference_type]}
                 <div className="ref-text">
                   <span className="ref-title">{ref.title}</span>
@@ -128,8 +142,8 @@ function Reference({ paperid }) {
               </div>
 
               <div className="ref-actions">
-                {/* VIEW (only for PDFs) */}
-                {ref.reference_type === "pdf" && ref.url && (
+                {/* VIEW PDF */}
+                {ref.reference_type === "book_pdf" && ref.url && (
                   <button
                     className="icon-btn"
                     onClick={() => setActivePdf(ref.url)}
