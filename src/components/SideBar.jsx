@@ -1,6 +1,7 @@
 import { supabase } from "../supabaseClient";
 import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
 
 function SideBar({
   isSidebarOpen,
@@ -9,24 +10,26 @@ function SideBar({
   setdepartments,
   setselectedDept,
   setdeptid,
-  selectedDept,setpaperid
+  selectedDept,
+  setpaperid,
 }) {
+  const [loading, setLoading] = useState(false);
 
-  const [loading, setLoading] = useState(false); // ✅ added
+  const navigate = useNavigate();
+  const { dept: deptCode, sem } = useParams();
 
   async function fetchdept() {
-    setLoading(true); // ✅ added
+    setLoading(true);
 
     const { data, error } = await supabase
       .from("departments")
       .select("*");
 
-    if (error) {
-      console.log("error : ", error);
+    if (!error) {
+      setdepartments(data || []);
     }
 
-    setdepartments(data || []);
-    setLoading(false); // ✅ added
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -38,7 +41,7 @@ function SideBar({
       {loading ? (
         <div className="loadingScreen">
           <div className="loader"></div>
-          <p>Loading papers...</p>
+          <p>Loading departments...</p>
         </div>
       ) : (
         <>
@@ -53,20 +56,29 @@ function SideBar({
             </div>
 
             <ul className="departmentList">
-              {departments.map((dept) => (
+              {departments.map((department) => (
                 <li
-                  key={dept.id}
+                  key={department.id}
+                  className={`departmentItem ${
+                    deptCode === department.code ? "activeDept" : ""
+                 }`}
                   onClick={() => {
                     toggleSidebar();
-                    setselectedDept(dept.name);
-                    setdeptid(dept.id);
+
+                    // reset paper
                     setpaperid(null);
+
+                    // sync state
+                    setselectedDept(department.name);
+                    setdeptid(department.id);
+
+                    // keep semester if present, else default to 1
+                    const nextSem = sem ? Number(sem) : 1;
+
+                    navigate(`/${department.code}/${nextSem}`);
                   }}
-                  className={`departmentItem ${
-                    selectedDept === dept.name ? "activeDept" : ""
-                  }`}
                 >
-                  {dept.name}
+                  {department.name}
                 </li>
               ))}
             </ul>

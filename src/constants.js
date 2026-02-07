@@ -21,7 +21,7 @@ export const SEMESTERS = [
 
 export const BOTTOM_TABS = [
   { id: "notes", label: "Notes", icon: NotebookText },
-  { id: "pyqs", label: "PYQs", icon: FileQuestionMark },
+  { id: "pyq", label: "PYQs", icon: FileQuestionMark },
   { id: "syllabus", label: "Syllabus", icon: BookOpenText },
   { id: "reference", label: "Reference", icon: ListCheck },
 ];
