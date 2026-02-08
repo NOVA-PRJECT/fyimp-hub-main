@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import "./Pyqs.css";
 import { FileText, Eye, ExternalLink, Loader2 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
+import { useParams } from "react-router-dom";
 import PdfViewer from "./PdfViewer";
 
 /* Exam display order */
@@ -14,14 +15,16 @@ const EXAM_ORDER = {
   internal: 5,
 };
 
-function PYQs({ paperid, selectedPaper }) {
+function PYQs() {
+  const { paperId } = useParams(); // ✅ URL source of truth
+
   const [pyqs, setPyqs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activePdf, setActivePdf] = useState(null);
 
   /* Fetch PYQs */
   useEffect(() => {
-    if (!paperid) return;
+    if (!paperId) return;
 
     const fetchPYQs = async () => {
       setLoading(true);
@@ -29,7 +32,7 @@ function PYQs({ paperid, selectedPaper }) {
       const { data, error } = await supabase
         .from("paper_pyqs")
         .select("*")
-        .eq("paper_id", paperid)
+        .eq("paper_id", paperId)
         .eq("is_active", true)
         .order("exam_year", { ascending: false })
         .order("priority", { ascending: true });
@@ -45,7 +48,7 @@ function PYQs({ paperid, selectedPaper }) {
     };
 
     fetchPYQs();
-  }, [paperid]);
+  }, [paperId]);
 
   /* Mobile back handling for PDF viewer */
   useEffect(() => {
@@ -122,7 +125,7 @@ function PYQs({ paperid, selectedPaper }) {
               {yearPapers.map((pyq) => (
                 <div className="pyq-card" key={pyq.id}>
                   <div className="pyq-left">
-                    <FileText size={22} className="pyqicon"/>
+                    <FileText size={22} className="pyqicon" />
                     <span className="pyq-title">
                       {pyq.exam_category === "internal"
                         ? `Internal ${pyq.internal_number}`
@@ -146,7 +149,7 @@ function PYQs({ paperid, selectedPaper }) {
                       onClick={() =>
                         handleDownload(
                           pyq.pdf_url,
-                          `${selectedPaper}_${pyq.exam_category}_${year}.pdf`
+                          `PYQ_${pyq.exam_category}_${year}.pdf`
                         )
                       }
                     >

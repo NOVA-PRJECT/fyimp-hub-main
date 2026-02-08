@@ -1,47 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import { createPortal } from 'react-dom'; // Added for teleporting the component
-import './Syllabus.css';
-import { FileText, ExternalLink, Eye, Loader2 } from 'lucide-react';
-import { supabase } from '../../supabaseClient'; 
-import PdfViewer from './PdfViewer';
+import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
+import "./Syllabus.css";
+import { FileText, ExternalLink, Eye, Loader2 } from "lucide-react";
+import { supabase } from "../../supabaseClient";
+import { useParams } from "react-router-dom";
+import PdfViewer from "./PdfViewer";
 
-function Syllabus({ selectedDept, selectedSem, selectedPaper, activeTab, paperid }) {
+function Syllabus() {
+  const { paperId, sem } = useParams(); // ✅ URL is source of truth
+
   const [pdfUrl, setPdfUrl] = useState(null);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  /* Fetch syllabus */
   useEffect(() => {
+    if (!paperId) return;
+
     const fetchSyllabus = async () => {
-      if (!paperid) return;
       setLoading(true);
+
       const { data, error } = await supabase
-        .from('paper_syllabus')
-        .select('pdf_url')
-        .eq('paper_id', paperid)
+        .from("paper_syllabus")
+        .select("pdf_url")
+        .eq("paper_id", paperId)
         .single();
 
       if (error) {
-        console.error('Supabase Error: ' + error.message);
-      } else if (data) {
-        setPdfUrl(data.pdf_url);
+        console.error("Syllabus fetch error:", error);
+        setPdfUrl(null);
+      } else {
+        setPdfUrl(data?.pdf_url || null);
       }
+
       setLoading(false);
     };
-    fetchSyllabus();
-  }, [paperid]);
 
-  // Mobile Back Button Logic
+    fetchSyllabus();
+  }, [paperId]);
+
+  /* Mobile back handling */
   useEffect(() => {
-    if (isViewerOpen) {
-      window.history.pushState({ view: 'pdf' }, '');
-      const handlePopState = () => setIsViewerOpen(false);
-      window.addEventListener('popstate', handlePopState);
-      return () => window.removeEventListener('popstate', handlePopState);
-    }
+    if (!isViewerOpen) return;
+
+    window.history.pushState({ view: "syllabus-pdf" }, "");
+    const onPop = () => setIsViewerOpen(false);
+
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
   }, [isViewerOpen]);
 
   const handleCloseViewer = () => {
-    if (window.history.state?.view === 'pdf') {
+    if (window.history.state?.view === "syllabus-pdf") {
       window.history.back();
     } else {
       setIsViewerOpen(false);
@@ -50,21 +60,25 @@ function Syllabus({ selectedDept, selectedSem, selectedPaper, activeTab, paperid
 
   const handleDownload = async () => {
     if (!pdfUrl) return;
+
     try {
       const response = await fetch(pdfUrl);
       const blob = await response.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = `${selectedPaper}_Syllabus.pdf`; 
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(blobUrl);
-    } catch (error) {
-      window.open(pdfUrl, '_blank'); 
+      const blobUrl = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = `Syllabus_Sem_${sem}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+    } catch {
+      window.open(pdfUrl, "_blank");
     }
   };
+
+  /* ---------- UI ---------- */
 
   return (
     <div className="syllabus">
@@ -75,38 +89,41 @@ function Syllabus({ selectedDept, selectedSem, selectedPaper, activeTab, paperid
 
         <div className="card-content">
           <h3>Course Syllabus</h3>
-          <p>{`Official syllabus document for ${selectedPaper} (Semester ${selectedSem})`}</p>
+          <p>Official syllabus document (Semester {sem})</p>
         </div>
 
         <div className="button-group">
-          <button 
-            className="view-btn" 
+          <button
+            className="view-btn"
             onClick={() => setIsViewerOpen(true)}
             disabled={loading || !pdfUrl}
           >
-            {loading ? <Loader2 className="animate-spin" size={18} /> : "View Syllabus"}
-            <Eye className="btn-icon"/>
+            {loading ? (
+              <Loader2 className="animate-spin" size={18} />
+            ) : (
+              "View Syllabus"
+            )}
+            <Eye className="btn-icon" />
           </button>
 
-          <button 
-            className="view-btn" 
+          <button
+            className="view-btn"
             onClick={handleDownload}
             disabled={loading || !pdfUrl}
           >
-            Download Syllabus 
+            Download Syllabus
             <ExternalLink className="btn-icon" />
           </button>
         </div>
       </div>
 
-      {/* PORTAL RENDERING: This moves the viewer to the very top of the DOM */}
-      {isViewerOpen && pdfUrl && createPortal(
-        <PdfViewer 
-          fileUrl={pdfUrl} 
-          onClose={handleCloseViewer} 
-        />,
-        document.body
-      )}
+      {/* PDF VIEWER PORTAL */}
+      {isViewerOpen &&
+        pdfUrl &&
+        createPortal(
+          <PdfViewer fileUrl={pdfUrl} onClose={handleCloseViewer} />,
+          document.body
+        )}
     </div>
   );
 }

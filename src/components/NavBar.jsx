@@ -1,27 +1,24 @@
 import { Menu, Brain, Search, Moon, Sun } from "lucide-react"
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-
-function NavBar({ darkMode, toggleDarkMode, toggleSidebar ,isSidebarOpen,  selectedDept,setisSidebarOpen,setselectedDept,setselectedPaper, backhome}) {
+function NavBar({ darkMode,
+  toggleDarkMode,
+  toggleSidebar,
+  isSidebarOpen,
+  selectedDept,
+  setisSidebarOpen,
+  setselectedDept,
+  backhome}) {
     const [searching, setsearching] = useState(false);
 
     const handleSearchClick = () => {
         setsearching(!searching);
     }
     
-      const handleLogoClick = () => {
-  if (selectedDept === null) {
-    // Already on home → scroll to top
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  } else {
-    // Go back to home
-    backhome();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-};
-      
-      
-      
+    
+    const navigate = useNavigate();
+    
     return (
         <header className="header">
             <header className="header">
@@ -38,7 +35,7 @@ function NavBar({ darkMode, toggleDarkMode, toggleSidebar ,isSidebarOpen,  selec
                             <button onClick={toggleSidebar} className="menuBtn">
                                 <Menu onClick={toggleSidebar} className="hamburgerIcon" />
                             </button>
-                            <span onClick={handleLogoClick} className="logoText">
+                            <span onClick={() => {navigate('/');}} className="logoText">
                                 FYIMP H<Brain className="logoBrain" />B
                             </span>
                         </div>
