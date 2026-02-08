@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import { StickyNote } from "lucide-react";
 import { useParams, useOutletContext, useNavigate } from "react-router-dom";
+import NotFound from "./NotFound";
+
+const VALID_SEMS = [1,2,3,4,5,6,7,8,9,10];
 
 function PaperView() {
   const { dept: deptCode, sem } = useParams();
+  const navigate = useNavigate();
   const [loading, setloading] = useState(false);
-
-   const navigate = useNavigate();
 
   const {
     selectedDept,
@@ -18,61 +20,77 @@ function PaperView() {
     setdeptid,
     setselectedPaper,
     setpaperid,
+    setIsRouteValid,   // ✅ THIS
   } = useOutletContext();
 
   useEffect(() => {
     async function fetchData() {
-      if (!deptCode || !sem) return;
-
       setloading(true);
+      setIsRouteValid(true); // assume valid until proven otherwise
 
-      try {
-        // 1. Resolve Department
-        const { data: deptData, error: deptError } = await supabase
-          .from("departments")
-          .select("id, name")
-          .eq("code", deptCode)
-          .single();
-
-        if (deptError || !deptData) {
-          console.error("Invalid department:", deptCode);
-          setpapers([]);
-          setselectedDept(null);
-          setdeptid(null);
-          setloading(false);
-          return;
-        }
-
-        // Update Parent States
-        setdeptid(deptData.id);
-        setselectedDept(deptData.name);
-        setselectedSem(Number(sem));
-
-        // 2. Fetch Papers immediately using resolved ID
-        const { data: paperData, error: paperError } = await supabase
-          .from("papers_ordered")
-          .select("*")
-          .eq("department_id", deptData.id)
-          .eq("semester", Number(sem));
-
-        if (paperError) {
-          console.error("Error fetching papers:", paperError);
-          setpapers([]);
-        } else {
-          setpapers(paperData || []);
-        }
-      } catch (err) {
-        console.error("System Error:", err);
-      } finally {
+      /* -----------------------------
+         VALIDATE SEM
+      ------------------------------ */
+      const semNumber = Number(sem);
+      if (!VALID_SEMS.includes(semNumber)) {
+        setIsRouteValid(false);
         setloading(false);
+        return;
       }
+
+      /* -----------------------------
+         RESOLVE DEPARTMENT
+      ------------------------------ */
+      const { data: deptData, error: deptError } = await supabase
+        .from("departments")
+        .select("id, name")
+        .eq("code", deptCode)
+        .single();
+
+      if (deptError || !deptData) {
+        setIsRouteValid(false);   // 🚫 INVALID DEPT
+        setpapers([]);
+        setselectedDept(null);
+        setdeptid(null);
+        setloading(false);
+        return;
+      }
+
+      /* -----------------------------
+         VALID DEPT + SEM
+      ------------------------------ */
+      setdeptid(deptData.id);
+      setselectedDept(deptData.name);
+      setselectedSem(semNumber);
+
+      const { data: paperData, error: paperError } = await supabase
+        .from("papers_ordered")
+        .select("*")
+        .eq("department_id", deptData.id)
+        .eq("semester", semNumber);
+
+      setpapers(paperError ? [] : paperData || []);
+      setloading(false);
     }
 
     fetchData();
-    // Only trigger when URL params change, ignoring internal state updates
-  }, [deptCode, sem]); 
+  }, [deptCode, sem]);
 
+  /* -----------------------------
+     INVALID ROUTE UI
+  ------------------------------ */
+  if (!loading && !selectedDept) {
+    return (
+      <NotFound
+        title="Page not found"
+        message="The page you are looking for doesn't exist."
+      />
+    );
+  }
 
+  /* -----------------------------
+     NORMAL UI
+  ------------------------------ */
   return (
     <div className="paperview">
       {loading ? (
@@ -104,11 +122,10 @@ function PaperView() {
                     <li
                       className="paperItem"
                       onClick={() => {
-  setselectedPaper(paper.name);
-  setpaperid(paper.id);
-
-  navigate(`/${deptCode}/${sem}/paper/${paper.id}/notes`);
-}}
+                        setselectedPaper(paper.name);
+                        setpaperid(paper.id);
+                        navigate(`paper/${paper.id}/notes`);
+                      }}
                     >
                       <div className="paperIcon">
                         <StickyNote size={28} />

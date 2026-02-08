@@ -8,81 +8,102 @@ const VALID_TABS = ["notes", "pyq", "syllabus", "reference"];
 
 function PaperLayout() {
   const location = useLocation();
-  const { paperId } = useParams();
+  const { dept, sem, paperId } = useParams();
 
   const [paperName, setPaperName] = useState("");
-  const [paperExists, setPaperExists] = useState(true);
+  const [paperValid, setPaperValid] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  // Split path
+  /* -----------------------------
+     URL ANALYSIS
+  ------------------------------ */
   const segments = location.pathname.split("/").filter(Boolean);
-
-  // If tab exists, it will be the last segment
-  const maybeTab = segments.at(-1);
-
-  const hasTab =
-    VALID_TABS.includes(maybeTab);
-
-  const isPaperOnlyRoute =
-    segments.at(-2) === "paper";
+  const currentTab = segments.at(-1);
+  const isPaperOnlyRoute = segments.at(-2) === "paper";
 
   /* -----------------------------
-     Resolve paperId → paperName
+     VALIDATE TAB
+  ------------------------------ */
+  const hasValidTab = VALID_TABS.includes(currentTab);
+
+  /* -----------------------------
+     RESOLVE & VALIDATE PAPER
   ------------------------------ */
   useEffect(() => {
-    if (!paperId) return;
+    if (!dept || !sem || !paperId) return;
 
-    const fetchPaper = async () => {
+    const validatePaper = async () => {
       setLoading(true);
 
-      const { data, error } = await supabase
-        .from("papers")
-        .select("name")
-        .eq("id", paperId)
-        .single();
+      try {
+        // 1️⃣ Resolve department code → id
+        const { data: deptData, error: deptError } = await supabase
+          .from("departments")
+          .select("id")
+          .eq("code", dept)
+          .single();
 
-      if (error || !data) {
-        setPaperExists(false);
-        setPaperName("");
-      } else {
-        setPaperExists(true);
-        setPaperName(data.name);
+        if (deptError || !deptData) {
+          setPaperValid(false);
+          setLoading(false);
+          return;
+        }
+
+        // 2️⃣ Validate paper ownership
+        const { data: paperData, error: paperError } = await supabase
+          .from("papers")
+          .select("id, name")
+          .eq("id", paperId)
+          .eq("department_id", deptData.id)
+          .eq("semester", Number(sem))
+          .single();
+
+        if (paperError || !paperData) {
+          setPaperValid(false);
+          setPaperName("");
+        } else {
+          setPaperValid(true);
+          setPaperName(paperData.name);
+        }
+      } catch (err) {
+        console.error("Paper validation failed:", err);
+        setPaperValid(false);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
-    fetchPaper();
-  }, [paperId]);
+    validatePaper();
+  }, [dept, sem, paperId]);
 
   /* -----------------------------
-     1️⃣ PAPER ID INVALID
+     HARD FAIL STATES
   ------------------------------ */
-  if (!loading && !paperExists) {
+  if (!loading && !paperValid) {
     return (
       <NotFound
         title="Paper not found"
-        message="The paper you are looking for does not exist."
+        message="This paper does not belong to the selected department or semester."
       />
     );
   }
 
   /* -----------------------------
-     2️⃣ NO TAB → redirect to notes
-     (/paper/:paperId)
+     NO TAB → REDIRECT
+     /paper/:paperId
   ------------------------------ */
-  if (isPaperOnlyRoute) {
+  if (!loading && paperValid && isPaperOnlyRoute) {
     return <Navigate to="notes" replace />;
   }
 
   /* -----------------------------
-     3️⃣ INVALID TAB
+     INVALID TAB
   ------------------------------ */
-  if (!hasTab) {
+  if (!loading && paperValid && !hasValidTab) {
     return (
       <NotFound
         title="Page not found"
-        message="The page you are looking for doesn’t exist."
+        message="The section you are looking for does not exist."
       />
     );
   }
@@ -95,13 +116,13 @@ function PaperLayout() {
       {/* HEADER */}
       <div className="reshead">
         <h4>{paperName}</h4>
-        <h4 className="s">{maybeTab.toUpperCase()}</h4>
+        <h4 className="s">{currentTab.toUpperCase()}</h4>
       </div>
 
       {/* TAB CONTENT */}
       <Outlet />
 
-      {/* BOTTOM NAV (only for valid paper + tab) */}
+      {/* BOTTOM NAV */}
       <BottomResourceNav />
     </div>
   );
