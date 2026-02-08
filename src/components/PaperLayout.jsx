@@ -2,6 +2,7 @@ import { Outlet, Navigate, useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import BottomResourceNav from "./BottomResourceNav";
 import { supabase } from "../supabaseClient";
+import NotFound from "./NotFound";
 
 const VALID_TABS = ["notes", "pyq", "syllabus", "reference"];
 
@@ -10,25 +11,28 @@ function PaperLayout() {
   const { paperId } = useParams();
 
   const [paperName, setPaperName] = useState("");
+  const [paperExists, setPaperExists] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  /* -----------------------------
-     CURRENT TAB FROM URL
-  ------------------------------ */
-  const currentTab = location.pathname.split("/").at(-1);
+  // Split path
+  const segments = location.pathname.split("/").filter(Boolean);
 
-  if (!VALID_TABS.includes(currentTab)) {
-    return <Navigate to="notes" replace />;
-  }
+  // If tab exists, it will be the last segment
+  const maybeTab = segments.at(-1);
+
+  const hasTab =
+    VALID_TABS.includes(maybeTab);
+
+  const isPaperOnlyRoute =
+    segments.at(-2) === "paper";
 
   /* -----------------------------
-     RESOLVE PAPER NAME (ID → NAME)
-     SAME PATTERN AS DEPT
+     Resolve paperId → paperName
   ------------------------------ */
   useEffect(() => {
     if (!paperId) return;
 
-    const fetchPaperName = async () => {
+    const fetchPaper = async () => {
       setLoading(true);
 
       const { data, error } = await supabase
@@ -37,36 +41,67 @@ function PaperLayout() {
         .eq("id", paperId)
         .single();
 
-      if (!error && data) {
-        setPaperName(data.name);
-      } else {
-        console.error("Invalid paper id:", paperId);
+      if (error || !data) {
+        setPaperExists(false);
         setPaperName("");
+      } else {
+        setPaperExists(true);
+        setPaperName(data.name);
       }
 
       setLoading(false);
     };
 
-    fetchPaperName();
+    fetchPaper();
   }, [paperId]);
 
   /* -----------------------------
-     TAB LABEL (DERIVED)
+     1️⃣ PAPER ID INVALID
   ------------------------------ */
-  const tabLabel = currentTab.toUpperCase();
+  if (!loading && !paperExists) {
+    return (
+      <NotFound
+        title="Paper not found"
+        message="The paper you are looking for does not exist."
+      />
+    );
+  }
 
+  /* -----------------------------
+     2️⃣ NO TAB → redirect to notes
+     (/paper/:paperId)
+  ------------------------------ */
+  if (isPaperOnlyRoute) {
+    return <Navigate to="notes" replace />;
+  }
+
+  /* -----------------------------
+     3️⃣ INVALID TAB
+  ------------------------------ */
+  if (!hasTab) {
+    return (
+      <NotFound
+        title="Page not found"
+        message="The page you are looking for doesn’t exist."
+      />
+    );
+  }
+
+  /* -----------------------------
+     VALID STATE
+  ------------------------------ */
   return (
     <div className="resourceview">
       {/* HEADER */}
       <div className="reshead">
         <h4>{paperName}</h4>
-        <h4 className="s">{tabLabel}</h4>
+        <h4 className="s">{maybeTab.toUpperCase()}</h4>
       </div>
 
       {/* TAB CONTENT */}
       <Outlet />
 
-      {/* BOTTOM NAV */}
+      {/* BOTTOM NAV (only for valid paper + tab) */}
       <BottomResourceNav />
     </div>
   );

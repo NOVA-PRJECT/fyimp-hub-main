@@ -3,6 +3,7 @@ import AppLayout from "./layouts/AppLayout";
 import HomeView from "./components/HomeView";
 import PaperView from "./components/PaperView";
 import PaperLayout from "./components/PaperLayout";
+import NotFound from "./components/NotFound";
 
 import Notes from "./components/ResourceView/Notes";
 import Pyq from  "./components/ResourceView/Pyqs";
@@ -28,6 +29,7 @@ function App() {
           <Route path="reference" element={<Reference />} />
         </Route>
       </Route>
+    <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
