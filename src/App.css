@@ -190,7 +190,7 @@ border-radius: 20px;
 /* Quick Links Section */
 .section-divider { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
 .section-divider h2 { font-size: 12px; font-weight: 700; color: black; text-transform: uppercase; letter-spacing: 0.2em; }
-.section-divider .line { height: 1px; background: black; flex: 1; margin-left: 1rem; }
+.section-divider .line { height: 1x; background: black; flex: 1; margin-left: 1rem; }
 
 .links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 2.5rem; }
 .link-btn {
