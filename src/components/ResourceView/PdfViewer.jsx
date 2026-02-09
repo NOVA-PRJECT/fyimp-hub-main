@@ -1,72 +1,62 @@
+import React, { useState } from "react";
+import { Document, Page, pdfjs } from "react-pdf";
+import { X, ZoomIn, ZoomOut } from "lucide-react";
+import "./PdfViewer.css";
 
+// Keep your existing worker (since this version already works for you)
+pdfjs.GlobalWorkerOptions.workerSrc =
+  `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
+function PdfViewer({ fileUrl, onClose }) {
+  const [numPages, setNumPages] = useState(null);
+  const [scale, setScale] = useState(1);
 
-import React from 'react';
-import { Worker, Viewer } from '@react-pdf-viewer/core';
-import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+  return (
+    <div className="pdf-modal-overlay">
+      <div className="pdf-modal-container">
 
-import '@react-pdf-viewer/core/lib/styles/index.css';
-import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+        {/* Toolbar */}
+        <div className="pdf-toolbar">
+          <div className="pdf-info">
+            <button onClick={onClose} className="close-btn">
+              <X size={24} />
+            </button>
+            <span>Syllabus Viewer</span>
+          </div>
 
-
-// Local worker URL for @react-pdf-viewer/core@^3.12.0 - Termux compatible
-const PDF_WORKER_URL = "/pdf.worker.min.js";
-
-const PdfViewer = ({ fileUrl, onClose }) => {
-    const defaultLayoutPluginInstance = defaultLayoutPlugin();
-
-    return (
-        <div style={{
-            position: 'fixed',
-            top: 0, // Changed from 4rem to 0
-            left: 0,
-            width: '100%',
-            height: '100dvh', // Use dvh to account for mobile browser bars
-            backgroundColor: '#121212',
-            zIndex: 999999, // Ensure this is higher than your header/footer
-            display: 'flex',
-            flexDirection: 'column',
-        }}>
-            {/* Toolbar Area */}
-            <div style={{
-                height: '55px',
-                padding: '0 15px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                background: '#1a1a1a',
-                borderBottom: '1px solid #333',
-                color: 'white'
-            }}>
-                <button 
-                    onClick={onClose}
-                    style={{
-                        background: '#333',
-                        border: 'none',
-                        color: 'white',
-                        padding: '6px 12px',
-                        borderRadius: '4px',
-                        fontSize: '14px'
-                    }}
-                >
-                    Back
-                </button>
-                <span style={{ fontSize: '14px', fontWeight: 'bold' }}>Syllabus Viewer</span>
-                <div style={{ width: '45px' }}></div> 
-            </div>
-
-            {/* Rendering Area */}
-            <div style={{ flex: 1, overflow: 'hidden' }}>
-                <Worker workerUrl={PDF_WORKER_URL}>
-                    <Viewer 
-                        fileUrl={fileUrl} 
-                        plugins={[defaultLayoutPluginInstance]}
-                        theme="dark"
-                    />
-                </Worker>
-            </div>
+          <div className="pdf-zoom">
+            <button onClick={() => setScale(s => Math.min(s + 0.2, 2))}>
+              <ZoomIn size={20} />
+            </button>
+            <button onClick={() => setScale(s => Math.max(s - 0.2, 0.5))}>
+              <ZoomOut size={20} />
+            </button>
+          </div>
         </div>
-    );
-};
+
+        {/* Scrollable PDF */}
+        <div className="pdf-viewer-content">
+          <Document
+            file={fileUrl}
+            onLoadSuccess={({ numPages }) => setNumPages(numPages)}
+            loading={<div className="loader">Loading PDF…</div>}
+            error={<div className="loader error">Failed to load PDF</div>}
+          >
+            {Array.from(new Array(numPages), (_, index) => (
+              <Page
+                key={`page_${index + 1}`}
+                pageNumber={index + 1}
+                scale={scale}
+                renderTextLayer={false}
+                renderAnnotationLayer={false}
+              />
+            ))}
+          </Document>
+        </div>
+
+      </div>
+    </div>
+  );
+}
 
 export default PdfViewer;
