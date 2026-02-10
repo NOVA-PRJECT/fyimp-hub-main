@@ -1,5 +1,6 @@
 /* GLOBAL UI FIXES */
 html, body {
+  background-color: white;
   /* Prevents text selection and the Google "Tap to Search" feature */
   -webkit-user-select: none;
   -moz-user-select: none;
