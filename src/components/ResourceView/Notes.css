@@ -1,100 +1,85 @@
+/*===========================*/
+/* 8) Notes & Modules        */
+/*===========================*/
+
 /* Root container */
-
-
 .notes {
-  
   padding: 0px 16px;
   width: 100%;
   box-sizing: border-box;
   background-color: transparent;
-  
 }
-
-/* Each module block */
-
 
 /* Module heading */
 .module-title {
   font-size: 1.05rem;
   font-weight: 600;
   margin-bottom: 10px;
-  color:#F8FAFC;
+  color: var(--text-heading); /* Updated */
 }
+
 .notes-row-wrapper {
   position: relative;
 }
 
-/* right colored fade */
+/* Right colored fade - Updated to match BG */
 .notes-row-wrapper::after {
   content: "";
   position: absolute;
   top: 0;
   right: 0;
-
   width: 4rem;
   height: 100%;
-
   pointer-events: none;
-
   background: linear-gradient(
     to right,
-    rgba(255, 0, 0, 0),
-    #0F172A
+    rgba(255, 255, 255, 0),
+    var(--bg-main) 
   );
 }
 
-/* Horizontal scroll row — SNAP GOES HERE */
+/* Horizontal scroll row */
 .notes-row {
   display: flex;
   gap: 14px;
   overflow-x: auto;
-
-  /* ✅ correct snap for horizontal scroll */
   scroll-snap-type: x mandatory;
-
-  
-
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
-
 
 /* Hide scrollbar */
 .notes-row::-webkit-scrollbar {
   display: none;
 }
 
-/* Individual note card — SNAP TARGET */
+/* Individual note card */
 .note-card {
   height: 100px;
   min-width: 90px;
   max-width: 210px;
-  background: #1E293B;
+  background: var(--surface-card); /* Updated */
   border-radius: 12px;
   padding: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-
-  /* ✅ snap alignment */
+  border: 1px solid var(--border-global); /* Updated */
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
   scroll-snap-align: start;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-
   flex-shrink: 0;
 }
 
 /* File icon */
 .note-icon {
-  color: red;
+  color: var(--accent-rose); /* Updated */
 }
 
 /* Priority label */
 .note-label {
   font-size: 0.85rem;
-  font-weight: 1000;
-  color: #CBD5E1;
+  font-weight: 800;
+  color: var(--text-body); /* Updated */
 }
 
 /* Button container */
@@ -102,6 +87,7 @@
   display: flex;
   gap: 8px;
   width: 100%;
+  margin-top: auto; /* Ensures buttons stay at bottom */
 }
 
 /* Buttons */
@@ -111,21 +97,19 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-
   font-size: 0.8rem;
   padding: 6px 8px;
   border-radius: 8px;
-
-  background: #818CF8;
+  background: var(--brand-indigo); /* Updated */
+  color: var(--text-white);
   border: none;
   cursor: pointer;
-
   transition: background 0.2s ease, transform 0.15s ease;
 }
 
 .note-btn:hover {
-  background: white;
-  color: red;
+  background: var(--accent-rose); /* Subtle change for interactive feel */
+  color: var(--text-white);
 }
 
 .note-btn:active {
@@ -135,7 +119,7 @@
 /* No notes text */
 .no-notes {
   font-size: 0.85rem;
-  color: #888;
+  color: var(--text-muted); /* Updated */
   padding: 6px 4px;
 }
 
@@ -147,31 +131,31 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  color: #555;
+  color: var(--text-muted); /* Updated */
 }
 
+/* Coming soon state */
 .note-coming-soon  {
   height: 100px;
   min-width: 90px;
   max-width: 210px;
-  background: #1E293B;
+  background: var(--surface-card);
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-global);
   padding: 10px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  /* ✅ snap alignment */
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   align-items: center;
-
   flex-shrink: 0;
-  opacity: 0.5;
+  opacity: 0.6;
 }
-.note-coming-soon .note-label {
-  color: #64748B;
 
+.note-coming-soon .note-label {
+  color: var(--text-muted-alt); /* Updated */
 }
+
 .note-icon-muted {
   filter: grayscale(100%);
+  opacity: 0.5;
 }

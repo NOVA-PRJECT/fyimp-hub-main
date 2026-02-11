@@ -2,9 +2,7 @@ import { Menu, Brain, Search, Moon, Sun } from "lucide-react"
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function NavBar({ darkMode,
-  toggleDarkMode,
-  toggleSidebar,
+function NavBar({ darkMode, setDarkMode,toggleSidebar,
   isSidebarOpen,
   selectedDept,
   setisSidebarOpen,
@@ -41,7 +39,8 @@ function NavBar({ darkMode,
                         </div>
                         <div className="rightNav">
                             <Search onClick={()=>{handleSearchClick();setisSidebarOpen(false);}}  className="searchIcon" />
-                            {darkMode ? <Sun onClick={toggleDarkMode} className="darkModeIcon" /> : <Moon onClick={toggleDarkMode} className="darkModeIcon" />
+                            {darkMode ? <Sun onClick={() => setDarkMode(!darkMode)} className="darkModeIcon" /> : <Moon onClick={() => setDarkMode(!darkMode)}
+                            className="darkModeIcon" />
                             }
                         </div>
                     </div>

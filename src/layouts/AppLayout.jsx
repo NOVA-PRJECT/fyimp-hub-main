@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect} from "react";
 import NavBar from "../components/NavBar";
 import SideBar from "../components/SideBar";
 import BottomNavBar from "../components/BottomNavBar";
@@ -9,7 +9,25 @@ function AppLayout() {
   /* -----------------------------
      GLOBAL UI STATE
   ------------------------------ */
-  const [darkMode, setdarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    if (darkMode) {
+      root.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      root.removeAttribute("data-theme");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
+
+  
+  
+  
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [about, setabout] = useState(false);
 
@@ -34,7 +52,7 @@ function AppLayout() {
      HELPERS
   ------------------------------ */
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-  const toggleDarkMode = () => setdarkMode(v => !v);
+  
 
   const backhome = () => {
     setselectedDept(null);
@@ -94,8 +112,8 @@ function AppLayout() {
          TOP NAV
       ------------------------------ */}
       <NavBar
-        darkMode={darkMode}
-        toggleDarkMode={toggleDarkMode}
+      darkMode={darkMode}
+      setDarkMode={setDarkMode}
         toggleSidebar={toggleSidebar}
         isSidebarOpen={isSidebarOpen}
         selectedDept={selectedDept}
