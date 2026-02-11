@@ -12,12 +12,12 @@
   bottom: 0;
   left: 0;
   right: 0;
-  margin: 0.5rem;
+  margin: 0.75rem;
   z-index: 40;
   height: 4rem;
-  border-radius: 20px;
+  border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.1); 
-  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(79, 70, 229, 0.1);
   color:white;
   background-color: rgba(15, 23, 42, 0.8);
   animation: fadeIn 0.5s ease-out;
@@ -45,17 +45,17 @@
 .resourcebottom {
   position: fixed;
   bottom: 0;
-  border-radius: 20px;
+  border-radius: 24px;
   left:0 ;
   right:0 ;
   height: 64px;
   color: white;
   display: flex;
   justify-content: space-around;
-  margin: 0.5rem;
+  margin: 0.75rem;
   background: rgba(15, 23, 42, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.1); 
-  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(79, 70, 229, 0.1);
   z-index: 40;
 }
 
@@ -65,7 +65,7 @@
 border-radius: 20px;
   display: flex;
   flex-direction: column;
-
+   ;
   align-items: center;      /* horizontal center */
   justify-content: center;  /* vertical center */
 
@@ -84,7 +84,7 @@ border-radius: 20px;
 
 /* ICON STYLE */
 .part svg {
-  color: white;
+  color: #64748B;
   width: 22px;
   height: 22px;
   stroke-width: 1.8;
@@ -93,6 +93,7 @@ border-radius: 20px;
 
 /* LABEL STYLE */
 .part p {
+  color: #64748B;
   margin: 0;
   font-size: 11px;
   line-height: 1;
@@ -105,16 +106,16 @@ border-radius: 20px;
    ----------------------------------------------------------- */
 
 .part.active {
-  background-color: #8080803d;
-  color: #e11d48; 
+
+  color: #FFFFFF; 
 }
 
 .part.active svg {
-  stroke: #e11d48; /* Colors the icon */
+  stroke: #FFFFFF; /* Colors the icon */
 }
 
 .part.active p {
-  color: #e11d48; /* Colors the text */
+  color: #FFFFFF; /* Colors the text */
   font-weight: 600; /* Makes text slightly bolder when selected */
 }
 
@@ -159,6 +160,7 @@ border-radius: 20px;
   color: #ffffff;
   margin-bottom: 1rem;
   box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 .main-card-content { display: flex; gap: 1.25rem; }
 .icon-wrapper-large {
@@ -171,7 +173,7 @@ border-radius: 20px;
 .card-text p { font-size: 11px; color: #94a3b8; line-height: 1.5; margin: 0; }
 
 .sub-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
-.feature-item { background: #1e293b; padding: 1.25rem; border-radius: 2rem; border: 1px solid #1e293b; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.feature-item { background: #1e293b; padding: 1.25rem; border-radius: 2rem; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
 .icon-box-blue { width: 40px; height: 40px; background: #eff6ff; color: #2563eb; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
 .icon-box-indigo { width: 40px; height: 40px; background: #eef2ff; color: #4f46e5; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
 .feature-item h4 { font-size: 10px; font-weight: 900; text-transform: uppercase; margin: 0 0 4px 0; color: #0f172a; }
@@ -180,7 +182,7 @@ border-radius: 20px;
 /* Verification Ribbon */
 .verification-ribbon {
   display: flex; align-items: center; gap: 1rem; padding: 1.25rem;
-  background: #1e293b; border: 1px solid #1e293b; border-radius: 2rem; margin-bottom: 2.5rem;
+  background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 2rem; margin-bottom: 2.5rem;
 }
 .v-icon-box { width: 48px; height: 48px; background: #10b981; color: #ffffff; border-radius: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .v-title { font-size: 12px; font-weight: 700; color: #10b981; margin: 0; }
@@ -189,12 +191,12 @@ border-radius: 20px;
 /* Quick Links Section */
 .section-divider { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
 .section-divider h2 { font-size: 12px; font-weight: 700; color: black; text-transform: uppercase; letter-spacing: 0.2em; }
-.section-divider .line { height: 1x; background: black; flex: 1; margin-left: 1rem; }
+.section-divider .line { height: 1x; background: white; flex: 1; margin-left: 1rem; }
 
 .links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 2.5rem; }
 .link-btn {
   display: flex; align-items: center; gap: 0.5rem; padding: 1rem;
-  background: #1e293b; border: 1px solid black; border-radius: 1rem; color: #fff;
+  background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1rem; color: #fff;
   font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;
 }
 .link-btn:active { transform: scale(0.95); }
@@ -203,14 +205,14 @@ border-radius: 20px;
 
 /* CTA Card */
 .contribution-card {
-  padding: 2.5rem; background: #f8fafc; border: 1px dashed #e2e8f0;
+  padding: 2.5rem; background: #1E293B; border: 2px dashed #C084FC;
   border-radius: 3rem; text-align: center;
 }
 .cta-icon { width: 40px; height: 40px; color: #cbd5e1; margin-bottom: 1rem; }
 .contribution-card h4 { margin: 0 0 0.5rem 0; color: #0f172a; font-size: 16px; }
 .contribution-card p { font-size: 11px; color: #64748b; margin-bottom: 2rem; }
 .cta-button {
-  width: 100%; padding: 1rem; background: #0f172a; color: #ffffff;
+  width: 100%; padding: 1rem; background: #818CF8; color: #ffffff;
   border: none; border-radius: 1rem; font-weight: 900; font-size: 11px;
   text-transform: uppercase; cursor: pointer;
 }
@@ -244,7 +246,7 @@ border-radius: 20px;
 }
 .searchInput {
   position: relative;  
-  padding: 0rem;      
+  padding: 0rem; ;    
 }
 .inputBar {
   width: 100%;
@@ -261,6 +263,9 @@ border-radius: 20px;
   padding: 0px 0px 0px 1rem;
   animation: fadeIn 0.3s ease forwards;
   pointer-events: auto;
+}
+.inputBar::placeholder {
+  color: #CBD5E1;
 }
 
 @keyframes fadeIn {
@@ -309,7 +314,7 @@ border-radius: 20px;
 .hamburgerIcon {
   width: 1.5rem;  
   height: 1.5rem;
-  color: #c084fc;   
+  color: #F8FAFC;   
 }
 .logoText {
   display: flex;
@@ -318,7 +323,7 @@ border-radius: 20px;
   font-weight: 800;
   font-size: 1.3rem;   
   line-height: 1;  
-  color: #c084fc;     
+  color: #F8FAFC;     
 }
 
 .logoText:active {
@@ -616,6 +621,7 @@ border-radius: 20px;
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   z-index: 500;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 .overlay {
   position: fixed;
@@ -676,18 +682,19 @@ border-radius: 20px;
 
 
 .departmentItem.activeDept {
-  background: navy;
+  background: rgba(129, 140, 248, 0.1);
   color: white;
   border-radius: 10px;
   position: relative; /* 👈 important */
+  border-left: 1px solid #818CF8;
 }
 
   .departmentItem.activeDept::after {
   content: "";
   width: 6px;
   height: 6px;
-  border-right: 2px solid #e11d48;
-  border-bottom: 2px solid #e11d48;
+  border-right: 2px solid #818CF8;
+  border-bottom: 2px solid #818CF8;
   transform: rotate(-45deg);
   position: absolute;
   right: 15px;

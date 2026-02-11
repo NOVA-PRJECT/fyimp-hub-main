@@ -147,14 +147,14 @@ function Notes() {
                     </div>
                   ))}
 
-                  <div className="note-card coming-soon">
-                    <FileText className="note-icon muted" />
+                  <div className="note-coming-soon">
+                    <FileText className="note-icon-muted" />
                     <p className="note-label">More coming soon</p>
                   </div>
                 </>
               ) : (
-                <div className="note-card coming-soon">
-                  <FileText className="note-icon muted" />
+                <div className="note-coming-soon">
+                  <FileText className="note-icon-muted" />
                   <p className="note-label">More coming soon</p>
                 </div>
               )}

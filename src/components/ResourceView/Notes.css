@@ -72,8 +72,9 @@
   background: #1E293B;
   border-radius: 12px;
   padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  border: 1px solid #8080805c;
+
   /* ✅ snap alignment */
   scroll-snap-align: start;
 
@@ -93,7 +94,7 @@
 .note-label {
   font-size: 0.85rem;
   font-weight: 1000;
-  color: #555;
+  color: #CBD5E1;
 }
 
 /* Button container */
@@ -115,7 +116,7 @@
   padding: 6px 8px;
   border-radius: 8px;
 
-  background: red;
+  background: #818CF8;
   border: none;
   cursor: pointer;
 
@@ -146,6 +147,31 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-
   color: #555;
+}
+
+.note-coming-soon  {
+  height: 100px;
+  min-width: 90px;
+  max-width: 210px;
+  background: #1E293B;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  /* ✅ snap alignment */
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+.note-coming-soon .note-label {
+  color: #64748B;
+
+}
+.note-icon-muted {
+  filter: grayscale(100%);
 }
