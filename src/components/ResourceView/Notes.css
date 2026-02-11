@@ -6,6 +6,7 @@
   padding: 0px 16px;
   width: 100%;
   box-sizing: border-box;
+  background-color: transparent;
   
 }
 
@@ -17,7 +18,7 @@
   font-size: 1.05rem;
   font-weight: 600;
   margin-bottom: 10px;
-  color: red;
+  color:#F8FAFC;
 }
 .notes-row-wrapper {
   position: relative;
@@ -38,7 +39,7 @@
   background: linear-gradient(
     to right,
     rgba(255, 0, 0, 0),
-    white
+    #0F172A
   );
 }
 
@@ -68,7 +69,7 @@
   height: 100px;
   min-width: 90px;
   max-width: 210px;
-  background: #ffffff;
+  background: #1E293B;
   border-radius: 12px;
   padding: 10px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
