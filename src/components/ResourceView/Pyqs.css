@@ -17,7 +17,6 @@
   align-items: center;
   gap: 12px;
   text-align: center;
-  color: #777;
 }
 
 /* ===== Year group ===== */
@@ -29,20 +28,23 @@
 
 /* Year heading */
 .pyq-year {
+  position: relative;
   display: inline-block;
   font-size: 15px;
   font-weight: 600;
-  color: #F8FAFC;
+  color: var(--text-heading);
   margin: 0px 0px;
+  
   letter-spacing: 0.3px;
   position: relative;
 }
 .pyq-year:after{
   content: "";
   position: absolute;
+  
   height: 1.5px;
   width: 300px;
-  background-color: #80808067;
+  background-color: var(--text-muted-alt);
   border-radius: 10px;
   margin:10px 5px;
 }
@@ -52,8 +54,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  background: #1E293B;
+  border: 1px solid var(--border-global);
+  background: var(--surface-card);
   border-radius: 14px;
   padding: 12px 14px;
 
@@ -72,13 +74,14 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  color: var(--accent-rose);
 }
 
 /* Title */
 .pyq-title {
   font-size: 14px;
   font-weight: 500;
-  color: black;
+  color: var(--text-body);
   line-height: 1.35;
   white-space: nowrap;
 }
@@ -89,28 +92,7 @@
   gap: 8px;
 }
 
-/* Icon button */
-.icon-btn {
-  background: red;
-  border: none;
-  border-radius: 10px;
-  padding: 8px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
-  transition: background 0.15s ease, transform 0.1s ease;
-}
-
-.icon-btn:hover {
-  background: #e6e8eb;
-}
-
-.icon-btn:active {
-  transform: scale(0.9);
-}
+/* Icon button at reference.css*/
 
 /* ===== Tablet & desktop ===== */
 @media (min-width: 768px) {
@@ -129,5 +111,5 @@
   }
 }
 .pyqicon{
-  color: red;
+  color: var(--accent-rose);
 }

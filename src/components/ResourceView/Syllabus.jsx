@@ -89,7 +89,7 @@ function Syllabus() {
 
         <div className="card-content">
           <h3>Course Syllabus</h3>
-          <p>Official syllabus document (Semester {sem})</p>
+          <p>Official syllabus document</p>
         </div>
 
         <div className="button-group">

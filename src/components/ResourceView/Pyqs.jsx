@@ -137,24 +137,24 @@ function PYQs() {
                   </div>
 
                   <div className="pyq-actions">
-                    <button
-                      className="icon-btn"
-                      onClick={() => setActivePdf(pyq.pdf_url)}
-                    >
-                      <Eye size={18} />
-                    </button>
+<button
+  className="icon-btn"
+  onClick={() => setActivePdf(pyq.pdf_url)}
+>
+  <Eye size={18} />
+</button>
 
-                    <button
-                      className="icon-btn"
-                      onClick={() =>
-                        handleDownload(
-                          pyq.pdf_url,
-                          `PYQ_${pyq.exam_category}_${year}.pdf`
-                        )
-                      }
-                    >
-                      <ExternalLink size={18} />
-                    </button>
+<button
+  className="icon-btn"
+  onClick={() =>
+    handleDownload(
+      pyq.pdf_url,
+      `PYQ_${pyq.exam_category}_${year}.pdf`
+    )
+  }
+>
+  <ExternalLink size={18} />
+</button>
                   </div>
                 </div>
               ))}

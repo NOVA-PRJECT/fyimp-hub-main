@@ -107,20 +107,22 @@
   transition: background 0.2s ease, transform 0.15s ease;
 }
 
-.note-btn:hover {
-  background: var(--accent-rose); /* Subtle change for interactive feel */
-  color: var(--text-white);
-}
 
 .note-btn:active {
   transform: scale(0.90);
+  background-color: var(--text-white);
+  color: var(--brand-indigo) ;
+}
+.note-btn:hover{
+  border: none;
 }
 
 /* No notes text */
 .no-notes {
   font-size: 0.85rem;
-  color: var(--text-muted); /* Updated */
+  color: red; /* Updated */
   padding: 6px 4px;
+  
 }
 
 /* Loading state */
@@ -139,11 +141,12 @@
   height: 100px;
   min-width: 90px;
   max-width: 210px;
+  color: var(--text-muted-alt);
   background: var(--surface-card);
   border-radius: 12px;
   border: 1px solid var(--border-global);
   padding: 10px;
-  scroll-snap-align: start;
+  scroll-snap-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -152,10 +155,5 @@
 }
 
 .note-coming-soon .note-label {
-  color: var(--text-muted-alt); /* Updated */
-}
+  color: var(--text-muted-alt); /
 
-.note-icon-muted {
-  filter: grayscale(100%);
-  opacity: 0.5;
-}
