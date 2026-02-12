@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import "./Pyqs.css";
-import { FileText, Eye, ExternalLink, Loader2 } from "lucide-react";
+import { FileText, Eye, Download, Loader2 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useParams } from "react-router-dom";
 import PdfViewer from "./PdfViewer";
@@ -153,7 +153,7 @@ function PYQs() {
     )
   }
 >
-  <ExternalLink size={18} />
+  <Download size={18} />
 </button>
                   </div>
                 </div>

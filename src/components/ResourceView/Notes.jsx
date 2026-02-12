@@ -4,6 +4,7 @@ import {
   FileText,
   NotebookText,
   Eye,
+  Download,
   ExternalLink,
   Loader2,
 } from "lucide-react";
@@ -141,7 +142,7 @@ function Notes() {
                             )
                           }
                         >
-                          <ExternalLink size={16} /> Download
+                          <Download   size={16} /> Download
                         </button>
                       </div>
                     </div>

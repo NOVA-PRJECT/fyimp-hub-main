@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import "./Syllabus.css";
-import { FileText, ExternalLink, Eye, Loader2 } from "lucide-react";
+import { FileText, Download, Eye, Loader2 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useParams } from "react-router-dom";
 import PdfViewer from "./PdfViewer";
@@ -112,7 +112,7 @@ function Syllabus() {
             disabled={loading || !pdfUrl}
           >
             Download Syllabus
-            <ExternalLink className="btn-icon" />
+            <Download className="btn-icon" />
           </button>
         </div>
       </div>
