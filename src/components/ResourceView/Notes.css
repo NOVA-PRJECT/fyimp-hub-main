@@ -155,5 +155,6 @@
 }
 
 .note-coming-soon .note-label {
-  color: var(--text-muted-alt); /
+  color: var(--text-muted-alt); 
+}
 
