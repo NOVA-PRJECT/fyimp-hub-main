@@ -120,7 +120,7 @@ function PaperLayout() {
       </div>
 
       {/* TAB CONTENT */}
-      <Outlet />
+      <Outlet context={{paperName}} />
 
       {/* BOTTOM NAV */}
       <BottomResourceNav />

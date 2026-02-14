@@ -5,6 +5,7 @@ import { FileText, Download, Eye, Loader2 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useParams } from "react-router-dom";
 import PdfViewer from "./PdfViewer";
+import { useOutletContext } from "react-router-dom";
 
 function Syllabus() {
   const { paperId, sem } = useParams(); // ✅ URL is source of truth
@@ -57,6 +58,8 @@ function Syllabus() {
       setIsViewerOpen(false);
     }
   };
+  const {paperName} = useOutletContext();
+
 
   const handleDownload = async () => {
     if (!pdfUrl) return;
@@ -65,10 +68,12 @@ function Syllabus() {
       const response = await fetch(pdfUrl);
       const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
+      
+      
 
       const a = document.createElement("a");
       a.href = blobUrl;
-      a.download = `Syllabus_Sem_${sem}.pdf`;
+      a.download = `${paperName}_syllabus .pdf`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -78,6 +83,8 @@ function Syllabus() {
     }
   };
 
+
+    
   /* ---------- UI ---------- */
 
   return (
