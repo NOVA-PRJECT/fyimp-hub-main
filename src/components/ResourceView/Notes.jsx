@@ -11,7 +11,7 @@ import {
 import { supabase } from "../../supabaseClient";
 import { useParams } from "react-router-dom";
 import PdfViewer from "./PdfViewer";
-import "./Notes.css";
+import "./View.css";
 
 function Notes() {
   const { paperId } = useParams(); // ✅ URL is the source of truth

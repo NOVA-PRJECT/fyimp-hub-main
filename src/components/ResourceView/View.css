@@ -1,0 +1,591 @@
+/*===========================*/
+/* 1) Notes                  */
+/*===========================*/
+
+.notes {
+  padding: 0px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: transparent;
+}
+
+/* Module heading */
+.module-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-heading); /* Updated */
+}
+
+.notes-row-wrapper {
+  position: relative;
+}
+
+/* Right colored fade - Updated to match BG */
+.notes-row-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4rem;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    var(--bg-main) 
+  );
+}
+
+/* Horizontal scroll row */
+.notes-row {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar */
+.notes-row::-webkit-scrollbar {
+  display: none;
+}
+
+/* Individual note card */
+.note-card {
+  height: 100px;
+  min-width: 90px;
+  max-width: 210px;
+  background: var(--surface-card); /* Updated */
+  border-radius: 12px;
+  padding: 10px;
+  border: 1px solid var(--border-global); /* Updated */
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* File icon */
+.note-icon {
+  color: var(--accent-rose); /* Updated */
+}
+
+/* Priority label */
+.note-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text-body); /* Updated */
+}
+
+/* Button container */
+.note-actions {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  margin-top: auto; /* Ensures buttons stay at bottom */
+}
+
+/* Buttons */
+.note-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: var(--brand-indigo); /* Updated */
+  color: var(--text-white);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+
+.note-btn:active {
+  transform: scale(0.90);
+  background-color: var(--text-white);
+  color: var(--brand-indigo) ;
+}
+.note-btn:hover{
+  border: none;
+}
+
+/* No notes text */
+.no-notes {
+  font-size: 0.85rem;
+  color: red; /* Updated */
+  padding: 6px 4px;
+  
+}
+
+/* Loading state */
+.notes-loading {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--text-muted); /* Updated */
+}
+
+/* Coming soon state */
+.note-coming-soon  {
+  height: 100px;
+  min-width: 90px;
+  max-width: 210px;
+  color: var(--text-muted-alt);
+  background: var(--surface-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-global);
+  padding: 10px;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.note-coming-soon .note-label {
+  color: var(--text-muted-alt); 
+}
+
+
+/*===========================*/
+/* 2) Pyq                    */
+/*===========================*/
+
+/* ===== Root container ===== */
+.pyqs-view {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+}
+
+/* ===== Loading & empty states ===== */
+.pyqs-view.center,
+.pyqs-view.empty {
+  min-height: 60vh;
+  display: flex;
+  color: var(--text-muted-alt);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+/* ===== Year group ===== */
+.pyq-year-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Year heading */
+.pyq-year {
+  position: relative;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-heading);
+  margin: 0px 0px;
+  
+  letter-spacing: 0.3px;
+  position: relative;
+}
+.pyq-year:after{
+  content: "";
+  position: absolute;
+  
+  height: 1.5px;
+  width: 300px;
+  background-color: var(--text-muted-alt);
+  border-radius: 10px;
+  margin:10px 5px;
+}
+
+/* ===== Card ===== */
+.pyq-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border-global);
+  background: var(--surface-card);
+  border-radius: 14px;
+  padding: 12px 14px;
+
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+/* Touch interaction */
+.pyq-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== Left section ===== */
+.pyq-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent-rose);
+}
+
+/* Title */
+.pyq-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-body);
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+/* ===== Action buttons ===== */
+.pyq-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Icon button at reference.css*/
+
+/* ===== Tablet & desktop ===== */
+@media (min-width: 768px) {
+  .pyqs-view {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .pyq-title {
+    font-size: 15px;
+  }
+
+  .pyq-card {
+    padding: 14px 18px;
+  }
+}
+.pyqicon{
+  color: var(--accent-rose);
+}
+
+
+/*===========================*/
+/* 3) syllabus               */
+/*===========================*/
+
+.syllabus {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: transparent; /* Allows page background to show through */
+}
+.syllabus-card {
+  background-color: var(--surface-card); 
+  width: 20rem;
+  padding: 35px 25px;
+  border-radius: 28px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid   var(--border-global);
+}
+
+/* The Icon Circle */
+.icon-container {
+  background-color: #96969629; /* Navy/Dark Grey circle */
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* The Lucide Icon inside the circle */
+.card-icon {
+  color: var(--accent-rose) !important; /* Light blue icon color */
+  width: 30px;
+  height: 30px;
+}
+
+/* Text Content Area */
+.card-content h3 {
+  color: var(--text-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+}
+
+.card-content p {
+  color: var(--text-muted); 
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0 0 30px 0;
+}
+
+
+/* The Red Action Button */
+.view-btn {
+  background-color: var(--brand-indigo); /* Vibrant Red */
+  color: var(--text-white);
+  border: none;
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 4px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+}
+
+
+.view-btn:active {
+  transform: scale(0.97);
+  border: none;
+}
+
+/* The External Link Icon inside button */
+.btn-icon {
+  padding: 0;
+  margin: 0;
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.5px;
+}
+
+/*===========================*/
+/* 4) reference              */
+/*===========================*/
+
+/* ---------- ROOT ---------- */
+
+.reference-view {
+  padding: 16px;
+  padding-bottom: 90px; /* space for bottom nav */
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  background: transparent;
+}
+
+/* ---------- STATES ---------- */
+
+.reference-view.center,
+.reference-view.empty {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-muted-alt);
+  text-align: center;
+}
+
+/* ---------- GROUP ---------- */
+
+.reference-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.group-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-heading);
+  padding-left: 2px;
+}
+
+/* ---------- CARD ---------- */
+
+.reference-card {
+  background: var(--surface-card);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--border-global);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.reference-card:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+/* ---------- LEFT ---------- */
+
+.ref-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 75%;
+  color: var(--accent-rose);
+}
+
+.ref-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ref-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-body);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+}
+
+.ref-author {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ---------- ACTIONS ---------- */
+
+.ref-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-btn {
+  background: var(--brand-indigo);
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: vvar(--text-white);
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.icon-btn:active {
+  background: #e5e7eb;
+  transform: scale(0.92);
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (min-width: 640px) {
+  .reference-view {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .group-title {
+    font-size: 16px;
+  }
+
+  .ref-title {
+    font-size: 15px;
+  }
+}
+
+
+/*===========================*/
+/* 4) PdfViewer              */
+/*===========================*/
+
+.pdf-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: #525659;
+  z-index: 9999;
+  display: flex;
+  overflow: hidden;
+}
+
+.pdf-modal-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #525659;
+  overflow: hidden;
+}
+.pdf-viewer-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #525659;
+  padding-bottom: 72px; /* space for bottom toolbar */
+}
+
+.react-pdf__Page {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.react-pdf__Page canvas {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+.pdf-toolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0; /* 👈 instead of width: 100vw */
+
+  height: 56px;
+  background: black;
+  border-top: 1px solid #333;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 12px;
+
+  box-sizing: border-box;
+  z-index: 10000;
+}
+
+pdf-controls,
+.pdf-zoom,
+.pdf-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+button {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

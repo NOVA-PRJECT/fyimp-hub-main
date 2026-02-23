@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import "./Syllabus.css";
+import "./View.css";
 import { FileText, Download, Eye, Loader2 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useParams } from "react-router-dom";

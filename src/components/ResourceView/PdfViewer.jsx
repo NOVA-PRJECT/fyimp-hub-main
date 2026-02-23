@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import { X, ZoomIn, ZoomOut } from "lucide-react";
-import "./PdfViewer.css";
+import "./View.css";
 
 // Keep your existing worker (since this version already works for you)
 pdfjs.GlobalWorkerOptions.workerSrc =

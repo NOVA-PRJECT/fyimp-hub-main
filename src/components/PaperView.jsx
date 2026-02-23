@@ -143,6 +143,9 @@ function PaperView() {
                   </React.Fragment>
                 );
               })}
+               <li className="endOfList">
+      — End of Papers —
+    </li>
             </ul>
           )}
 
