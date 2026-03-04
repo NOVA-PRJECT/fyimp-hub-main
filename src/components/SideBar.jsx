@@ -14,104 +14,86 @@ function SideBar({
   setpaperid,
 }) {
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
   const { dept: deptCode, sem } = useParams();
 
   async function fetchdept() {
     setLoading(true);
-
-    const { data, error } = await supabase
-      .from("departments")
-      .select("*");
+    const { data, error } = await supabase.from("departments").select("*");
 
     if (!error) {
       setdepartments(data || []);
     }
-
     setLoading(false);
   }
 
   useEffect(() => {
     fetchdept();
   }, []);
-  
-  
-  
-  
-  useEffect(() => {
-  if (isSidebarOpen) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
 
-  return () => {
-    document.body.style.overflow = "auto";
-  };
-}, [isSidebarOpen]);
+  useEffect(() => {
+    if (isSidebarOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isSidebarOpen]);
 
   return (
-  <>
-    {isSidebarOpen && (
-      <div className="overlay" onClick={toggleSidebar}></div>
-    )}
-
-    <div className={`sidebar ${isSidebarOpen ? "open" : "close"}`}>
-      <div className="sidebarhead">
-        <h2 className="heading">Departments</h2>
-        <X className="closebtn" onClick={toggleSidebar} />
-      </div>
-
-      {loading ? (
-        <div className="loadingScreen">
-          <div className="loader"></div>
-          <p>Loading departments...</p>
-        </div>
-      ) : (
-        <>
-          {isSidebarOpen && (
-            <div className="overlay" onClick={toggleSidebar}></div>
-          )}
-
-          <div className={`sidebar ${isSidebarOpen ? "open" : "close"}`}>
-            <div className="sidebarhead">
-              <h2 className="heading">Departments</h2>
-              <X className="closebtn" onClick={toggleSidebar} />
-            </div>
-
-            <ul className="departmentList">
-              {departments.map((department) => (
-                <li
-                  key={department.id}
-                  className={`departmentItem ${
-                    deptCode === department.code ? "activeDept" : ""
-                 }`}
-                  onClick={() => {
-                    toggleSidebar();
-
-                    // reset paper
-                    setpaperid(null);
-
-                    // sync state
-                    setselectedDept(department.name);
-                    setdeptid(department.id);
-
-                    // keep semester if present, else default to 1
-                    const nextSem = sem ? Number(sem) : 1;
-
-                    navigate(`/${department.code}/${nextSem}`);
-                  }}
-                >
-                  {department.name}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </>
+    <>
+      {/* Overlay */}
+      {isSidebarOpen && (
+        <div className="overlay" onClick={toggleSidebar}></div>
       )}
-    </div>
-  </>
-);
+
+      {/* Sidebar Container */}
+      <div className={`sidebar ${isSidebarOpen ? "open" : "close"}`}>
+        <div className="sidebarhead">
+          <h2 className="heading">Departments</h2>
+          <X className="closebtn" onClick={toggleSidebar} />
+        </div>
+
+        {loading ? (
+          <div className="loadingScreen">
+            <div className="loader"></div>
+            <p>Loading departments...</p>
+          </div>
+        ) : (
+          <ul className="departmentList">
+            {departments.map((department) => (
+              <li
+                key={department.id}
+                className={`departmentItem ${
+                  deptCode === department.code ? "activeDept" : ""
+                }`}
+                onClick={() => {
+                  toggleSidebar();
+
+                  // Reset paper and sync state
+                  setpaperid(null);
+                  setselectedDept(department.name);
+                  setdeptid(department.id);
+
+                  // 🔥 Grab the saved semester from local storage, default to 1 if none exists
+                  const savedSem = localStorage.getItem("savedSemester");
+                  const nextSem = savedSem ? Number(savedSem) : 1;
+
+                  // Navigate using the department code and the saved semester
+                  navigate(`/${department.code}/${nextSem}`);
+                }}
+              >
+                {department.name}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </>
+  );
 }
+
 export default SideBar;
