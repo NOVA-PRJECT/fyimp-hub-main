@@ -49,14 +49,16 @@ function PaperLayout() {
           return;
         }
 
-        // 2️⃣ Validate paper ownership
+                // 2️⃣ Validate paper ownership (Core OR AEC)
         const { data: paperData, error: paperError } = await supabase
           .from("papers")
           .select("id, name")
           .eq("id", paperId)
-          .eq("department_id", deptData.id)
           .eq("semester", Number(sem))
+          // THE FIX: It must belong to the department OR be an AEC paper
+          .or(`department_id.eq.${deptData.id},type.eq.AEC`) 
           .single();
+
 
         if (paperError || !paperData) {
           setPaperValid(false);
