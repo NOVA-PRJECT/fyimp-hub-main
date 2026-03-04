@@ -64,10 +64,11 @@ function PaperView() {
       setselectedSem(semNumber);
 
       const { data: paperData, error: paperError } = await supabase
-        .from("papers_ordered")
-        .select("*")
-        .eq("department_id", deptData.id)
-        .eq("semester", semNumber);
+  .from("papers_ordered")
+  .select("*")
+  .eq("semester", semNumber) // 1. Master filter: Must be this semester
+  .or(`department_id.eq.${deptData.id},type.eq.AEC`); // 2. Sub-filter: Must be THIS department OR an AEC paper
+
 
       setpapers(paperError ? [] : paperData || []);
       setloading(false);
