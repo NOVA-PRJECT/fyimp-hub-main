@@ -30,7 +30,7 @@ function NavBar({ darkMode, setDarkMode,toggleSidebar,
                             </span>
                         </div>
                         <div className="rightNav">
-                            <Search onClick={()=>{handleSearchClick();setisSidebarOpen(false);}}  className="searchIcon" />
+                            <Search onClick={()=>{navigate('/search')} }/>
                             {darkMode ? <Sun onClick={() => setDarkMode(!darkMode)} className="darkModeIcon" /> : <Moon onClick={() => setDarkMode(!darkMode)}
                             className="darkModeIcon" />
                             }

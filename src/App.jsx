@@ -11,6 +11,8 @@ import Pyq from  "./components/ResourceView/Pyqs";
 import Syllabus from "./components/ResourceView/Syllabus";
 import Reference from "./components/ResourceView/Reference";
 import About from './components/About'
+import './App.css'
+import SearchPaper from './components/SearchPaper'
 
 function App() {
   return (
@@ -32,6 +34,7 @@ function App() {
             <Route path="reference" element={<Reference />} />
           </Route>
         </Route>
+        <Route path="/search" element={<SearchPaper />} />
         <Route path="/about" element={<About />} />
       <Route path="*" element={<NotFound />} />
       </Routes>

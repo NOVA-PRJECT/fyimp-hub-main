@@ -751,6 +751,139 @@
   top: 50%;
   margin-top: -4px;
 }
+/*===========================*/
+/* 8) SearchPaper            */
+/*===========================*/
+.search-page {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-main);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.search-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: var(--surface-card);
+  border-bottom: 1px solid var(--border-global);
+}
+
+.search-back-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-heading);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.search-back-btn:hover {
+  background: var(--border-global);
+}
+
+.search-input-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text-heading);
+  font-size: 16px;
+  outline: none;
+  padding: 8px 0;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted-alt);
+}
+
+/* Results Area */
+.search-results {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.search-paper-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-global);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.search-paper-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--border-global);
+}
+
+.paper-title {
+  color: var(--text-heading);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.paper-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.meta-dot {
+  color: var(--text-muted-alt);
+}
+/* --- Theme-Aware Skeleton Loader --- */
+.skeleton-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-global);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-box {
+  background: var(--border-global);
+  border-radius: 4px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+
+
 
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
