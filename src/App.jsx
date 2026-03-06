@@ -10,6 +10,7 @@ import Notes from "./components/ResourceView/Notes";
 import Pyq from  "./components/ResourceView/Pyqs";
 import Syllabus from "./components/ResourceView/Syllabus";
 import Reference from "./components/ResourceView/Reference";
+import About from './components/About'
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="reference" element={<Reference />} />
           </Route>
         </Route>
+        <Route path="/about" element={<About />} />
       <Route path="*" element={<NotFound />} />
       </Routes>
       <Analytics />

@@ -1,55 +1,123 @@
 import "./About.css";
 
-function About({ setabout }) {
+export default function About() {
   return (
-    <div className="abtcon" onClick={() => setabout(false)}>
-      <div className="abt" onClick={(e) => e.stopPropagation()}>
-        <h3>About FYIMP HUB</h3>
+    <main className="about-page">
+
+      {/* HERO */}
+      <section className="about-hero">
+        <h1>FYIMP HUB</h1>
+        <p>
+          A student-built academic platform created for learners of 
+          Kannur University Mangattuparamba Campus.
+        </p>
+      </section>
+
+
+      {/* WHY EXISTS */}
+      <section className="about-section">
+        <h2>Why FYIMP HUB Exists</h2>
 
         <p>
-          <strong>FYIMP HUB</strong> is a centralized academic resource platform
-          developed by students of the{" "}
-          <a
-            href="https://www.kannuruniversity.ac.in/en/academics/campus/all-departments/department-of-information-technology/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Department of Information Technology, Kannur University
-            (Mangattuparamba Campus)
-          </a>.
+          Finding academic resources shouldn’t feel like searching in the dark.
+          Notes are scattered across WhatsApp groups, PYQs are buried in
+          someone’s drive, and syllabus details often take too long to locate.
         </p>
 
         <p>
-          The platform is designed to <strong>FYIMP students</strong> by providing structured access to course-aligned
-          academic resources, <strong>including official syllabi, modular notes,
-          previous year question papers, and curated reference materials.</strong>
+          FYIMP HUB was created to solve that problem — a single place where
+          students can quickly access papers, notes, PYQs, syllabus, and
+          reference materials without wasting time.
         </p>
 
         <p>
-          The current release focuses on clarity, reliability, and academic
-          relevance. FYIMP HUB follows a priority-based content model and a
-          scalable architecture, allowing future improvements to be introduced
-          progressively while maintaining a focused learning experience.
+          It is designed to help students focus on learning instead of
+          searching.
         </p>
+      </section>
 
-        <p>
-          This initiative is collaboratively developed and maintained by{" "}
-          <strong>NOVA</strong>, in association with <strong>SHAD CT</strong>, as a
-          long-term academic support system for students.
-        </p>
 
-        <div className="version-info">
-          <p>
-            <strong>Version:</strong> 1.0
-          </p>
-          <p className="version-note">
-            Designed for structured academic access · Future updates will be
-            introduced based on academic requirements
-          </p>
+      {/* FEATURES */}
+      <section className="about-section">
+        <h2>What You Can Do Here</h2>
+
+        <div className="feature-grid">
+
+          <div className="feature-card">
+            <h3>Browse Papers</h3>
+            <p>Explore subjects by department and semester.</p>
+          </div>
+
+          <div className="feature-card">
+            <h3>Syllabus Access</h3>
+            <p>View detailed syllabus for every paper.</p>
+          </div>
+
+          <div className="feature-card">
+            <h3>Module Notes</h3>
+            <p>Each module can contain up to four curated notes.</p>
+          </div>
+
+          <div className="feature-card">
+            <h3>Previous Year Questions</h3>
+            <p>Prepare better using PYQs.</p>
+          </div>
+
+          <div className="feature-card">
+            <h3>Reference Materials</h3>
+            <p>Books and videos recommended for deeper learning.</p>
+          </div>
+
+          <div className="feature-card">
+            <h3>Search</h3>
+            <p>Instantly search papers like a mini academic search engine.</p>
+          </div>
+
         </div>
-      </div>
-    </div>
+      </section>
+
+
+      {/* DEPARTMENTS */}
+      <section className="about-section">
+        <h2>Departments Covered</h2>
+
+        <div className="dept-grid">
+          <span>Mathematics</span>
+          <span>Information Technology</span>
+          <span>Statistics</span>
+          <span>History</span>
+          <span>Physical Education</span>
+          <span>Psychology</span>
+          <span>Environmental Studies</span>
+        </div>
+
+        <p className="semester-info">
+          Content is organized across all 10 semesters.
+        </p>
+      </section>
+
+
+      {/* STORY */}
+      <section className="about-section">
+        <h2>Our Story</h2>
+
+        <p>
+          FYIMP HUB started as an idea by Shad CT, a FYIMP IT student
+          from the 2024 batch.
+        </p>
+
+        <p>
+          The platform is now being developed by FYIMP IT students
+          of the 2025 batch as part of a student initiative under
+          Project Nova.
+        </p>
+
+        <p>
+          The goal is simple: build tools that make academic life
+          easier for students.
+        </p>
+      </section>
+
+    </main>
   );
 }
-
-export default About;

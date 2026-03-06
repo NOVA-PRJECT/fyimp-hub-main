@@ -18,16 +18,8 @@ function NavBar({ darkMode, setDarkMode,toggleSidebar,
     const navigate = useNavigate();
     
     return (
-        <header className="header">
             <header className="header">
-                {searching ? (
-                    <div className="searchInput">
-                        <input type="text" className="inputBar" placeholder="Search from all papers..." />
-                        <button onClick={handleSearchClick} className="closeSearchBtn">
-                            X
-                        </button>
-                    </div>
-                ) : (
+               
                     <div className="navbar">
                         <div className="leftNav">
                             <button onClick={toggleSidebar} className="menuBtn">
@@ -44,9 +36,7 @@ function NavBar({ darkMode, setDarkMode,toggleSidebar,
                             }
                         </div>
                     </div>
-                )}
             </header>
-        </header>
 
     )
 

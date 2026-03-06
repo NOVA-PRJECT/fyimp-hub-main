@@ -43,7 +43,7 @@ function BottmNavBar({ setabout, about }) {
     <div className="homebottom">
       <CircleQuestionMark
         onClick={() => {
-          setabout(!about);
+          navigate('/about');
         }}
         className="questmark"
       />
