@@ -3,16 +3,30 @@ import { createPortal } from "react-dom";
 import "./View.css";
 import { FileText, Download, Eye, Loader2 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams, useOutletContext } from "react-router-dom";
 import PdfViewer from "./PdfViewer";
-import { useOutletContext } from "react-router-dom";
 
 function Syllabus() {
-  const { paperId, sem } = useParams(); // ✅ URL is source of truth
+  const { paperId, sem } = useParams();
+  const { paperName } = useOutletContext();
+
+  // 1. REPLACED local state with URL Search Params
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isViewerOpen = searchParams.get("pdf") === "true";
 
   const [pdfUrl, setPdfUrl] = useState(null);
-  const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+    // The URL Cleaner
+  useEffect(() => {
+    const currentPdfParam = searchParams.get("pdf");
+    // If there is a parameter, but it's not exactly "true", wipe it out
+    if (currentPdfParam && currentPdfParam !== "true") {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete("pdf");
+      setSearchParams(newParams, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
+
 
   /* Fetch syllabus */
   useEffect(() => {
@@ -40,26 +54,19 @@ function Syllabus() {
     fetchSyllabus();
   }, [paperId]);
 
-  /* Mobile back handling */
-  useEffect(() => {
-    if (!isViewerOpen) return;
+  // 2. DELETED the manual window.history.pushState useEffect!
+  // React Router automatically handles the browser history now.
 
-    window.history.pushState({ view: "syllabus-pdf" }, "");
-    const onPop = () => setIsViewerOpen(false);
-
-    window.addEventListener("popstate", onPop);
-    return () => window.removeEventListener("popstate", onPop);
-  }, [isViewerOpen]);
+  // 3. New Open/Close Handlers using the URL
+  const handleOpenViewer = () => {
+    setSearchParams({ pdf: "true" });
+  };
 
   const handleCloseViewer = () => {
-    if (window.history.state?.view === "syllabus-pdf") {
-      window.history.back();
-    } else {
-      setIsViewerOpen(false);
-    }
+    const newParams = new URLSearchParams(searchParams);
+    newParams.delete("pdf");
+    setSearchParams(newParams);
   };
-  const {paperName} = useOutletContext();
-
 
   const handleDownload = async () => {
     if (!pdfUrl) return;
@@ -69,11 +76,9 @@ function Syllabus() {
       const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
       
-      
-
       const a = document.createElement("a");
       a.href = blobUrl;
-      a.download = `${paperName}_syllabus .pdf`;
+      a.download = `${paperName}_syllabus.pdf`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -83,8 +88,6 @@ function Syllabus() {
     }
   };
 
-
-    
   /* ---------- UI ---------- */
 
   return (
@@ -100,9 +103,10 @@ function Syllabus() {
         </div>
 
         <div className="button-group">
+          {/* 4. Updated the onClick to use handleOpenViewer */}
           <button
             className="view-btn"
-            onClick={() => setIsViewerOpen(true)}
+            onClick={handleOpenViewer}
             disabled={loading || !pdfUrl}
           >
             {loading ? (

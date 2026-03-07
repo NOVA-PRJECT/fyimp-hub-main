@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FileText, Eye, Download, Loader2 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom"; // ✅ Added useSearchParams
 import PdfViewer from "./PdfViewer";
 import "./View.css";
 
@@ -16,11 +16,21 @@ const EXAM_ORDER = {
 };
 
 function PYQs() {
-  const { paperId } = useParams(); // ✅ URL source of truth
+  const { paperId } = useParams();
+
+  // 1. URL Search Params Setup
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activePdfId = searchParams.get("pdf"); // Grabs the ID from ?pdf=123
 
   const [pyqs, setPyqs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activePdf, setActivePdf] = useState(null);
+
+  // 2. Find the active PDF directly from the flat pyqs array
+  const activePyq = activePdfId 
+    ? pyqs.find((pyq) => pyq.id.toString() === activePdfId)
+    : null;
+  
+  const activePdfUrl = activePyq?.pdf_url;
 
   /* Fetch PYQs */
   useEffect(() => {
@@ -50,16 +60,22 @@ function PYQs() {
     fetchPYQs();
   }, [paperId]);
 
-  /* Mobile back handling for PDF viewer */
+  // 3. The URL Cleaner (Replaces the old window.history popstate hack)
   useEffect(() => {
-    if (!activePdf) return;
+    // If loading is done, we have pyqs, there's an ID in the URL, BUT the pyq wasn't found...
+    if (!loading && pyqs.length > 0 && activePdfId && !activePyq) {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete("pdf");
+      setSearchParams(newParams, { replace: true }); // Wipe it cleanly
+    }
+  }, [activePdfId, activePyq, loading, pyqs, searchParams, setSearchParams]);
 
-    window.history.pushState({ view: "pyq-pdf" }, "");
-    const onPop = () => setActivePdf(null);
-
-    window.addEventListener("popstate", onPop);
-    return () => window.removeEventListener("popstate", onPop);
-  }, [activePdf]);
+  // 4. URL-based Close Handler
+  const handleCloseViewer = () => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.delete("pdf");
+    setSearchParams(newParams);
+  };
 
   /* Download handler */
   const handleDownload = async (url, name) => {
@@ -137,24 +153,25 @@ function PYQs() {
                   </div>
 
                   <div className="pyq-actions">
-<button
-  className="icon-btn"
-  onClick={() => setActivePdf(pyq.pdf_url)}
->
-  <Eye size={18} />
-</button>
+                    {/* 5. Update URL state instead of local state */}
+                    <button
+                      className="icon-btn"
+                      onClick={() => setSearchParams({ pdf: pyq.id })}
+                    >
+                      <Eye size={18} />
+                    </button>
 
-<button
-  className="icon-btn"
-  onClick={() =>
-    handleDownload(
-      pyq.pdf_url,
-      `PYQ_${pyq.exam_category}_${year}.pdf`
-    )
-  }
->
-  <Download size={18} />
-</button>
+                    <button
+                      className="icon-btn"
+                      onClick={() =>
+                        handleDownload(
+                          pyq.pdf_url,
+                          `PYQ_${pyq.exam_category}_${year}.pdf`
+                        )
+                      }
+                    >
+                      <Download size={18} />
+                    </button>
                   </div>
                 </div>
               ))}
@@ -163,11 +180,11 @@ function PYQs() {
         })}
 
       {/* PDF VIEWER (PORTAL) */}
-      {activePdf &&
+      {activePdfUrl &&
         createPortal(
           <PdfViewer
-            fileUrl={activePdf}
-            onClose={() => setActivePdf(null)}
+            fileUrl={activePdfUrl}
+            onClose={handleCloseViewer}
           />,
           document.body
         )}

@@ -9,18 +9,38 @@ import {
   Loader2,
 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom"; // ✅ Added useSearchParams
 import PdfViewer from "./PdfViewer";
 import "./View.css";
 
 function Notes() {
-  const { paperId } = useParams(); // ✅ URL is the source of truth
+  const { paperId } = useParams();
+
+  // 1. URL Search Params Setup
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activePdfId = searchParams.get("pdf"); // Grabs the ID from ?pdf=123
 
   const [notesByModule, setNotesByModule] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const [activePdf, setActivePdf] = useState(null);
-  const [isViewerOpen, setIsViewerOpen] = useState(false);
+  // 2. Find the active PDF URL by flattening our grouped modules
+  // If there's an activePdfId in the URL, search all notes to find the matching one
+  const activeNote = activePdfId 
+    ? Object.values(notesByModule).flat().find(note => note.id.toString() === activePdfId)
+    : null;
+  
+  const activePdfUrl = activeNote?.pdf_url;
+    // The URL Cleaner
+  useEffect(() => {
+    // If loading is finished, AND there's an ID in the URL, BUT we couldn't find the note...
+    if (!loading && Object.keys(notesByModule).length > 0 && activePdfId && !activeNote) {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete("pdf");
+      // { replace: true } ensures this cleanup doesn't add a junk step to the Android back button history
+      setSearchParams(newParams, { replace: true });
+    }
+  }, [activePdfId, activeNote, loading, notesByModule, searchParams, setSearchParams]);
+
 
   useEffect(() => {
     if (!paperId) return;
@@ -57,23 +77,11 @@ function Notes() {
     fetchNotes();
   }, [paperId]);
 
-  // Handle back button for PDF viewer
-  useEffect(() => {
-    if (!isViewerOpen) return;
-
-    window.history.pushState({ view: "pdf" }, "");
-    const handlePopState = () => setIsViewerOpen(false);
-    window.addEventListener("popstate", handlePopState);
-
-    return () => window.removeEventListener("popstate", handlePopState);
-  }, [isViewerOpen]);
-
+  // 3. New URL-based Close Handler (DELETED the old window.history hack)
   const handleCloseViewer = () => {
-    if (window.history.state?.view === "pdf") {
-      window.history.back();
-    } else {
-      setIsViewerOpen(false);
-    }
+    const newParams = new URLSearchParams(searchParams);
+    newParams.delete("pdf");
+    setSearchParams(newParams);
   };
 
   const handleDownload = async (url, filename) => {
@@ -123,12 +131,10 @@ function Notes() {
                       </p>
 
                       <div className="note-actions">
+                        {/* 4. Updated to use setSearchParams instead of local state */}
                         <button
                           className="note-btn"
-                          onClick={() => {
-                            setActivePdf(note.pdf_url);
-                            setIsViewerOpen(true);
-                          }}
+                          onClick={() => setSearchParams({ pdf: note.id })}
                         >
                           <Eye size={16} /> View
                         </button>
@@ -142,7 +148,7 @@ function Notes() {
                             )
                           }
                         >
-                          <Download   size={16} /> Download
+                          <Download size={16} /> Download
                         </button>
                       </div>
                     </div>
@@ -164,10 +170,10 @@ function Notes() {
         </div>
       ))}
 
-      {isViewerOpen &&
-        activePdf &&
+      {/* 5. Render portal based on URL state */}
+      {activePdfUrl &&
         createPortal(
-          <PdfViewer fileUrl={activePdf} onClose={handleCloseViewer} />,
+          <PdfViewer fileUrl={activePdfUrl} onClose={handleCloseViewer} />,
           document.body
         )}
     </div>
