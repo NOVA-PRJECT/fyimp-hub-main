@@ -170,7 +170,7 @@ function Notes() {
       <div className="priority-hint">
         <Info size={14} />
         <p>
-          <strong>Priority Guide:</strong> 1 = Faculty Notes &nbsp;&bull;&nbsp; 2 = Topper's Notes &nbsp;&bull;&nbsp; 3 = Exam Prep &nbsp;&bull;&nbsp; 4 = AI-Generated Notes
+          <strong>Priority Guide:</strong> 1 = Faculty Notes &nbsp;&bull;&nbsp; 2 = student's Notes &nbsp;&bull;&nbsp; 3 = Exam Prep &nbsp;&bull;&nbsp; 4 = AI-Generated Notes
         </p>
       </div>
 
