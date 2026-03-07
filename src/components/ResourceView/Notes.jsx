@@ -5,11 +5,11 @@ import {
   NotebookText,
   Eye,
   Download,
-  ExternalLink,
   Loader2,
+  Info, // ✅ Imported Info icon for the subtle hint
 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
-import { useParams, useSearchParams } from "react-router-dom"; // ✅ Added useSearchParams
+import { useParams, useSearchParams } from "react-router-dom";
 import PdfViewer from "./PdfViewer";
 import "./View.css";
 
@@ -18,29 +18,26 @@ function Notes() {
 
   // 1. URL Search Params Setup
   const [searchParams, setSearchParams] = useSearchParams();
-  const activePdfId = searchParams.get("pdf"); // Grabs the ID from ?pdf=123
+  const activePdfId = searchParams.get("pdf");
 
   const [notesByModule, setNotesByModule] = useState({});
   const [loading, setLoading] = useState(false);
 
   // 2. Find the active PDF URL by flattening our grouped modules
-  // If there's an activePdfId in the URL, search all notes to find the matching one
   const activeNote = activePdfId 
     ? Object.values(notesByModule).flat().find(note => note.id.toString() === activePdfId)
     : null;
   
   const activePdfUrl = activeNote?.pdf_url;
-    // The URL Cleaner
+
+  // The URL Cleaner
   useEffect(() => {
-    // If loading is finished, AND there's an ID in the URL, BUT we couldn't find the note...
     if (!loading && Object.keys(notesByModule).length > 0 && activePdfId && !activeNote) {
       const newParams = new URLSearchParams(searchParams);
       newParams.delete("pdf");
-      // { replace: true } ensures this cleanup doesn't add a junk step to the Android back button history
       setSearchParams(newParams, { replace: true });
     }
   }, [activePdfId, activeNote, loading, notesByModule, searchParams, setSearchParams]);
-
 
   useEffect(() => {
     if (!paperId) return;
@@ -77,7 +74,7 @@ function Notes() {
     fetchNotes();
   }, [paperId]);
 
-  // 3. New URL-based Close Handler (DELETED the old window.history hack)
+  // 3. New URL-based Close Handler
   const handleCloseViewer = () => {
     const newParams = new URLSearchParams(searchParams);
     newParams.delete("pdf");
@@ -131,7 +128,6 @@ function Notes() {
                       </p>
 
                       <div className="note-actions">
-                        {/* 4. Updated to use setSearchParams instead of local state */}
                         <button
                           className="note-btn"
                           onClick={() => setSearchParams({ pdf: note.id })}
@@ -170,10 +166,18 @@ function Notes() {
         </div>
       ))}
 
-      {/* 5. Render portal based on URL state */}
+      {/* ✅ Subtle Priority Hint at the bottom */}
+      <div className="priority-hint">
+        <Info size={14} />
+        <p>
+          <strong>Priority Guide:</strong> 1 = Faculty Notes &nbsp;&bull;&nbsp; 2 = Topper's Notes &nbsp;&bull;&nbsp; 3 = Exam Prep &nbsp;&bull;&nbsp; 4 = AI-Generated Notes
+        </p>
+      </div>
+
+      {/* Render portal based on URL state */}
       {activePdfUrl &&
         createPortal(
-          <PdfViewer fileUrl={activePdfUrl} onClose={handleCloseViewer} />,
+          <PdfViewer fileUrl={activePdfUrl} onClose={handleCloseViewer} title={`Module ${activeNote?.module_number} Notes`} />,
           document.body
         )}
     </div>
