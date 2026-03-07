@@ -156,6 +156,35 @@
 .note-coming-soon .note-label {
   color: var(--text-muted-alt); 
 }
+/* --- Subtle Priority Hint --- */
+.priority-hint {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px dashed #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.priority-hint p {
+  margin: 0;
+}
+
+.priority-hint strong {
+  font-weight: 600;
+  color: #64748b;
+}
+
+@media (max-width: 600px) {
+  .priority-hint {
+    flex-direction: column;
+    text-align: center;
+    line-height: 1.6;
+  }
+}
 
 
 /*===========================*/
