@@ -411,6 +411,39 @@
   cursor: pointer; 
   
 }
+/* Wrapper for icons that need absolute positioned badges */
+.navIconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Add a little pop effect when tapping the star */
+.navIconWrapper:active {
+  transform: scale(0.90);
+}
+
+/* The Notification Badge */
+.bookmarkBadge {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  background-color: var(--accent-rose); /* Uses your existing red theme variable! */
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 900;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* Ensures the click passes through to the icon */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
 
 /*===========================*/
 /* 5) PaperView              */
@@ -537,10 +570,7 @@
     box-shadow 0.15s ease;
      border: 1px solid var(--border-global);
 }
-.paperItem:active {
-  transform: scale(0.97);
-  box-shadow: inset 0 2px 6px rgba(0,0,0,0.2);
-}
+
 
 
 /* LEFT */
@@ -593,6 +623,20 @@
   padding: 20px;
   font-size: 14px;
   opacity: 0.6;
+}
+/* STAR ICON CONTAINER (RIGHT) */
+.paperBookmark {
+  width: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* Optional: Add a subtle hover effect to the star on desktop */
+.paperBookmark:active {
+  transform: scale(0.85);
 }
 
 

@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
-import { StickyNote } from "lucide-react";
+import { StickyNote, Star } from "lucide-react"; // ✅ Import Star
 import { useParams, useOutletContext, useNavigate } from "react-router-dom";
 import NotFound from "./NotFound";
+import { useBookmarks } from "../BookmarkContext"; // ✅ Import our Hook
 
-const VALID_SEMS = [1,2,3,4,5,6,7,8,9,10];
+const VALID_SEMS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 function PaperView() {
   const { dept: deptCode, sem } = useParams();
   const navigate = useNavigate();
   const [loading, setloading] = useState(false);
+
+  // ✅ Bring in the bookmarks!
+  const { bookmarks, toggleBookmark } = useBookmarks();
 
   const {
     selectedDept,
@@ -20,17 +24,14 @@ function PaperView() {
     setdeptid,
     setselectedPaper,
     setpaperid,
-    setIsRouteValid,   // ✅ THIS
+    setIsRouteValid,
   } = useOutletContext();
 
   useEffect(() => {
     async function fetchData() {
       setloading(true);
-      setIsRouteValid(true); // assume valid until proven otherwise
+      setIsRouteValid(true); 
 
-      /* -----------------------------
-         VALIDATE SEM
-      ------------------------------ */
       const semNumber = Number(sem);
       if (!VALID_SEMS.includes(semNumber)) {
         setIsRouteValid(false);
@@ -38,9 +39,6 @@ function PaperView() {
         return;
       }
 
-      /* -----------------------------
-         RESOLVE DEPARTMENT
-      ------------------------------ */
       const { data: deptData, error: deptError } = await supabase
         .from("departments")
         .select("id, name")
@@ -48,7 +46,7 @@ function PaperView() {
         .single();
 
       if (deptError || !deptData) {
-        setIsRouteValid(false);   // 🚫 INVALID DEPT
+        setIsRouteValid(false);   
         setpapers([]);
         setselectedDept(null);
         setdeptid(null);
@@ -56,19 +54,15 @@ function PaperView() {
         return;
       }
 
-      /* -----------------------------
-         VALID DEPT + SEM
-      ------------------------------ */
       setdeptid(deptData.id);
       setselectedDept(deptData.name);
       setselectedSem(semNumber);
 
       const { data: paperData, error: paperError } = await supabase
-  .from("papers_ordered")
-  .select("*")
-  .eq("semester", semNumber) // 1. Master filter: Must be this semester
-  .or(`department_id.eq.${deptData.id},type.eq.AEC`); // 2. Sub-filter: Must be THIS department OR an AEC paper
-
+        .from("papers_ordered")
+        .select("*")
+        .eq("semester", semNumber) 
+        .or(`department_id.eq.${deptData.id},type.eq.AEC`); 
 
       setpapers(paperError ? [] : paperData || []);
       setloading(false);
@@ -77,21 +71,10 @@ function PaperView() {
     fetchData();
   }, [deptCode, sem]);
 
-  /* -----------------------------
-     INVALID ROUTE UI
-  ------------------------------ */
   if (!loading && !selectedDept) {
-    return (
-      <NotFound
-        title="Page not found"
-        message="The page you are looking for doesn't exist."
-      />
-    );
+    return <NotFound title="Page not found" message="The page you are looking for doesn't exist." />;
   }
 
-  /* -----------------------------
-     NORMAL UI
-  ------------------------------ */
   return (
     <div className="paperview">
       {loading ? (
@@ -113,6 +96,9 @@ function PaperView() {
               {papers.map((paper, index) => {
                 const prevType = index > 0 ? papers[index - 1].type : null;
                 const showHeading = paper.type !== prevType;
+                
+                // ✅ Check if THIS specific paper in the loop is saved
+                const isSaved = bookmarks.some((b) => b.paperId === paper.id);
 
                 return (
                   <React.Fragment key={paper.id}>
@@ -140,16 +126,37 @@ function PaperView() {
                           {deptCode} • {paper.type}
                         </div>
                       </div>
+
+                      {/* ✅ THE NEW STAR BUTTON */}
+                      <div 
+                        className="paperBookmark"
+                        onClick={(e) => {
+                          e.stopPropagation(); // 🛑 PREVENTS THE CARD FROM NAVIGATING!
+                          toggleBookmark({
+                            paperId: paper.id,
+                            name: paper.name,
+                            dept: deptCode,
+                            sem: Number(sem)
+                          });
+                        }}
+                      >
+                        <Star 
+                          size={24} 
+                          fill={isSaved ? "#f59e0b" : "transparent"} 
+                          color={isSaved ? "#f59e0b" : "var(--border-global)"} 
+                          style={{ 
+                            transition: "all 0.2s ease", 
+                            filter: isSaved ? "drop-shadow(0 0 4px rgba(245, 158, 11, 0.4))" : "none" 
+                          }}
+                        />
+                      </div>
                     </li>
                   </React.Fragment>
                 );
               })}
-               <li className="endOfList">
-      — End of Papers —
-    </li>
+               <li className="endOfList">— End of Papers —</li>
             </ul>
           )}
-
         </>
       )}
     </div>

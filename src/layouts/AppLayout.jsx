@@ -25,9 +25,6 @@ function AppLayout() {
     }
   }, [darkMode]);
 
-  
-  
-  
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [about, setabout] = useState(false);
 
@@ -53,7 +50,6 @@ function AppLayout() {
   ------------------------------ */
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   
-
   const backhome = () => {
     setselectedDept(null);
     setdeptid(0);
@@ -68,6 +64,9 @@ function AppLayout() {
   ------------------------------ */
   const location = useLocation();
   const isPaperRoute = location.pathname.includes("/paper/");
+  
+  // ✅ NEW: Detect if we are on the My Papers dashboard
+  const isMyPapersRoute = location.pathname.includes("/mypapers");
 
   /* -----------------------------
      OUTLET CONTEXT
@@ -112,12 +111,12 @@ function AppLayout() {
          TOP NAV
       ------------------------------ */}
       <NavBar
-      darkMode={darkMode}
-      setDarkMode={setDarkMode}
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
         toggleSidebar={toggleSidebar}
         isSidebarOpen={isSidebarOpen}
         selectedDept={selectedDept}
-        setIsSidebarOpen={setIsSidebarOpen}
+        setisSidebarOpen={setIsSidebarOpen}
         setselectedDept={setselectedDept}
         setselectedPaper={setselectedPaper}
         backhome={backhome}
@@ -145,7 +144,8 @@ function AppLayout() {
       {/* -----------------------------
          BOTTOM NAV (GUARDED)
       ------------------------------ */}
-      {!isPaperRoute && isRouteValid && (
+      {/* ✅ NEW: Hide BottomNav if we are on a Paper route OR the My Papers route */}
+      {!isPaperRoute && !isMyPapersRoute && isRouteValid && (
         <BottomNavBar
           setselectedSem={setselectedSem}
           setabout={setabout}
