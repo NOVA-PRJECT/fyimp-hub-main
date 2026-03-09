@@ -1,9 +1,14 @@
 import React from 'react';
 import { Send } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 function ShareButton() {
+  const location = useLocation();
+
+  // ✅ ONLY check if the PDF Viewer is open
+  const isPdfViewerOpen = location.search.includes('pdf=');
+
   const handleShare = async () => {
-    // Grab the exact URL the user is currently looking at
     const currentUrl = window.location.href;
     
     const shareData = {
@@ -12,16 +17,13 @@ function ShareButton() {
       url: currentUrl,
     };
 
-    // Check if the device supports native sharing (most modern phones do)
     if (navigator.share) {
       try {
         await navigator.share(shareData);
       } catch (err) {
-        // User cancelled the share, fail silently
         console.log('Share cancelled', err);
       }
     } else {
-      // FALLBACK for Desktop: Copy to clipboard
       try {
         await navigator.clipboard.writeText(currentUrl);
         alert('Link copied to clipboard!'); 
@@ -32,7 +34,16 @@ function ShareButton() {
   };
 
   return (
-    <button className="global-share-btn" onClick={handleShare} aria-label="Share this page">
+    <button 
+      className="global-share-btn" 
+      onClick={handleShare} 
+      aria-label="Share this page"
+      style={{
+        // ✅ Drop to 1.5rem ONLY when viewing a PDF. Otherwise, stay at 5.5rem.
+        bottom: isPdfViewerOpen ? '1.3rem' : '5.5rem',
+        transition: 'bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+      }}
+    >
       <Send size={24} color="white" />
     </button>
   );

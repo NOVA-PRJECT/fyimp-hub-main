@@ -4,7 +4,7 @@ import BottomResourceNav from "./BottomResourceNav";
 import { supabase } from "../supabaseClient";
 import NotFound from "./NotFound";
 // Make sure you import your CSS!
-
+import ShareButton from "./ShareButton";
 const VALID_TABS = ["notes", "pyq", "syllabus", "reference"];
 
 function PaperLayout() {
@@ -139,6 +139,7 @@ function PaperLayout() {
       </div>
 
       <Outlet context={{ paperName }} />
+      <ShareButton/>
 
       <BottomResourceNav />
     </div>

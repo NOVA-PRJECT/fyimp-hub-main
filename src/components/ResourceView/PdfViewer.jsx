@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import { X, ZoomIn, ZoomOut, AlertCircle } from "lucide-react";
 import "./View.css";
-
+import ShareButton from "../ShareButton";
 pdfjs.GlobalWorkerOptions.workerSrc =
   `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -91,6 +91,7 @@ function PdfViewer({ fileUrl, onClose, title = "Document Viewer" }) {
             </button>
           </div>
         )}
+        <ShareButton />
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar";
 import SideBar from "../components/SideBar";
 import BottomNavBar from "../components/BottomNavBar";
 import "../App.css";
-import ShareButton from "../components/ShareButton";
+
 function AppLayout() {
   /* -----------------------------
      GLOBAL UI STATE
@@ -142,8 +142,8 @@ function AppLayout() {
       <Outlet context={contextValue} />
       
       
-      <ShareButton/>
 
+      
 
       {/* -----------------------------
          BOTTOM NAV (GUARDED)
