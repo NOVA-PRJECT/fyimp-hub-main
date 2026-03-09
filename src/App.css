@@ -418,6 +418,14 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  
+  /* ✅ THE FIX: Expand the invisible clickable area */
+  padding: 12px; 
+  margin: -12px; /* Pulls it back so it doesn't push your other icons away */
+  border-radius: 50%; /* Makes the click-box a perfect circle */
+  
+  /* Removes the ugly blue square tap-highlight on mobile phones */
+  -webkit-tap-highlight-color: transparent; 
 }
 
 /* Add a little pop effect when tapping the star */
@@ -425,12 +433,12 @@
   transform: scale(0.90);
 }
 
-/* The Notification Badge */
+/* The Notification Badge (keep this as is) */
 .bookmarkBadge {
   position: absolute;
-  top: -4px;
-  right: -6px;
-  background-color: var(--accent-rose); /* Uses your existing red theme variable! */
+  top: 6px;       /* Adjusted slightly to account for the new padding */
+  right: 6px;     /* Adjusted slightly to account for the new padding */
+  background-color: var(--accent-rose); 
   color: #ffffff;
   font-size: 10px;
   font-weight: 900;
@@ -440,9 +448,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none; /* Ensures the click passes through to the icon */
+  pointer-events: none; 
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
+
 
 
 /*===========================*/
