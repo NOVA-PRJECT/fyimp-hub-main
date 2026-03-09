@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 
 import AppLayout from "./layouts/AppLayout";
@@ -12,20 +12,24 @@ import Syllabus from "./components/ResourceView/Syllabus";
 import Reference from "./components/ResourceView/Reference";
 import About from "./components/About";
 import SearchPaper from "./components/SearchPaper";
-import MyPapers from "./components/MyPapers"; // ✅ 1. Import your new dashboard
+import MyPapers from "./components/MyPapers"; // ✅ Dashboard imported
 
 import "./App.css";
 
-import { BookmarkProvider, useBookmarks } from "./BookmarkContext"; // ✅ 2. Import context and hook
+import { BookmarkProvider, useBookmarks } from "./BookmarkContext"; // ✅ Context imported
 
 /* ------------------------------------------------------------------
    🚦 THE TRAFFIC COP: Decides which home page to show
 -------------------------------------------------------------------*/
 function HomeOrDashboard() {
   const { isCustomHome } = useBookmarks();
+  const location = useLocation();
 
-  // If they flipped the switch, instantly teleport them to their dashboard
-  if (isCustomHome) {
+  // ✅ Check if the NavBar Star button passed the secret bypass message
+  const forceHome = location.state?.forceHome;
+
+  // Only redirect if they have the setting ON *AND* they didn't explicitly click to leave
+  if (isCustomHome && !forceHome) {
     return <Navigate to="/mypapers" replace />;
   }
   
@@ -42,13 +46,12 @@ function App() {
       <Routes>
         <Route element={<AppLayout />}>
           
-          {/* ✅ 3. Swap <HomeView /> for our Traffic Cop */}
+          {/* ✅ The Traffic Cop guards the root route */}
           <Route path="/" element={<HomeOrDashboard />} />
           
-          {/* ✅ 4. Register the new dashboard route */}
+          {/* ✅ The Dashboard route */}
           <Route path="/mypapers" element={<MyPapers />} />
 
-          {/* ... The rest of your existing routes remain untouched ... */}
           <Route path=":dept/:sem" element={<PaperView />} />
 
           <Route path=":dept/:sem/paper/:paperId" element={<PaperLayout />}>

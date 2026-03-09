@@ -1,6 +1,6 @@
 import { Menu, Brain, Search, Moon, Sun, Star } from "lucide-react"; 
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; // ✅ Import useLocation
+import { useNavigate, useLocation } from "react-router-dom";
 import { useBookmarks } from "../BookmarkContext"; 
 
 function NavBar({ 
@@ -16,10 +16,10 @@ function NavBar({
     const [searching, setsearching] = useState(false);
     
     const navigate = useNavigate();
-    const location = useLocation(); // ✅ Get the current route
+    const location = useLocation();
     const { bookmarks } = useBookmarks();
 
-    // ✅ Check if we are currently on the My Papers page
+    // ✅ Check if we are currently on the My Papers dashboard
     const isMyPapersActive = location.pathname.includes('/mypapers');
 
     const handleSearchClick = () => {
@@ -39,14 +39,21 @@ function NavBar({
                 </div>
                 
                 <div className="rightNav">
-                    {/* THE BOOKMARK ICON */}
+                    {/* ✅ THE BOOKMARK TOGGLE ICON */}
                     <div 
                       className="navIconWrapper" 
-                      onClick={() => navigate('/mypapers')}
+                      onClick={() => {
+                        if (isMyPapersActive) {
+                          // If we are already here, go Home and bypass the preference
+                          navigate('/', { state: { forceHome: true } });
+                        } else {
+                          // Otherwise, open the dashboard
+                          navigate('/mypapers');
+                        }
+                      }}
                     >
                         <Star 
                           className="searchIcon" 
-                          /* ✅ Dynamically fill with gold if active, otherwise transparent */
                           fill={isMyPapersActive ? "#f59e0b" : "transparent"} 
                           color={isMyPapersActive ? "#f59e0b" : "currentColor"} 
                           style={{ transition: "all 0.2s ease" }}
