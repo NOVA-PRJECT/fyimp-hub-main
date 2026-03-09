@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import BottomResourceNav from "./BottomResourceNav";
 import { supabase } from "../supabaseClient";
 import NotFound from "./NotFound";
+// Make sure you import your CSS!
 
 const VALID_TABS = ["notes", "pyq", "syllabus", "reference"];
 
@@ -36,7 +37,6 @@ function PaperLayout() {
       setLoading(true);
 
       try {
-        // 1️⃣ Resolve department code → id
         const { data: deptData, error: deptError } = await supabase
           .from("departments")
           .select("id")
@@ -49,16 +49,13 @@ function PaperLayout() {
           return;
         }
 
-                // 2️⃣ Validate paper ownership (Core OR AEC)
         const { data: paperData, error: paperError } = await supabase
           .from("papers")
           .select("id, name")
           .eq("id", paperId)
           .eq("semester", Number(sem))
-          // THE FIX: It must belong to the department OR be an AEC paper
           .or(`department_id.eq.${deptData.id},type.eq.AEC`) 
           .single();
-
 
         if (paperError || !paperData) {
           setPaperValid(false);
@@ -79,6 +76,28 @@ function PaperLayout() {
   }, [dept, sem, paperId]);
 
   /* -----------------------------
+     LOADING STATE (THE FIX)
+  ------------------------------ */
+  if (loading) {
+    return (
+      <div className="resourceview">
+        <div className="reshead">
+          {/* This empty div reserves space and shows a loading animation */}
+          <div className="skeleton-title"></div>
+          {hasValidTab && <h4 className="s">{currentTab.toUpperCase()}</h4>}
+        </div>
+        
+        {/* We hold off rendering the Outlet so child components don't fetch data yet */}
+        <div className="skeleton-outlet-placeholder">
+          {/* You can add a subtle spinner here if you want */}
+        </div>
+        
+        <BottomResourceNav />
+      </div>
+    );
+  }
+
+  /* -----------------------------
      HARD FAIL STATES
   ------------------------------ */
   if (!loading && !paperValid) {
@@ -92,7 +111,6 @@ function PaperLayout() {
 
   /* -----------------------------
      NO TAB → REDIRECT
-     /paper/:paperId
   ------------------------------ */
   if (!loading && paperValid && isPaperOnlyRoute) {
     return <Navigate to="notes" replace />;
@@ -115,16 +133,13 @@ function PaperLayout() {
   ------------------------------ */
   return (
     <div className="resourceview">
-      {/* HEADER */}
       <div className="reshead">
         <h4>{paperName}</h4>
         <h4 className="s">{currentTab.toUpperCase()}</h4>
       </div>
 
-      {/* TAB CONTENT */}
-      <Outlet context={{paperName}} />
+      <Outlet context={{ paperName }} />
 
-      {/* BOTTOM NAV */}
       <BottomResourceNav />
     </div>
   );

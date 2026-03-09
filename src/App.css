@@ -643,6 +643,31 @@
   margin-top: 20px;
   border-radius: 3px;
 }
+/* Add this below your existing .reshead styles */
+
+.skeleton-title {
+  width: 180px; /* Approximate width of a standard paper name */
+  height: 20px; /* Adjust to match the exact height of your h4 text */
+  margin-top: 1rem;
+  margin-bottom: 12px;
+  background-color: var(--text-muted-alt, #e2e8f0);
+  border-radius: 4px;
+  animation: pulse-shimmer 1.5s infinite ease-in-out;
+}
+
+.skeleton-outlet-placeholder {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes pulse-shimmer {
+  0% { opacity: 0.5; }
+  50% { opacity: 0.2; }
+  100% { opacity: 0.5; }
+}
+
 
 
 /*===========================*/

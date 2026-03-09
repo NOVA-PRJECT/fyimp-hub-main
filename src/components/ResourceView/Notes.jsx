@@ -6,31 +6,35 @@ import {
   Eye,
   Download,
   Loader2,
-  Info, // ✅ Imported Info icon for the subtle hint
 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useParams, useSearchParams } from "react-router-dom";
 import PdfViewer from "./PdfViewer";
 import "./View.css";
 
+// ✅ The translation dictionary for your priorities
+const priorityLabels = {
+  1: "Faculty Note",
+  2: "Student's Note",
+  3: "Exam Prep",
+  4: "AI-Generated Note",
+};
+
 function Notes() {
   const { paperId } = useParams();
 
-  // 1. URL Search Params Setup
   const [searchParams, setSearchParams] = useSearchParams();
   const activePdfId = searchParams.get("pdf");
 
   const [notesByModule, setNotesByModule] = useState({});
   const [loading, setLoading] = useState(false);
 
-  // 2. Find the active PDF URL by flattening our grouped modules
   const activeNote = activePdfId 
     ? Object.values(notesByModule).flat().find(note => note.id.toString() === activePdfId)
     : null;
   
   const activePdfUrl = activeNote?.pdf_url;
 
-  // The URL Cleaner
   useEffect(() => {
     if (!loading && Object.keys(notesByModule).length > 0 && activePdfId && !activeNote) {
       const newParams = new URLSearchParams(searchParams);
@@ -74,7 +78,6 @@ function Notes() {
     fetchNotes();
   }, [paperId]);
 
-  // 3. New URL-based Close Handler
   const handleCloseViewer = () => {
     const newParams = new URLSearchParams(searchParams);
     newParams.delete("pdf");
@@ -101,12 +104,7 @@ function Notes() {
   };
 
   if (loading) {
-    return (
-      <div className="notes-loading">
-        <Loader2 className="animate-spin" />
-        <p>Loading notes...</p>
-      </div>
-    );
+    return 
   }
 
   return (
@@ -123,8 +121,9 @@ function Notes() {
                     <div key={note.id} className="note-card">
                       <NotebookText className="note-icon" />
 
+                      {/* ✅ Translated the Priority into readable text */}
                       <p className="note-label">
-                        Priority {note.priority}
+                        {priorityLabels[note.priority] || `Priority ${note.priority}`}
                       </p>
 
                       <div className="note-actions">
@@ -140,7 +139,7 @@ function Notes() {
                           onClick={() =>
                             handleDownload(
                               note.pdf_url,
-                              `Module_${module}_Priority_${note.priority}.pdf`
+                              `Module_${module}_${priorityLabels[note.priority]?.replace(/\s+/g, '_') || 'Notes'}.pdf`
                             )
                           }
                         >
@@ -166,15 +165,7 @@ function Notes() {
         </div>
       ))}
 
-      {/* ✅ Subtle Priority Hint at the bottom */}
-      <div className="priority-hint">
-        <Info size={14} />
-        <p>
-          <strong>Priority Guide:</strong> 1 = Faculty Notes &nbsp;&bull;&nbsp; 2 = student's Notes &nbsp;&bull;&nbsp; 3 = Exam Prep &nbsp;&bull;&nbsp; 4 = AI-Generated Notes
-        </p>
-      </div>
-
-      {/* Render portal based on URL state */}
+      {/* 5. Render portal based on URL state */}
       {activePdfUrl &&
         createPortal(
           <PdfViewer fileUrl={activePdfUrl} onClose={handleCloseViewer} title={`Module ${activeNote?.module_number} Notes`} />,

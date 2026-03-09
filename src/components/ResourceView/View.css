@@ -7,7 +7,52 @@
   width: 100%;
   box-sizing: border-box;
   background-color: transparent;
+}/* --- Pixel-Perfect Notes Skeleton --- */
+
+/* Ensures the ghost card stays flat and clean while loading */
+.skeleton-card-override {
+  box-shadow: none;
+  border: 1px solid var(--border-global);
+  background: var(--surface-card);
 }
+
+/* Mimics the red Notebook icon */
+.skeleton-icon-box {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background-color: rgba(148, 163, 184, 0.25);
+  animation: notes-pulse 1.5s infinite ease-in-out;
+  margin-top: 2px;
+  margin-bottom: 8px;
+}
+
+/* Mimics the bold text label */
+.skeleton-label-box {
+  width: 80px;
+  height: 14px;
+  border-radius: 4px;
+  background-color: rgba(148, 163, 184, 0.25);
+  animation: notes-pulse 1.5s infinite ease-in-out;
+  margin-bottom: auto; /* Pushes the buttons to the bottom exactly like the real card */
+}
+
+/* Mimics the two purple buttons */
+.skeleton-btn-box {
+  flex: 1;
+  height: 26px; /* Matches the exact height of your real buttons (padding + text) */
+  border-radius: 8px; /* Matches your note-btn border-radius */
+  background-color: rgba(148, 163, 184, 0.25);
+  animation: notes-pulse 1.5s infinite ease-in-out;
+}
+
+/* Smooth fade animation */
+@keyframes notes-pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 0.2; }
+  100% { opacity: 0.6; }
+}
+
 
 /* Module heading */
 .module-title {
@@ -185,6 +230,35 @@
     line-height: 1.6;
   }
 }
+/* --- Smooth Entry Animation --- */
+
+/* 1. Define the fade and slide keyframes */
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(15px); /* Starts slightly lower */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Rests in its normal position */
+  }
+}
+
+/* 2. Apply it to the module container */
+.module-block {
+  opacity: 0; /* Ensures it is hidden before the animation starts */
+  /* Using a cubic-bezier gives it a buttery-smooth "app-like" easing */
+  animation: slideUpFade 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  margin-bottom: 24px; /* Just ensuring there is good spacing between modules */
+}
+
+/* 3. The Secret Sauce: Stagger the animations! */
+/* This makes Module 1 load, then Module 2 a split-second later, creating a cascading waterfall effect */
+.module-block:nth-child(1) { animation-delay: 0.05s; }
+.module-block:nth-child(2) { animation-delay: 0.12s; }
+.module-block:nth-child(3) { animation-delay: 0.19s; }
+.module-block:nth-child(4) { animation-delay: 0.26s; }
+
 
 
 /*===========================*/
