@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-
+import toast from "react-hot-toast";
 // 1. Create the Context
 const BookmarkContext = createContext();
 
@@ -33,26 +33,31 @@ export function BookmarkProvider({ children }) {
 
   // --- THE LOGIC: Toggle Bookmark ---
   const toggleBookmark = (paperObj) => {
-    // 1. Check if it is already saved based on current state
     const isSaved = bookmarks.some((b) => b.paperId === paperObj.paperId);
 
-    // 2. SAFETY CHECK: If adding a new paper, make sure we aren't at the limit!
+    // 1. Check limit FIRST
     if (!isSaved && bookmarks.length >= 6) {
-      alert("You can only save a maximum of 6 papers per semester.");
-      return; // 🛑 Stop the function immediately! Do not update state.
+      toast.error("Maximum 6 papers allowed per semester!");
+      return; 
     }
 
-    // 3. Update the state (React loves this because it's a pure calculation now)
+    // 2. Fire the toast OUTSIDE the state setter (React only runs this once)
+    if (isSaved) {
+      toast.success("Removed from My Papers", { icon: '🗑️', id: 'remove-toast' });
+    } else {
+      toast.success("Added to My Papers", { icon: '⭐', id: 'add-toast' });
+    }
+
+    // 3. Keep the state update perfectly pure
     setBookmarks((prev) => {
       if (isSaved) {
-        // UN-BOOKMARK: Filter it out
         return prev.filter((b) => b.paperId !== paperObj.paperId);
       } else {
-        // BOOKMARK: Add the new paper
         return [...prev, paperObj];
       }
     });
   };
+
 
   // --- THE LOGIC: Toggle Homepage ---
   const toggleCustomHome = () => {

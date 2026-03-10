@@ -15,7 +15,7 @@ import SearchPaper from "./components/SearchPaper";
 import MyPapers from "./components/MyPapers"; // ✅ Dashboard imported
 
 import "./App.css";
-
+import { Toaster } from "react-hot-toast"; 
 import { BookmarkProvider, useBookmarks } from "./BookmarkContext"; // ✅ Context imported
 
 /* ------------------------------------------------------------------
@@ -43,6 +43,18 @@ function HomeOrDashboard() {
 function App() {
   return (
     <BookmarkProvider>
+      <Toaster 
+        position="top-center" 
+        toastOptions={{
+          duration: 1700,
+          style: {
+            background: 'var(--surface-card, #333)', 
+            color: 'var(--text-heading, #fff)',
+            borderRadius: '8px',
+            border: '1px solid var(--border-global, #444)',
+          },
+        }} 
+      />
       <Routes>
         <Route element={<AppLayout />}>
           
