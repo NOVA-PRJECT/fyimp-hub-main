@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
+import { useNavigate } from "react-router-dom";
 import { X, ZoomIn, ZoomOut, AlertCircle } from "lucide-react";
 import "./View.css";
 import ShareButton from "../ShareButton";
@@ -30,6 +31,8 @@ function PdfViewer({ fileUrl, onClose, title = "Document Viewer" }) {
   // Calculate initial width to fit screen perfectly
   const [pageWidth, setPageWidth] = useState(window.innerWidth > 800 ? 800 : window.innerWidth);
 
+const navigate=useNavigate();
+
   useEffect(() => {
     const handleResize = () => {
       setPageWidth(window.innerWidth > 800 ? 800 : window.innerWidth);
@@ -43,7 +46,7 @@ function PdfViewer({ fileUrl, onClose, title = "Document Viewer" }) {
       <div className="pdf-modal-container">
         
         <div className="pdf-top-header">
-          <button onClick={onClose} className="pdf-icon-btn close-btn">
+          <button onClick={() => navigate(-1, { replace: true })} className="pdf-icon-btn close-btn">
             <X size={24} />
           </button>
           <h2 className="pdf-title">{title}</h2>
