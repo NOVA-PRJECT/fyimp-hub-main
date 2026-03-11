@@ -17,7 +17,7 @@ const priorityLabels = {
   1: "Faculty Note",
   2: "Student's Note",
   3: "Exam Prep",
-  4: "AI-Generated Note",
+  4: "Smart Note",
 };
 
 function Notes() {
