@@ -45,7 +45,9 @@ function NavBar({
                       onClick={() => {
                         if (isMyPapersActive) {
                           // If we are already here, go Home and bypass the preference
-                          navigate('/', { state: { forceHome: true } });
+                         // navigate('/', { state: { forceHome: true } }); 
+
+navigate(-1,  {replace: true });
                         } else {
                           // Otherwise, open the dashboard
                           navigate('/mypapers');
