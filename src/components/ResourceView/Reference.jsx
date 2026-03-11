@@ -143,14 +143,7 @@ function Reference() {
 
               <div className="ref-actions">
                 {/* VIEW PDF */}
-                {ref.reference_type === "book_pdf" && ref.url && (
-                  <button
-                    className="icon-btn"
-                    onClick={() => setActivePdf(ref.url)}
-                  >
-                    <Eye size={18} />
-                  </button>
-                )}
+              
 
                 {/* OPEN LINK */}
                 {ref.url && (
