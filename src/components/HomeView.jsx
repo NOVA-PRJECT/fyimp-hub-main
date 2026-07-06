@@ -35,8 +35,8 @@ function HomeView(){
               <FileDown className="icon-download" />
             </div>
             <div className="card-text">
-              <h3>Universal PDF Hub</h3>
-              <p>View <b>Any PDF</b> online or download for offline study.</p>
+              <h3>Universal Resource Hub</h3>
+              <p>Get <b>Any PDF</b> online and download for offline study.</p>
             </div>
           </div>
         </div>
@@ -53,8 +53,8 @@ function HomeView(){
             <div className="icon-box-indigo">
               <RefreshCw size={20} />
             </div>
-            <h4>KU NEP Sync</h4>
-            <p>Latest credit schemes.</p>
+            <h4>6 departments</h4>
+            <p>paper specific syllabus.</p>
           </div>
         </div>
       </section>
@@ -65,8 +65,8 @@ function HomeView(){
           <ShieldCheck size={24} />
         </div>
         <div className="v-text">
-          <p className="v-title">Official Verification</p>
-          <p className="v-sub">All PDFs match official KU curriculum standards.</p>
+          <p className="v-title">From students</p>
+          <p className="v-sub">All resources available here are provided by the students.</p>
         </div>
       </div>
 
@@ -88,7 +88,7 @@ function HomeView(){
       <div className="contribution-card">
         <BookOpen className="cta-icon" />
         <h4>Build the KU Hub</h4>
-        <p>Missing a paper? Upload it to help others.</p>
+        <p>Missing a resource? Upload it to help others.</p>
         <button className="cta-button">Upload / Request PDF</button>
       </div>
     </div>
