@@ -1,7 +1,17 @@
 <!doctype html>
-<html lang="en" data-theme="dark"> 
+<html lang="en"> 
 
   <head>
+    <script>
+      (function() {
+        const theme = localStorage.getItem("theme");
+        if (theme === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+          document.documentElement.removeAttribute("data-theme");
+        }
+      })();
+    </script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-X3V3L64F4V"></script>
 <script>

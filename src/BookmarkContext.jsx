@@ -37,7 +37,7 @@ export function BookmarkProvider({ children }) {
 
     // 1. Check limit FIRST
     if (!isSaved && bookmarks.length >= 6) {
-      toast.error("Maximum 6 papers allowed per semester!");
+      toast.error("Maximum 6 papers allowed!");
       return; 
     }
 

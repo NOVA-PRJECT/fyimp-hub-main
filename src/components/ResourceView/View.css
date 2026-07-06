@@ -7,7 +7,9 @@
   width: 100%;
   box-sizing: border-box;
   background-color: transparent;
-}/* --- Pixel-Perfect Notes Skeleton --- */
+}
+
+/* --- Pixel-Perfect Notes Skeleton --- */
 
 /* Ensures the ghost card stays flat and clean while loading */
 .skeleton-card-override {
@@ -365,8 +367,6 @@
 /* ===== Tablet & desktop ===== */
 @media (min-width: 768px) {
   .pyqs-view {
-    max-width: 720px;
-    margin: 0 auto;
     padding: 20px;
   }
 
@@ -588,7 +588,7 @@
   padding: 10px;
   border-radius: 8px;
   cursor: pointer;
-  color: vvar(--text-white);
+  color: var(--text-white);
   transition: background 0.15s ease, transform 0.1s ease;
 }
 
@@ -600,10 +600,7 @@
 /* ---------- RESPONSIVE ---------- */
 
 @media (min-width: 640px) {
-  .reference-view {
-    max-width: 720px;
-    margin: 0 auto;
-  }
+
 
   .group-title {
     font-size: 16px;

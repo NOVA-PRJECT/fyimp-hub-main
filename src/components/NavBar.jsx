@@ -1,7 +1,8 @@
-import { Menu, Brain, Search, Moon, Sun, Star } from "lucide-react"; 
+import { Menu, Brain, Search, Moon, Sun, Star, CircleQuestionMark } from "lucide-react"; 
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useBookmarks } from "../BookmarkContext"; 
+import { SEMESTERS } from "../constants.js";
 
 function NavBar({ 
   darkMode, 
@@ -22,6 +23,15 @@ function NavBar({
     // ✅ Check if we are currently on the My Papers dashboard
     const isMyPapersActive = location.pathname.includes('/mypapers');
 
+    // Parse active department and semester from URL for the desktop navbar controls
+    const pathParts = location.pathname.split('/').filter(Boolean);
+    const deptParam = pathParts[0];
+    const semParam = pathParts[1];
+    
+    const isDocViewRoute = deptParam && semParam && 
+      !['search', 'about', 'mypapers'].includes(deptParam) &&
+      !isNaN(Number(semParam));
+
     const handleSearchClick = () => {
         setsearching(!searching);
     }
@@ -39,18 +49,39 @@ function NavBar({
                 </div>
                 
                 <div className="rightNav">
+                    {/* Semester Selector on Desktop */}
+                    {isDocViewRoute && (
+                      <select
+                        className="navbar-semselect desktop-only"
+                        value={semParam}
+                        onChange={(e) => {
+                          const nextSem = e.target.value;
+                          localStorage.setItem("savedSemester", nextSem);
+                          navigate(`/${deptParam}/${nextSem}`);
+                        }}
+                      >
+                        {SEMESTERS.map((semOption) => (
+                          <option key={semOption.id} value={semOption.id}>
+                            {semOption.label}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+
                     {/* ✅ THE BOOKMARK TOGGLE ICON */}
                     <div 
                       className="navIconWrapper" 
                       onClick={() => {
                         if (isMyPapersActive) {
-                          // If we are already here, go Home and bypass the preference
-                         // navigate('/', { state: { forceHome: true } }); 
-
-navigate(-1,  {replace: true });
+                          const fromPath = location.state?.from;
+                          if (fromPath && fromPath !== '/') {
+                            navigate(fromPath);
+                          } else {
+                            navigate('/', { state: { forceHome: true } });
+                          }
                         } else {
                           // Otherwise, open the dashboard
-                          navigate('/mypapers');
+                          navigate('/mypapers', { state: { from: location.pathname + location.search } });
                         }
                       }}
                     >
@@ -71,6 +102,11 @@ navigate(-1,  {replace: true });
 
                     <Search className="searchIcon" onClick={() => navigate('/search')} />
                     
+                    <CircleQuestionMark 
+                      className="searchIcon desktop-only" 
+                      onClick={() => navigate('/about')} 
+                    />
+
                     {darkMode ? (
                         <Sun onClick={() => setDarkMode(!darkMode)} className="darkModeIcon" /> 
                     ) : (

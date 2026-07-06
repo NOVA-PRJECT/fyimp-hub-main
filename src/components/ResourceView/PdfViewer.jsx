@@ -46,7 +46,7 @@ const navigate=useNavigate();
       <div className="pdf-modal-container">
         
         <div className="pdf-top-header">
-          <button onClick={() => navigate(-1, { replace: true })} className="pdf-icon-btn close-btn">
+          <button onClick={onClose} className="pdf-icon-btn close-btn">
             <X size={24} />
           </button>
           <h2 className="pdf-title">{title}</h2>

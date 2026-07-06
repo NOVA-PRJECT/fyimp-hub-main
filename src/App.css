@@ -156,10 +156,18 @@
 .home-container {
   background-color: var(--bg-main);
   padding: 6rem 1.5rem 8rem;
-  max-width: 450px;
+  max-width: 100%;
   margin: 0 auto;
   font-family: sans-serif;
   animation: fadeIn 0.5s ease-out;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .home-container {
+    max-width: 900px;
+    padding: 7rem 2rem 6rem;
+  }
 }
 
 .badge {
@@ -192,8 +200,14 @@
 .hero-subtitle { 
   font-size: 12px; 
   color: var(--text-muted); 
-  line-height: 1.6; 
-  max-width: 310px;
+  line-height: 1.6;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .hero-subtitle {
+    max-width: 480px;
+  }
 }
 
 .main-card {
@@ -217,7 +231,29 @@
 .card-text h3 { font-size: 1.125rem; font-weight: 700; margin: 0 0 4px 0; }
 .card-text p { font-size: 11px; color: var(--text-muted); line-height: 1.5; margin: 0; }
 
-.sub-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.sub-features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .features-grid {
+    grid-template-columns: 1.2fr 1fr;
+  }
+  .sub-features {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .feature-item { background: var(--surface-card); padding: 1.25rem; border-radius: 2rem; border: 1px solid var(--border-global); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
 
 .icon-box-blue { width: 40px; height: 40px; background: #eff6ff; color: #2563eb; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
@@ -470,8 +506,8 @@
 .loader {
   width: 40px;
   height: 40px;
-  border: 4px solid var(--text-muted-alt);
-  border-top: 4px solid var(--text-muted-alt);
+  border: 4px solid var(--border-global);
+  border-top: 4px solid var(--brand-indigo);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin-bottom: 12px;
@@ -481,6 +517,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 
 .nopapers{
@@ -507,18 +547,21 @@
   width: 100vw;
   overflow-y: scroll;
   background-color: var(--bg-main);
-  padding: px;
+  padding: 0;
   margin-bottom: 4rem;
   z-index: 1;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 .pprhead{
   display: flex;
   align-items:center ;
-  padding: 0 0 0 0;
+  padding: 0 1rem;
   margin-bottom: 10px;
   gap: 5px;
+  width: 100%;
+  box-sizing: border-box;
 }
 .pprhead h5{
   margin: 0;
@@ -555,7 +598,11 @@
   overflow-y: auto;
   flex: 1;
   border-radius: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
+
+
 .paperTypeHeading{
   color: var(--text-heading);
   display: inline-block;
@@ -669,21 +716,21 @@
 }
 .reshead{
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 10px;
-  align-items:start ;
-  align-self: start;
-  text-align: center;
-  padding: 0 0 0 0;
+  align-items: center;
+  align-self: flex-start;
+  text-align: left;
+  padding: 1rem 1rem 0 1rem;
   margin-bottom: 0px;
- padding-left: 10px;
-  
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .reshead h4 {
   position: relative;
   margin-bottom: 12px;
-  font-size:rem;
+  font-size: 1.1rem;
   margin-top: 1rem;
   margin-left: 0rem;
   color: var(--text-heading);
@@ -727,29 +774,7 @@
 /* 7) SideBar                */
 /*===========================*/
 
-.loadingScreen {
-  height: 70vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
 
-.loader {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #ccc;
-  border-top: 4px solid black;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: 12px;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 
 
@@ -857,6 +882,8 @@
   padding: 16px 20px;
   background: var(--surface-card);
   border-bottom: 1px solid var(--border-global);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .search-back-btn {
@@ -903,7 +930,11 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
 }
+
+
 
 .search-paper-card {
   background: var(--surface-card);
@@ -999,4 +1030,152 @@
 .global-share-btn:active {
   transform: scale(0.9);
   background-color: var(--accent-rose); /* Fun pop of color when tapped */
+}
+
+/*==========================================================*/
+/* 9) DESKTOP RESPONSIVE MEDIA QUERIES                      */
+/*==========================================================*/
+
+@media (min-width: 1024px) {
+  /* Sidebar is always visible and occupies space on the left */
+  .sidebar {
+    transform: translateX(0) !important;
+    z-index: 30 !important; /* Keep below dropdown overlay */
+  }
+
+  /* Hide mobile sidebar overlay and close button */
+  .overlay,
+  .closebtn,
+  .menuBtn {
+    display: none !important;
+  }
+
+  /* Shift top nav by sidebar width */
+  .header {
+    left: 260px !important;
+    width: calc(100% - 260px) !important;
+  }
+
+  /* Shift page wrappers by sidebar width */
+  .paperview,
+  .resourceview {
+    left: 260px !important;
+    width: calc(100% - 260px) !important;
+  }
+
+  /* Hide the mobile bottom navigation bar */
+  .homebottom {
+    display: none !important;
+  }
+
+  /* Desktop-integrated semester selector style */
+  .navbar-semselect {
+    padding: 6px 12px;
+    background-color: var(--brand-indigo);
+    color: var(--text-white);
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+    margin-right: 0.5rem;
+  }
+  .navbar-semselect:focus {
+    outline: none;
+  }
+
+  /* Position resource tabs at the top (below header) on desktop */
+  .resourceview {
+    padding-bottom: 3rem !important; /* Clear fixed padding since tabs are at the top */
+  }
+  
+  .reshead {
+    order: 1 !important;
+  }
+  
+  .resourcebottom {
+    order: 2 !important;
+    position: static !important; /* Make it block layout instead of fixed */
+    margin: 0 0 1.5rem 0 !important;
+    height: 48px !important;
+    border-radius: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-shadow: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: 1px solid var(--border-global) !important;
+    border-bottom: 1px solid var(--border-global) !important;
+    background-color: var(--surface-card) !important;
+  }
+  
+  /* Make the notes/outlet container sit under the tabs */
+  .resourceview > *:not(.reshead):not(.resourcebottom) {
+    order: 3 !important;
+  }
+
+  /* Make tabs display as horizontal row on desktop */
+  .part {
+    flex-direction: row !important;
+    gap: 8px !important;
+    padding: 0 16px !important;
+  }
+
+  /* Shift home view by sidebar width and center its child elements */
+  .home-container {
+    margin-left: 260px !important;
+    width: calc(100% - 260px) !important;
+    max-width: none !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  
+  .home-container > * {
+    width: 100%;
+    max-width: 900px;
+    box-sizing: border-box;
+  }
+
+  /* Make horizontal note list wrap to layout as a grid on desktop */
+  .notes-row {
+    flex-wrap: wrap !important;
+    overflow-x: visible !important;
+  }
+  
+  .notes-row-wrapper::after {
+    display: none !important;
+  }
+
+  /* Syllabus height fix on desktop */
+  .syllabus {
+    height: auto !important;
+    min-height: 400px !important;
+  }
+
+  /* Stretch resource view child elements fully and prevent compression */
+  .notes,
+  .notes-loading,
+  .pyqs-view,
+  .syllabus,
+  .reference-view {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Left align the paper listing title */
+  .pprhead h4 {
+    text-align: left !important;
+  }
+}
+
+/* Hide desktop-only controls on mobile/tablet viewports */
+@media (max-width: 1023px) {
+  .desktop-only {
+    display: none !important;
+  }
 }

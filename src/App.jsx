@@ -74,10 +74,11 @@ function App() {
             <Route path="reference" element={<Reference />} />
           </Route>
 
+          <Route path="/about" element={<About />} />
+
         </Route>
         
         <Route path="/search" element={<SearchPaper />} />
-        <Route path="/about" element={<About />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       

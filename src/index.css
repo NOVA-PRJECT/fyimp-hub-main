@@ -6,18 +6,18 @@ html, body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-/* Create a class to re-enable it when we want */
-.allow-select {
-  -webkit-user-select: text !important;
-  user-select: text !important;
-}
-
 
   /* Removes the blue/grey tap highlight on mobile */
   -webkit-tap-highlight-color: transparent;
 
   /* Prevents the system context menu on long-press (iOS/Android) */
   -webkit-touch-callout: none;
+}
+
+/* Create a class to re-enable it when we want */
+.allow-select {
+  -webkit-user-select: text !important;
+  user-select: text !important;
 }
 
 /* IMPORTANT: Ensure users can still type in inputs and textareas */

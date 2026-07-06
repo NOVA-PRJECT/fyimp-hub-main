@@ -10,6 +10,7 @@ import {
 import { supabase } from "../../supabaseClient";
 import { useParams, useSearchParams } from "react-router-dom";
 import PdfViewer from "./PdfViewer";
+import { downloadPdf } from "../../utils/download";
 import "./View.css";
 
 // ✅ The translation dictionary for your priorities
@@ -29,10 +30,10 @@ function Notes() {
   const [notesByModule, setNotesByModule] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const activeNote = activePdfId 
+  const activeNote = activePdfId
     ? Object.values(notesByModule).flat().find(note => note.id.toString() === activePdfId)
     : null;
-  
+
   const activePdfUrl = activeNote?.pdf_url;
 
   useEffect(() => {
@@ -84,28 +85,15 @@ function Notes() {
     setSearchParams(newParams);
   };
 
-  const handleDownload = async (url, filename) => {
-    try {
-      const response = await fetch(url);
-      const blob = await response.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = blobUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(blobUrl);
-    } catch {
-      window.open(url, "_blank");
-    }
-  };
-
   if (loading) {
-    return 
+    return (
+      <div className="notes-loading">
+        <Loader2 className="animate-spin" />
+        <p>Loading notes...</p>
+      </div>
+    );
   }
+
 
   return (
     <div className="notes">
@@ -137,7 +125,7 @@ function Notes() {
                         <button
                           className="note-btn"
                           onClick={() =>
-                            handleDownload(
+                            downloadPdf(
                               note.pdf_url,
                               `Module_${module}_${priorityLabels[note.priority]?.replace(/\s+/g, '_') || 'Notes'}.pdf`
                             )

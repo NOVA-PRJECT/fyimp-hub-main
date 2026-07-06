@@ -4,6 +4,7 @@ import { FileText, Eye, Download, Loader2 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useParams, useSearchParams } from "react-router-dom"; // ✅ Added useSearchParams
 import PdfViewer from "./PdfViewer";
+import { downloadPdf } from "../../utils/download";
 import "./View.css";
 
 /* Exam display order */
@@ -77,24 +78,7 @@ function PYQs() {
     setSearchParams(newParams);
   };
 
-  /* Download handler */
-  const handleDownload = async (url, name) => {
-    try {
-      const res = await fetch(url);
-      const blob = await res.blob();
-      const blobUrl = URL.createObjectURL(blob);
 
-      const a = document.createElement("a");
-      a.href = blobUrl;
-      a.download = name;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(blobUrl);
-    } catch {
-      window.open(url, "_blank");
-    }
-  };
 
   /* ---------- UI STATES ---------- */
 
@@ -164,7 +148,7 @@ function PYQs() {
                     <button
                       className="icon-btn"
                       onClick={() =>
-                        handleDownload(
+                        downloadPdf(
                           pyq.pdf_url,
                           `PYQ_${pyq.exam_category}_${year}.pdf`
                         )

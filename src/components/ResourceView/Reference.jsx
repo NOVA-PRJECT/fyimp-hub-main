@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 import "./View.css";
 import {
   Youtube,
   Globe,
   FileText,
   BookOpen,
-  Eye,
   ExternalLink,
   Loader2,
 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import { useParams } from "react-router-dom";
-import PdfViewer from "./PdfViewer";
 
 /* ---------- ORDER & LABELS ---------- */
 
@@ -44,7 +41,6 @@ function Reference() {
   const { paperId } = useParams(); // ✅ URL-driven
   const [refs, setRefs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activePdf, setActivePdf] = useState(null);
 
   /* ---------- FETCH ---------- */
 
@@ -73,17 +69,7 @@ function Reference() {
     fetchRefs();
   }, [paperId]);
 
-  /* ---------- MOBILE BACK ---------- */
 
-  useEffect(() => {
-    if (!activePdf) return;
-
-    window.history.pushState({ view: "reference-pdf" }, "");
-    const onPop = () => setActivePdf(null);
-
-    window.addEventListener("popstate", onPop);
-    return () => window.removeEventListener("popstate", onPop);
-  }, [activePdf]);
 
   /* ---------- SORT + GROUP ---------- */
 
@@ -142,8 +128,6 @@ function Reference() {
               </div>
 
               <div className="ref-actions">
-                {/* VIEW PDF */}
-              
 
                 {/* OPEN LINK */}
                 {ref.url && (
@@ -160,15 +144,7 @@ function Reference() {
         </div>
       ))}
 
-      {/* PDF VIEWER */}
-      {activePdf &&
-        createPortal(
-          <PdfViewer
-            fileUrl={activePdf}
-            onClose={() => setActivePdf(null)}
-          />,
-          document.body
-        )}
+
     </div>
   );
 }

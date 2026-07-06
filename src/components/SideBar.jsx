@@ -32,13 +32,19 @@ function SideBar({
   }, []);
 
   useEffect(() => {
-    if (isSidebarOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+    const handleScrollLock = () => {
+      if (isSidebarOpen && !mediaQuery.matches) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "auto";
+      }
+    };
 
+    handleScrollLock();
+    mediaQuery.addEventListener("change", handleScrollLock);
     return () => {
+      mediaQuery.removeEventListener("change", handleScrollLock);
       document.body.style.overflow = "auto";
     };
   }, [isSidebarOpen]);
