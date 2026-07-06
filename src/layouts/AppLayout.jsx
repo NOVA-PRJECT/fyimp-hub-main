@@ -67,6 +67,9 @@ function AppLayout() {
   
   // ✅ NEW: Detect if we are on the My Papers dashboard
   const isMyPapersRoute = location.pathname.includes("/mypapers");
+  
+  // ✅ NEW: Detect if we are on the Request / Upload PDF page
+  const isRequestRoute = location.pathname.includes("/request");
 
   /* -----------------------------
      OUTLET CONTEXT
@@ -148,8 +151,8 @@ function AppLayout() {
       {/* -----------------------------
          BOTTOM NAV (GUARDED)
       ------------------------------ */}
-      {/* ✅ NEW: Hide BottomNav if we are on a Paper route OR the My Papers route */}
-      {!isPaperRoute && !isMyPapersRoute && isRouteValid && (
+      {/* ✅ NEW: Hide BottomNav if we are on a Paper route, My Papers route, or Request route */}
+      {!isPaperRoute && !isMyPapersRoute && !isRequestRoute && isRouteValid && (
         <BottomNavBar
           setselectedSem={setselectedSem}
           setabout={setabout}

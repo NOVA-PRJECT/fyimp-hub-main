@@ -13,6 +13,7 @@ import Reference from "./components/ResourceView/Reference";
 import About from "./components/About";
 import SearchPaper from "./components/SearchPaper";
 import MyPapers from "./components/MyPapers"; // ✅ Dashboard imported
+import RequestUpload from "./components/RequestUpload"; // ✅ Upload / Request imported
 
 import "./App.css";
 import { Toaster } from "react-hot-toast"; 
@@ -75,6 +76,8 @@ function App() {
           </Route>
 
           <Route path="/about" element={<About />} />
+
+          <Route path="/request" element={<RequestUpload />} />
 
         </Route>
         

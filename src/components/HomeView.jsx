@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Sparkles,
   FileSearch,
@@ -11,6 +12,7 @@ import {
 } from "lucide-react";
 
 function HomeView() {
+  const navigate = useNavigate();
   return (
     <div className="home-container">
       {/* Header */}
@@ -116,7 +118,7 @@ function HomeView() {
 
         <p>Missing a resource? Upload it to help others.</p>
 
-        <button className="cta-button">Upload / Request PDF</button>
+        <button className="cta-button" onClick={() => navigate("/request")}>Upload / Request PDF</button>
       </div>
     </div>
   );
