@@ -51,6 +51,11 @@ export default function RequestUpload() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
+  // Scroll to top when page loads
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Fetch Departments
   useEffect(() => {
     async function getDepartments() {
