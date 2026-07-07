@@ -113,7 +113,7 @@ export default function About() {
               FYIMP HUB was originally envisioned and founded by <strong>Shad CT and his classmates</strong>,from the 2024 batch of the FYIMP Computational Science.
             </p>
             <p>
-              Today, the platform is maintained, enhanced, and updated by <strong>AZ Projectz</strong> — a student-led engineering initiative by the 2025 FYIMP CS student Zayyan PV. Our goal is to leverage software craftsmanship to build tools that make life easier for everyone.
+              Today, the platform is maintained, enhanced, and updated by <strong>AZ Projectz</strong> — a student-led engineering initiative by the 2025 FYIMP CS student <strong>Zayyan PV</strong>. Our goal is to leverage software craftsmanship to build tools that make life easier for everyone.
             </p>
           </div>
         </section>
