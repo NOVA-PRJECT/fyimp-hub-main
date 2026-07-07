@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import { FileText, Eye, Download, Loader2 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
-import { useParams, useSearchParams } from "react-router-dom"; // ✅ Added useSearchParams
+import { useParams, useSearchParams, useNavigate } from "react-router-dom"; // ✅ Added useSearchParams
 import PdfViewer from "./PdfViewer";
 import { downloadPdf } from "../../utils/download";
 import "./View.css";
@@ -18,10 +18,12 @@ const EXAM_ORDER = {
 
 function PYQs() {
   const { paperId } = useParams();
+  const navigate = useNavigate();
 
   // 1. URL Search Params Setup
   const [searchParams, setSearchParams] = useSearchParams();
   const activePdfId = searchParams.get("pdf"); // Grabs the ID from ?pdf=123
+  const openedFromHereRef = useRef(false); // true if WE pushed this pdf entry
 
   const [pyqs, setPyqs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -71,11 +73,20 @@ function PYQs() {
     }
   }, [activePdfId, activePyq, loading, pyqs, searchParams, setSearchParams]);
 
-  // 4. URL-based Close Handler
+  // 4. Close handler: undo our own push if we opened it, otherwise just strip the param
   const handleCloseViewer = () => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.delete("pdf");
-    setSearchParams(newParams, { replace:true});
+    if (openedFromHereRef.current) {
+      // We pushed this entry ourselves when opening -> undo it exactly,
+      // same as what the phone's hardware back button would do.
+      navigate(-1);
+    } else {
+      // Viewer was opened via a deep link (e.g. ?pdf=42 shared URL),
+      // there's nothing "ours" to go back to, so just strip the param.
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete("pdf");
+      setSearchParams(newParams, { replace: true });
+    }
+    openedFromHereRef.current = false;
   };
 
 
@@ -137,10 +148,13 @@ function PYQs() {
                   </div>
 
                   <div className="pyq-actions">
-                    {/* 5. Update URL state instead of local state */}
+                    {/* 5. Update URL state — push, and remember we opened it */}
                     <button
                       className="icon-btn"
-                      onClick={() => setSearchParams({ pdf: pyq.id },{ replace:true})}
+                      onClick={() => {
+                        openedFromHereRef.current = true;
+                        setSearchParams({ pdf: pyq.id });
+                      }}
                     >
                       <Eye size={18} />
                     </button>
