@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import {
   FileText,
@@ -8,7 +8,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import PdfViewer from "./PdfViewer";
 import { downloadPdf } from "../../utils/download";
 import "./View.css";
@@ -23,9 +23,11 @@ const priorityLabels = {
 
 function Notes() {
   const { paperId } = useParams();
+  const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const activePdfId = searchParams.get("pdf");
+  const openedFromHereRef = useRef(false); // true if WE pushed this pdf entry
 
   const [notesByModule, setNotesByModule] = useState({});
   const [loading, setLoading] = useState(false);
@@ -80,9 +82,14 @@ function Notes() {
   }, [paperId]);
 
   const handleCloseViewer = () => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.delete("pdf");
-    setSearchParams(newParams, { replace: true});
+    if (openedFromHereRef.current) {
+      navigate(-1);
+    } else {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete("pdf");
+      setSearchParams(newParams, { replace: true });
+    }
+    openedFromHereRef.current = false;
   };
 
   if (loading) {
@@ -117,7 +124,10 @@ function Notes() {
                       <div className="note-actions">
                         <button
                           className="note-btn"
-                          onClick={() => setSearchParams({ pdf: note.id }, { replace: true} )}
+                          onClick={() => {
+                            openedFromHereRef.current = true;
+                            setSearchParams({ pdf: note.id });
+                          }}
                         >
                           <Eye size={16} /> View
                         </button>
