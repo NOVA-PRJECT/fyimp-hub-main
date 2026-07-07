@@ -60,13 +60,13 @@ function Syllabus() {
 
   // 3. New Open/Close Handlers using the URL
   const handleOpenViewer = () => {
-    setSearchParams({ pdf: "true" });
+    setSearchParams({ pdf: "true" }, {replace:true} );
   };
 
   const handleCloseViewer = () => {
     const newParams = new URLSearchParams(searchParams);
     newParams.delete("pdf");
-    setSearchParams(newParams);
+    setSearchParams(newParams,{replace:true});
   };
 
   const handleDownload = () => {
