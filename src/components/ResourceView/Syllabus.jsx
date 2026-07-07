@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import "./View.css";
 import { FileText, Download, Eye, Loader2 } from "lucide-react";
 import { supabase } from "../../supabaseClient";
-import { useParams, useSearchParams, useOutletContext } from "react-router-dom";
+import { useParams, useSearchParams, useOutletContext, useNavigate } from "react-router-dom";
 import PdfViewer from "./PdfViewer";
 import { downloadPdf } from "../../utils/download";
 
 function Syllabus() {
   const { paperId, sem } = useParams();
   const { paperName } = useOutletContext();
+  const navigate = useNavigate();
 
   // 1. REPLACED local state with URL Search Params
   const [searchParams, setSearchParams] = useSearchParams();
   const isViewerOpen = searchParams.get("pdf") === "true";
+  const openedFromHereRef = useRef(false); // true if WE pushed this pdf entry
 
   const [pdfUrl, setPdfUrl] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -58,15 +60,25 @@ function Syllabus() {
   // 2. DELETED the manual window.history.pushState useEffect!
   // React Router automatically handles the browser history now.
 
-  // 3. New Open/Close Handlers using the URL
+  // 3. Open/Close Handlers using the URL
   const handleOpenViewer = () => {
-    setSearchParams({ pdf: "true" }, {replace:true} );
+    openedFromHereRef.current = true;
+    setSearchParams({ pdf: "true" });
   };
 
   const handleCloseViewer = () => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.delete("pdf");
-    setSearchParams(newParams,{replace:true});
+    if (openedFromHereRef.current) {
+      // We pushed this entry ourselves when opening -> undo it exactly,
+      // same as what the phone's hardware back button would do.
+      navigate(-1);
+    } else {
+      // Viewer was opened via a deep link (e.g. ?pdf=true shared URL),
+      // there's nothing "ours" to go back to, so just strip the param.
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete("pdf");
+      setSearchParams(newParams, { replace: true });
+    }
+    openedFromHereRef.current = false;
   };
 
   const handleDownload = () => {
