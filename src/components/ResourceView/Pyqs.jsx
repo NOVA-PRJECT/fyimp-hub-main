@@ -75,7 +75,7 @@ function PYQs() {
   const handleCloseViewer = () => {
     const newParams = new URLSearchParams(searchParams);
     newParams.delete("pdf");
-    setSearchParams(newParams);
+    setSearchParams(newParams, { replace:true});
   };
 
 
@@ -140,7 +140,7 @@ function PYQs() {
                     {/* 5. Update URL state instead of local state */}
                     <button
                       className="icon-btn"
-                      onClick={() => setSearchParams({ pdf: pyq.id })}
+                      onClick={() => setSearchParams({ pdf: pyq.id },{ replace:true})}
                     >
                       <Eye size={18} />
                     </button>
