@@ -82,7 +82,7 @@ function Notes() {
   const handleCloseViewer = () => {
     const newParams = new URLSearchParams(searchParams);
     newParams.delete("pdf");
-    setSearchParams(newParams);
+    setSearchParams(newParams, { replace: true});
   };
 
   if (loading) {
@@ -117,7 +117,7 @@ function Notes() {
                       <div className="note-actions">
                         <button
                           className="note-btn"
-                          onClick={() => setSearchParams({ pdf: note.id })}
+                          onClick={() => setSearchParams({ pdf: note.id }, { replace: true} )}
                         >
                           <Eye size={16} /> View
                         </button>
