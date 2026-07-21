@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Sparkles,
@@ -9,12 +9,43 @@ import {
   BookMarked,
   Zap,
   BookOpen,
+  AlertTriangle,
+  X,
 } from "lucide-react";
 
 function HomeView() {
   const navigate = useNavigate();
+  const [showDisclaimer, setShowDisclaimer] = useState(() => {
+    return !localStorage.getItem("dismissedDisclaimer");
+  });
+
+  const dismissDisclaimer = () => {
+    localStorage.setItem("dismissedDisclaimer", "true");
+    setShowDisclaimer(false);
+  };
+
   return (
     <div className="home-container">
+      {/* Disclaimer Modal */}
+      {showDisclaimer && (
+        <div className="modal-overlay">
+          <div className="modal-card">
+            <div className="modal-icon-wrapper amber">
+              <AlertTriangle size={28} />
+            </div>
+            <h3>Unofficial Student Portal</h3>
+            <p>
+              Please note that this is <strong>not</strong> an official Kannur University website. This is an unofficial resource portal built <strong>by students, for students</strong> to help access study materials easily.
+            </p>
+            <div className="modal-actions">
+              <button className="modal-btn-primary" onClick={dismissDisclaimer}>
+                I Understand, Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <section className="welcome-header">
         <div className="badge">
@@ -114,11 +145,11 @@ function HomeView() {
       <div className="contribution-card">
         <BookOpen className="cta-icon" />
 
-        <h4>Build the KU Hub</h4>
+        <h4>Request a Resource</h4>
 
-        <p>Missing a resource? Upload it to help others.</p>
+        <p>Can't find a study material? Ask for it and we'll look for it.</p>
 
-        <button className="cta-button" onClick={() => navigate("/request")}>Upload / Request PDF</button>
+        <button className="cta-button" onClick={() => navigate("/request")}>Request PDF</button>
       </div>
     </div>
   );

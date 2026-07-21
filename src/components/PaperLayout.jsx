@@ -1,8 +1,9 @@
-import { Outlet, Navigate, useLocation, useParams } from "react-router-dom";
+import { Outlet, Navigate, useLocation, useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import BottomResourceNav from "./BottomResourceNav";
 import { supabase } from "../supabaseClient";
 import NotFound from "./NotFound";
+import { X, BookOpen } from "lucide-react";
 // Make sure you import your CSS!
 import ShareButton from "./ShareButton";
 const VALID_TABS = ["notes", "pyq", "syllabus", "reference"];
@@ -14,6 +15,15 @@ function PaperLayout() {
   const [paperName, setPaperName] = useState("");
   const [paperValid, setPaperValid] = useState(true);
   const [loading, setLoading] = useState(true);
+
+  const [showResourceBanner, setShowResourceBanner] = useState(() => {
+    return !localStorage.getItem("dismissedResourceBanner");
+  });
+
+  const dismissResourceBanner = () => {
+    localStorage.setItem("dismissedResourceBanner", "true");
+    setShowResourceBanner(false);
+  };
 
   /* -----------------------------
      URL ANALYSIS
@@ -137,6 +147,28 @@ function PaperLayout() {
         <h4>{paperName}</h4>
         <h4 className="s">{currentTab.toUpperCase()}</h4>
       </div>
+
+      {showResourceBanner && (
+        <div className="modal-overlay">
+          <div className="modal-card">
+            <div className="modal-icon-wrapper indigo">
+              <BookOpen size={28} />
+            </div>
+            <h3>Student Resources</h3>
+            <p>
+              All study materials, notes, and question papers here were added by students. If you can't find what you need, request it or contribute to help others!
+            </p>
+            <div className="modal-actions">
+              <Link to="/request" className="modal-btn-primary" onClick={dismissResourceBanner} style={{ textDecoration: 'none', textAlign: 'center' }}>
+                Request / Contribute PDF
+              </Link>
+              <button className="modal-btn-secondary" onClick={dismissResourceBanner}>
+                Close & View Resources
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Outlet context={{ paperName }} />
       <ShareButton/>
